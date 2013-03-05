@@ -322,7 +322,7 @@ public class Histograma {
     //normalization by scaling between 0 and 1
     public static double[] normalizacao(int[] histograma) {
         //intensidade
-        int RANGE = 244;
+        int RANGE = 200;
         
         //Armazena a frequencia max e min do histograma
         double max = histograma[0];
