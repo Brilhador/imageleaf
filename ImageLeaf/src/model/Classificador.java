@@ -180,10 +180,10 @@ public class Classificador {
                         }
                     } else {
                         for (int line = 0; line < tabCsv.getLineSize(); line++) {
-                            if (tabCsv.getCell(line, 0).equals(nomeInf)) {
+                            if (tabCsv.getCell(line, 0).equals(especie)) {
                                 for (int column = 0; column < tabCsv.getColumnSize(); column++) {
                                     try {
-                                        if (tabCsv.getCell(0, column).equals(especie)) {
+                                        if (tabCsv.getCell(0, column).equals(nomeInf)) {
                                             int valor = Integer.parseInt(tabCsv.getCell(line, column));
                                             valor++;
                                             tabCsv.setCell(line, column, valor + "");

@@ -101,7 +101,7 @@
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="jlhisimage" min="-2" pref="428" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="jbclagrupo" pref="203" max="-2" attributes="0"/>
+                          <Component id="jbselecionar" pref="203" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jbclassificar" min="-2" pref="203" max="-2" attributes="0"/>
                       </Group>
@@ -115,7 +115,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jbclagrupo" alignment="0" pref="46" max="-2" attributes="0"/>
+                      <Component id="jbselecionar" alignment="0" pref="46" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jbabrir" min="-2" pref="46" max="-2" attributes="0"/>
                           <Component id="jbclassificar" min="-2" pref="46" max="-2" attributes="0"/>
@@ -164,9 +164,9 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jbclagrupo">
+        <Component class="javax.swing.JButton" name="jbselecionar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Classificar grupo de folhas"/>
+            <Property name="text" type="java.lang.String" value="Abrir Esp&#xe9;cie"/>
           </Properties>
         </Component>
       </SubComponents>

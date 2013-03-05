@@ -40,7 +40,7 @@ public class ViewClassificar extends javax.swing.JFrame {
         jbclassificar = new javax.swing.JButton();
         jlImage = new javax.swing.JLabel();
         jlhisimage = new javax.swing.JLabel();
-        jbclagrupo = new javax.swing.JButton();
+        jbselecionar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jlImageE = new javax.swing.JLabel();
         jlespecie = new javax.swing.JLabel();
@@ -94,7 +94,7 @@ public class ViewClassificar extends javax.swing.JFrame {
 
         jlhisimage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jbclagrupo.setText("Classificar grupo de folhas");
+        jbselecionar.setText("Abrir Espécie");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -109,7 +109,7 @@ public class ViewClassificar extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jlhisimage, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jbclagrupo, javax.swing.GroupLayout.DEFAULT_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbselecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jbclassificar, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(30, Short.MAX_VALUE))
@@ -119,7 +119,7 @@ public class ViewClassificar extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbclagrupo, javax.swing.GroupLayout.DEFAULT_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbselecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbabrir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jbclassificar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -285,10 +285,10 @@ public class ViewClassificar extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JButton jbabrir;
-    private javax.swing.JButton jbclagrupo;
     private javax.swing.JButton jbclassificar;
     private javax.swing.JButton jbhdesvio;
     private javax.swing.JButton jbhmedio;
+    private javax.swing.JButton jbselecionar;
     private javax.swing.JLabel jlImage;
     private javax.swing.JLabel jlImageE;
     private javax.swing.JLabel jldiferenca;
@@ -421,11 +421,11 @@ public class ViewClassificar extends javax.swing.JFrame {
         this.jLdmred = jLdmred;
     }
 
-    public JButton getJbclagrupo() {
-        return jbclagrupo;
+    public JButton getJbselecionar() {
+        return jbselecionar;
     }
 
-    public void setJbclagrupo(JButton jbclagrupo) {
-        this.jbclagrupo = jbclagrupo;
+    public void setJbselecionar(JButton jbselecionar) {
+        this.jbselecionar = jbselecionar;
     }
 }
