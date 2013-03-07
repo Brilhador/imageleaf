@@ -4,22 +4,7 @@
  */
 package model;
 
-import com.sun.org.apache.xml.internal.serialize.OutputFormat;
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageInputStream;
-import javax.imageio.stream.ImageInputStream;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Text;
 
 /**
  *
@@ -27,7 +12,7 @@ import org.w3c.dom.Text;
  */
 public class ManageDirectory {
 
-    private String diretorioPadrao = System.getProperty("user.home") + "\\ImageLeaf\\Especies\\";
+    private String diretorioPadrao = System.getProperty("user.home") + "/ImageLeaf/";
     
     //getters e Setters
     public String getDiretorioPadrao() {
@@ -40,6 +25,7 @@ public class ManageDirectory {
 
     //funcao que cria os diretorios do progrma
     public void criarDiretorio(String caminho) {
+        System.out.println(diretorioPadrao);
         new File(caminho).mkdirs();
     }
 
