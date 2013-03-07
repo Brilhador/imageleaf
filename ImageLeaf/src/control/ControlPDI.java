@@ -103,7 +103,8 @@ public class ControlPDI {
                 //limiar automatico por maxima soma das entropias
                 if (view.getJrmaxentropia().isSelected()) {
                     BufferedImage BUimage = (BufferedImage) image;
-                    limiar = Limiar.maxentropia(Histograma.histogramaGray((BufferedImage) image), BUimage.getHeight() * BUimage.getWidth());
+                    limiar = Limiar.otsuTreshold(Histograma.histogramaGray((BufferedImage) image), BUimage.getHeight() * BUimage.getWidth());
+                    image = Limiar.limiarizacao((BufferedImage)image, limiar);
                 }
                 //detectores de borda
                 if (view.getJrsobel().isSelected()) {
