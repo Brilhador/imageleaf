@@ -5,13 +5,16 @@
 package model;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 
 /**
  *
@@ -35,14 +38,15 @@ public class Classificador {
             if (tipo.equalsIgnoreCase("scan")) {
                 //
                 ManageDirectory dir = new ManageDirectory();
-                //String diretorio = diretorioPadrao + especie + "\\" + tipo;
-                String diretorio = dir.getDiretorioPadrao() + especie;
+                //String diretorio = diretorioPadrao + especie + "/" + tipo;
+                String diretorio = dir.getDiretorioPadrao() + "Especies/" +especie;
                 System.out.println(diretorio);
-                File fileImg = new File(diretorio + "\\" + imgNome);
-                System.out.println(diretorio + "\\" + imgNome);
+                File fileImg = new File(diretorio + "/" + imgNome);
+                System.out.println(diretorio + "/" + imgNome);
                 if (dir.verificaDiretorio(diretorio)) {
                     try {
-                        image = ImageIO.read(new File(caminho + "\\" + imgNome));
+                        System.out.println(caminho + "/" + imgNome);
+                        image = ImageIO.read(new File(caminho + "/" + imgNome));
                         ImageIO.write(image, "JPG", fileImg);
                     } catch (IOException ex) {
                         Logger.getLogger(ManageDirectory.class.getName()).log(Level.SEVERE, null, ex);
@@ -50,7 +54,7 @@ public class Classificador {
                 } else {
                     dir.criarDiretorio(diretorio);
                     try {
-                        image = ImageIO.read(new File(caminho + "\\" + imgNome));
+                        image = ImageIO.read(new File(caminho + "/" + imgNome));
                         ImageIO.write(image, "JPG", fileImg);
                     } catch (IOException ex) {
                         Logger.getLogger(ManageDirectory.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,9 +86,9 @@ public class Classificador {
                         hBlue = Histograma.histogramaMedioBlue(imagens);
 
                 //salva os histogramas medio dentro da pasta do novo padrao
-                Histograma.criarTxtHistograma(diretorio.getAbsolutePath() + "\\" + "hmR", hRed);
-                Histograma.criarTxtHistograma(diretorio.getAbsolutePath() + "\\" + "hmG", hGreen);
-                Histograma.criarTxtHistograma(diretorio.getAbsolutePath() + "\\" + "hmB", hBlue);
+                Histograma.criarTxtHistograma(diretorio.getAbsolutePath() + "/" + "hmR", hRed);
+                Histograma.criarTxtHistograma(diretorio.getAbsolutePath() + "/" + "hmG", hGreen);
+                Histograma.criarTxtHistograma(diretorio.getAbsolutePath() + "/" + "hmB", hBlue);
 
                 //calculando o desvio padrao
                 hRed = Histograma.histogramaDesvioPadraoRed(imagens, hRed);
@@ -92,11 +96,11 @@ public class Classificador {
                 hBlue = Histograma.histogramaDesvioPadraoBlue(imagens, hBlue);
 
                 //salva os histogramas medio dentro da pasta do novo padrao
-                Histograma.criarTxtHistograma(diretorio.getAbsolutePath() + "\\" + "hdpR", hRed);
-                Histograma.criarTxtHistograma(diretorio.getAbsolutePath() + "\\" + "hdpG", hGreen);
-                Histograma.criarTxtHistograma(diretorio.getAbsolutePath() + "\\" + "hdpB", hBlue);
+                Histograma.criarTxtHistograma(diretorio.getAbsolutePath() + "/" + "hdpR", hRed);
+                Histograma.criarTxtHistograma(diretorio.getAbsolutePath() + "/" + "hdpG", hGreen);
+                Histograma.criarTxtHistograma(diretorio.getAbsolutePath() + "/" + "hdpB", hBlue);
 
-                XML.criarXml(diretorio.getAbsolutePath(), diretorio.getName());
+                XML.criarXml(diretorio.getAbsolutePath() + "/", diretorio.getName());
             }
         }
     }
@@ -117,14 +121,13 @@ public class Classificador {
         ManageDirectory dir = new ManageDirectory();
 
         //Percorrer todas as especies no banco
-        File[] especies = new File(dir.getDiretorioPadrao()).listFiles();
+        File[] especies = new File(dir.getDiretorioPadrao() + "Especies/").listFiles();
         //percorre cada diretorio e calcula a diferença
         for (File especie : especies) {
-            //System.out.println(especie.getAbsoluteFile());
             //carrega o histogrma médio no vetores
-            int[] hmRed = Histograma.lerTxtHistograma(especie + "\\hmR.txt");
-            int[] hmGreen = Histograma.lerTxtHistograma(especie + "\\hmG.txt");
-            int[] hmBlue = Histograma.lerTxtHistograma(especie + "\\hmB.txt");
+            int[] hmRed = Histograma.lerTxtHistograma(especie.getAbsolutePath() + "/hmR.txt");
+            int[] hmGreen = Histograma.lerTxtHistograma(especie.getAbsolutePath() + "/hmG.txt");
+            int[] hmBlue = Histograma.lerTxtHistograma(especie.getAbsolutePath() + "/hmB.txt");
 
             double aux = 0;
 
@@ -147,7 +150,7 @@ public class Classificador {
     }
 
     public static void classificaBancoFolha(File[] arquivo, String caminho) {
-        CSV tabCsv = new CSV(new File("C:\\Users\\Anderson\\ImageLeaf\\confusao.csv"));
+        CSV tabCsv = new CSV(new File(new ManageDirectory().getDiretorioPadrao() + "confusao.csv"));
         tabCsv.readCSV();
         for (File file : arquivo) {
             BufferedImage image;
@@ -161,7 +164,7 @@ public class Classificador {
             if (tipo.equalsIgnoreCase("scan")) {
                 System.out.println("V -->" + especie);
                 try {
-                    image = ImageIO.read(new File(caminho + "\\" + imgNome));
+                    image = ImageIO.read(new File(caminho + "/" + imgNome));
                     File espInf = classificaFolha(image);
                     String nomeInf = espInf.getName();
                     nomeInf.trim();
@@ -211,7 +214,7 @@ public class Classificador {
         arquivo.readCSV();
         DecimalFormat fmt = new DecimalFormat("000.00");
         //calcular a precisão dos acertos
-        CSV preCsv = new CSV(new File("C:\\Users\\Anderson\\ImageLeaf\\precisao.csv"));
+        CSV preCsv = new CSV(new File(new ManageDirectory().getDiretorioPadrao() + "precisao.csv"));
         preCsv.readCSV();
         for (int line = 1; line < arquivo.getLineSize(); line++) {
             double soma = 0;

@@ -124,7 +124,7 @@ public class XML {
             dblueElement.appendChild(dblueText);
 
             //Serializando o documento
-            FileOutputStream output = new FileOutputStream(caminho + "\\dados.xml");
+            FileOutputStream output = new FileOutputStream(caminho + "dados.xml");
             XMLSerializer serializer = new XMLSerializer(output, new OutputFormat(doc, "ISO-8859-1", true));
             //escrevendo os dados
             serializer.serialize(doc);
