@@ -32,12 +32,34 @@ public class Limiar {
                     imgOut.setRGB(x, y, Color.WHITE.getRGB());
                 } else {
                     imgOut.setRGB(x, y, Color.BLACK.getRGB());
-                    
+
                 }
             }
         }
         // retorna a imagem binarizada
         return imgOut;
+    }
+
+    public static boolean[][] limiarizacaoBool(BufferedImage img, int limiar) {
+        //vetor de boolean para saida da funcao
+        //valores true sao obejto de interesse
+        boolean[][] boolImg = new boolean[img.getWidth()][img.getHeight()];
+
+        int cor;
+        // atribuido valores a imagem dos pixels
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                cor = (Color.getColor("red", img.getRGB(x, y)).getRed() + Color.getColor("green", img.getRGB(x, y)).getGreen() + Color.getColor("blue", img.getRGB(x, y)).getBlue()) / 3;
+                if (cor >= limiar) {
+                    boolImg[x][y] = false;
+                } else {
+                    boolImg[x][y] = true;
+
+                }
+            }
+        }
+        // retorna a imagem binarizada
+        return boolImg;
     }
     // limiarização basica com valor já pré-definido (valores atrivuidos a uma
     // matriz) com liminar por parametro,
@@ -77,7 +99,7 @@ public class Limiar {
                 if (g[x][y] >= limiar) {
                     imgOut.setRGB(x, y, Color.WHITE.getRGB());
                 } else {
-                    imgOut.setRGB(x, y, Color.BLACK.getRGB());   
+                    imgOut.setRGB(x, y, Color.BLACK.getRGB());
                 }
             }
         }
@@ -137,8 +159,8 @@ public class Limiar {
         }
         return e;
     }
-    
-    public static int otsuTreshold(int[] histogramOriginal, int total){ 
+
+    public static int otsuTreshold(int[] histogramOriginal, int total) {
         /* Implementado de acordo com o artigo proposto por Otsu: 
          * @article{otsu1975threshold,
          * title={A threshold selection method from gray-level histograms},
@@ -154,64 +176,64 @@ public class Limiar {
          */
         float histogram[] = new float[histogramOriginal.length];
         for (int i = 0; i < histogramOriginal.length; i++) {
-            histogram[i]= (float)histogramOriginal[i]/(float) total;
+            histogram[i] = (float) histogramOriginal[i] / (float) total;
         }
-        
+
         double n, miT, S2b, S2t, w0, w1, u0, u1, ut, pi;
-        
+
         int TOtsu = 0;
         double VOtsu = 0;
-             
-        
-        miT = 0; 
+
+
+        miT = 0;
         pi = 0;
         for (int i = 0; i < 256; i++) {
             pi = histogram[i];
             miT += i * pi; //Total mean level of original picture;
         }
-        
+
         S2t = 0;
         for (int i = 0; i < 256; i++) {
             pi = histogram[i];
-            S2t += ((i-miT)*(i-miT)) * pi; //Total Variance of levels;
+            S2t += ((i - miT) * (i - miT)) * pi; //Total Variance of levels;
         }
-        
+
         pi = 0;
         w1 = 0;
         for (int t = 0; t < 256; t++) {
             w0 = 0;
             ut = 0;
-            
-            for (int i= 0; i < t; i++) {
+
+            for (int i = 0; i < t; i++) {
                 pi = histogram[i];
                 w0 += pi; //Probabilities of class occurrence
                 ut += (double) i * pi;
             }
-            
+
             w1 = 1 - w0; // Probabilities of class occurrence
-            
-            if (w1 != 0 && w1 != 1){
+
+            if (w1 != 0 && w1 != 1) {
                 u1 = (miT - ut) / (1 - w1);
             } else {
                 u1 = 0;
             }
-            
-            if (w0 != 0){ //Class Mean levels
+
+            if (w0 != 0) { //Class Mean levels
                 u0 = ut / w0;
             } else {
                 u0 = 0;
             }
-            
-            S2b = w0 * w1 * ((u1-u0)*(u1-u0)); 
-            
-            n = (S2b / S2t); 
-            
-            double S2bt = ((miT*w0 - ut)*(miT*w0 - ut))/(w0*(1-w0));
-            
-            if(VOtsu < S2bt){
+
+            S2b = w0 * w1 * ((u1 - u0) * (u1 - u0));
+
+            n = (S2b / S2t);
+
+            double S2bt = ((miT * w0 - ut) * (miT * w0 - ut)) / (w0 * (1 - w0));
+
+            if (VOtsu < S2bt) {
                 VOtsu = S2bt;
                 TOtsu = t;
-            }  
+            }
         }
         return TOtsu;
     }

@@ -45,26 +45,6 @@ public class ControlPadrao {
     }
 
     private void addEvents() {
-
-        view.getJbabrir().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser cDiretorio = new JFileChooser();
-                cDiretorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                if (cDiretorio.showOpenDialog(view) == cDiretorio.APPROVE_OPTION) {
-                    caminho = cDiretorio.getSelectedFile().getAbsolutePath();
-                    arquivo = new File(caminho);
-                    arquivos = arquivo.listFiles();
-                    DefaultListModel model = new DefaultListModel();
-                    for (File file : arquivos) {
-                        model.addElement(file);
-                    }
-                    view.getJllista().removeAll();
-                    view.getJllista().setModel(model);
-                }
-            }
-        });
         
         view.getJbabrirbanco().addActionListener(new ActionListener() {
 
@@ -72,26 +52,9 @@ public class ControlPadrao {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser cDiretorio = new JFileChooser();
                 cDiretorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
-                //colocando um filtro para abrir somente imagens
-                FilenameFilter filter = new FilenameFilter() {
-
-                    @Override
-                    public boolean accept(File dir, String name) {
-                        return name.endsWith(".xml");
-                    }
-                };
-                
                 if (cDiretorio.showOpenDialog(view) == cDiretorio.APPROVE_OPTION) {
                     caminho = cDiretorio.getSelectedFile().getAbsolutePath();
-                    arquivo = new File(caminho);
-                    arquivos = arquivo.listFiles(filter);
-                    DefaultListModel model = new DefaultListModel();
-                    for (File file : arquivos) {
-                        model.addElement(file);
-                    }
-                    view.getJllista().removeAll();
-                    view.getJllista().setModel(model);
+                    view.getLblcaminho().setText(caminho);
                 }
             }
         });
@@ -100,7 +63,7 @@ public class ControlPadrao {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Classificador().agruparEspecie(arquivos, caminho);
+                new Classificador().agruparEspecie(caminho, view.getTxtnomepadrao().getText());
             }
         });
 
@@ -108,7 +71,20 @@ public class ControlPadrao {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Classificador().calculaHistograma(arquivo);
+                int mode = -1;
+                if(view.getRbnot().isSelected()){
+                    mode = Classificador.NO_THRESHOLD;
+                }
+                else if(view.getRbyest().isSelected()){
+                    mode = Classificador.THRESHOLD;
+                }
+                else if(view.getRbtwosurf().isSelected()){
+                    mode = Classificador.TWO_SURFACE;
+                }
+                else if(view.getRbfoursurf().isSelected()){
+                    mode = Classificador.FOUR_SURFACE;
+                }
+                new Classificador().criaPadrao(caminho, mode);
             }
         });
         
@@ -116,7 +92,35 @@ public class ControlPadrao {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Classificador().classificaBancoFolha(arquivos, caminho);
+                int superficie = 0;
+                if(view.getRbsup().isSelected()){
+                    superficie = Classificador.SUPERIOR;
+                }else if(view.getRbinf().isSelected()){
+                    superficie = Classificador.INFERIOR;
+                }
+                
+                int distancia = -1;
+                if(view.getRbeuclidiana().isSelected()){
+                    distancia = Classificador.EUCLIDIANA;
+                }
+                else if(view.getRbmanhattan().isSelected()){
+                    distancia = Classificador.MANHATTAN;
+                }
+                
+                int mode = -1;
+                if(view.getRbnot().isSelected()){
+                    mode = Classificador.NO_THRESHOLD;
+                }
+                else if(view.getRbyest().isSelected()){
+                    mode = Classificador.THRESHOLD;
+                }
+                else if(view.getRbtwosurf().isSelected()){
+                    mode = Classificador.TWO_SURFACE;
+                }
+                else if(view.getRbfoursurf().isSelected()){
+                    mode = Classificador.FOUR_SURFACE;
+                }
+                new Classificador().classificaBancoFolha(caminho, mode, distancia, superficie);
             }
         });
     }

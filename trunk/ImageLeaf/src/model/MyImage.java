@@ -19,7 +19,7 @@ import javax.imageio.stream.ImageInputStream;
  *
  * @author Anderson
  */
-public class Image {
+public class MyImage {
 
     //redimensiona um array de imagens
     public static BufferedImage[] resizeImages(File[] arquivos, int width, int heigth) {
@@ -62,7 +62,7 @@ public class Image {
         }
         return imagens;
     }
-    
+
     public static BufferedImage convertToGray(BufferedImage img) {
         BufferedImage imgOut = new BufferedImage(
                 img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -79,5 +79,59 @@ public class Image {
             }
         }
         return imgOut;
+    }
+
+    public static BufferedImage extractObj(BufferedImage img) {
+        //Imagem de saida
+        BufferedImage imgOut = img;
+
+        //histograma
+        int[] histograma = Histograma.histogramaGray(img);
+
+        //total de pixels da imagem
+        int total = img.getWidth() * img.getHeight();
+
+        boolean[][] objBool = Limiar.limiarizacaoBool(img, Limiar.otsuTreshold(histograma, total));
+
+        for (int y = 0; y < img.getHeight(); y++) {
+            for (int x = 0; x < img.getWidth(); x++) {
+                if (!objBool[x][y]) {
+                    imgOut.setRGB(x, y, Color.BLACK.getRGB());
+                }
+            }
+        }
+        return imgOut;
+    }
+
+    public BufferedImage recortarObjeto(BufferedImage imagem, boolean[][] borda) {
+        // proporcoes
+        int largura = imagem.getWidth();
+        int altura = imagem.getHeight();
+
+        int xmin = largura;
+        int xmax = 0;
+        int ymin = altura;
+        int ymax = 0;
+
+        for (int x = 0; x < largura; x++) {
+            for (int y = 0; y < altura; y++) {
+                if (!borda[x][y]) {
+                    if (x < xmin) {
+                        xmin = x;
+                    }
+                    if (x > xmax) {
+                        xmax = x;
+                    }
+                    if (y < ymin) {
+                        ymin = y;
+                    }
+                    if (y > ymax) {
+                        ymax = y;
+                    }
+                }
+            }
+        }
+        
+        return imagem.getSubimage(xmin, ymin, xmax, ymax);
     }
 }

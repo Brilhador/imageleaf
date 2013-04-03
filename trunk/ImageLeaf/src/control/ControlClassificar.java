@@ -17,6 +17,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import model.*;
+import static model.Histograma.histogramaBlue;
+import static model.Histograma.histogramaGreen;
+import static model.Histograma.histogramaRed;
 import view.ViewClassificar;
 
 /**
@@ -54,13 +57,15 @@ public class ControlClassificar {
                     } catch (IOException ex) {
                         Logger.getLogger(ControlClassificar.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    view.getJlImage().setIcon(new ImageIcon(model.Image.resizeImage(image, view.getJlImage().getWidth(), view.getJlImage().getHeight())));
+                    view.getJlImage().setIcon(new ImageIcon(model.MyImage.resizeImage(image, view.getJlImage().getWidth(), view.getJlImage().getHeight())));
                 }
+                
+                int limiar =  Limiar.otsuTreshold(Histograma.histogramaGray(image), image.getWidth() * image.getHeight());
 
                 //Gera o histograma da imagem
-                hred = Histograma.histogramaRed(image);
-                hgreen = Histograma.histogramaGreen(image);
-                hblue = Histograma.histogramaBlue(image);
+                hred = histogramaRed(image, Limiar.limiarizacaoBool(image, limiar));
+                hgreen = histogramaGreen(image, Limiar.limiarizacaoBool(image, limiar));
+                hblue = histogramaBlue(image, Limiar.limiarizacaoBool(image, limiar));
 
                 histograma = Grafico.histogramaRGB(hred,
                         hgreen,
@@ -77,14 +82,14 @@ public class ControlClassificar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //pega o caminho da especie a qual folha foi classificada
-                File file = Classificador.classificaFolha((BufferedImage) image);
+                File file = Classificador.classificaFolha((BufferedImage) image, Classificador.THRESHOLD, Classificador.EUCLIDIANA, Classificador.TOTAL);
                 caminho = file.getAbsolutePath();
                 //altero o nome da especie na tela
-                view.getJlespecienome().setText(XML.lerXml(caminho + "\\dados.xml", "nome"));
+                view.getJlespecienome().setText(XML.lerXml(caminho + "/dados.xml", "nome"));
                 //leio os arquivos txt dos histograma medio
-                hmred = Histograma.lerTxtHistograma(caminho + "\\hmR.txt");
-                hmgreen = Histograma.lerTxtHistograma(caminho + "\\hmG.txt");
-                hmblue = Histograma.lerTxtHistograma(caminho + "\\hmB.txt");
+                hmred = Histograma.lerTxtHistograma(caminho + "/hmRyesT.txt");
+                hmgreen = Histograma.lerTxtHistograma(caminho + "/hmGyesT.txt");
+                hmblue = Histograma.lerTxtHistograma(caminho + "/hmByesT.txt");
                 histogramaM = Grafico.histogramaRGB(hmred, hmgreen, hmblue, view.getJlhisimageE().getWidth(), view.getJlhisimageE().getHeight(), "Médio");
                 try {
                     //altera a imagem da folha padrao
@@ -101,14 +106,14 @@ public class ControlClassificar {
                 } catch (IOException ex) {
                     Logger.getLogger(ControlClassificar.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                imageE = model.Image.resizeImage(imageE, view.getJlImageE().getWidth(), view.getJlImageE().getHeight());
+                imageE = model.MyImage.resizeImage(imageE, view.getJlImageE().getWidth(), view.getJlImageE().getHeight());
                 view.getJlImageE().setIcon(new ImageIcon(imageE));
                 //altero a imagem do jlabel na tela com o histograma criado
                 view.getJlhisimageE().setIcon(new ImageIcon(histogramaM));
                 //leio os arquivos txt dos histograma de desvio padrao
-                hdpred = Histograma.lerTxtHistograma(caminho + "\\hdpR.txt");
-                hdpgreen = Histograma.lerTxtHistograma(caminho + "\\hdpG.txt");
-                hdpblue = Histograma.lerTxtHistograma(caminho + "\\hdpB.txt");
+                hdpred = Histograma.lerTxtHistograma(caminho + "/hdpRyesT.txt");
+                hdpgreen = Histograma.lerTxtHistograma(caminho + "/hdpGyesT.txt");
+                hdpblue = Histograma.lerTxtHistograma(caminho + "/hdpByesT.txt");
                 histogramaD = Grafico.histogramaRGB(hdpred, hdpgreen, hdpblue, view.getJlhisimageE().getWidth(), view.getJlhisimageE().getHeight(), "Desvio Padrão");
             }
         });
@@ -122,11 +127,11 @@ public class ControlClassificar {
                 if (cDiretorio.showOpenDialog(view) == cDiretorio.APPROVE_OPTION) {
                     caminho = cDiretorio.getSelectedFile().getAbsolutePath();
                     //altero o nome da especie na tela
-                    view.getJlespecienome().setText(XML.lerXml(caminho + "\\dados.xml", "nome"));
+                    view.getJlespecienome().setText(XML.lerXml(caminho + "/dados.xml", "nome"));
                     //leio os arquivos txt dos histograma medio
-                    hmred = Histograma.lerTxtHistograma(caminho + "\\hmR.txt");
-                    hmgreen = Histograma.lerTxtHistograma(caminho + "\\hmG.txt");
-                    hmblue = Histograma.lerTxtHistograma(caminho + "\\hmB.txt");
+                    hmred = Histograma.lerTxtHistograma(caminho + "/hmR.txt");
+                    hmgreen = Histograma.lerTxtHistograma(caminho + "/hmG.txt");
+                    hmblue = Histograma.lerTxtHistograma(caminho + "/hmB.txt");
                     histogramaM = Grafico.histogramaRGB(hmred, hmgreen, hmblue, view.getJlhisimageE().getWidth(), view.getJlhisimageE().getHeight(), "Médio");
                     try {
                         //altera a imagem da folha padrao
@@ -143,14 +148,14 @@ public class ControlClassificar {
                     } catch (IOException ex) {
                         Logger.getLogger(ControlClassificar.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    imageE = model.Image.resizeImage(imageE, view.getJlImageE().getWidth(), view.getJlImageE().getHeight());
+                    imageE = model.MyImage.resizeImage(imageE, view.getJlImageE().getWidth(), view.getJlImageE().getHeight());
                     view.getJlImageE().setIcon(new ImageIcon(imageE));
                     //altero a imagem do jlabel na tela com o histograma criado
                     view.getJlhisimageE().setIcon(new ImageIcon(histogramaM));
                     //leio os arquivos txt dos histograma de desvio padrao
-                    hdpred = Histograma.lerTxtHistograma(caminho + "\\hdpR.txt");
-                    hdpgreen = Histograma.lerTxtHistograma(caminho + "\\hdpG.txt");
-                    hdpblue = Histograma.lerTxtHistograma(caminho + "\\hdpB.txt");
+                    hdpred = Histograma.lerTxtHistograma(caminho + "/hdpR.txt");
+                    hdpgreen = Histograma.lerTxtHistograma(caminho + "/hdpG.txt");
+                    hdpblue = Histograma.lerTxtHistograma(caminho + "/hdpB.txt");
                     histogramaD = Grafico.histogramaRGB(hdpred, hdpgreen, hdpblue, view.getJlhisimageE().getWidth(), view.getJlhisimageE().getHeight(), "Desvio Padrão");
                 }
             }
