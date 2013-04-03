@@ -7,6 +7,8 @@ package view;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 /**
  *
@@ -30,34 +32,35 @@ public class ViewPadrao extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jbabrir = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jllista = new javax.swing.JList();
-        jbagrupar = new javax.swing.JButton();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jldados = new javax.swing.JLabel();
         jbabrirbanco = new javax.swing.JButton();
-        jbcriar = new javax.swing.JButton();
+        jbagrupar = new javax.swing.JButton();
         jbclassificar = new javax.swing.JButton();
+        jbcriar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        rbnot = new javax.swing.JRadioButton();
+        rbtwosurf = new javax.swing.JRadioButton();
+        rbfoursurf = new javax.swing.JRadioButton();
+        rbyest = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtnomepadrao = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        lblcaminho = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        rbeuclidiana = new javax.swing.JRadioButton();
+        rbmanhattan = new javax.swing.JRadioButton();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        rbsup = new javax.swing.JRadioButton();
+        rbinf = new javax.swing.JRadioButton();
+        jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(620, 480));
-        setPreferredSize(new java.awt.Dimension(620, 480));
-
-        jbabrir.setText("Localizar diretório de imagens");
-        jbabrir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbabrirActionPerformed(evt);
-            }
-        });
-
-        jScrollPane1.setViewportView(jllista);
-
-        jbagrupar.setText("Agrupar Espécies");
-        jbagrupar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbagruparActionPerformed(evt);
-            }
-        });
+        setMaximumSize(new java.awt.Dimension(0, 0));
+        setResizable(false);
 
         jldados.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jldados.setText("Padrão:");
@@ -69,6 +72,15 @@ public class ViewPadrao extends javax.swing.JFrame {
             }
         });
 
+        jbagrupar.setText("Agrupar Espécies");
+        jbagrupar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbagruparActionPerformed(evt);
+            }
+        });
+
+        jbclassificar.setText("Classificar");
+
         jbcriar.setText("Criar Padrão");
         jbcriar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,61 +88,202 @@ public class ViewPadrao extends javax.swing.JFrame {
             }
         });
 
-        jbclassificar.setText("Classificar");
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        rbnot.setText("NO_THRESHOLD");
+
+        rbtwosurf.setText("TWO SURFACE");
+
+        rbfoursurf.setText("FOUR SURFACE");
+
+        rbyest.setText("THRESHOLD");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbnot)
+                    .addComponent(rbtwosurf))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbfoursurf)
+                    .addComponent(rbyest))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbnot)
+                    .addComponent(rbyest))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbfoursurf)
+                    .addComponent(rbtwosurf))
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        jLabel1.setText("Nome do diretoro:");
+
+        jLabel2.setText("Caminho do banco:");
+
+        jLabel3.setText("Tipo de extraçao:");
+
+        jLabel4.setText("Calculo de distancia:");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        rbeuclidiana.setText("Euclidiana");
+
+        rbmanhattan.setText("Manhattan");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rbeuclidiana)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rbmanhattan)
+                .addGap(34, 34, 34))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbeuclidiana)
+                    .addComponent(rbmanhattan))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel5.setText("Superficie:");
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        rbsup.setText("Superior");
+
+        rbinf.setText("Inferior");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbsup)
+                    .addComponent(rbinf))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rbsup)
+                .addGap(18, 18, 18)
+                .addComponent(rbinf)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 164, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jldados)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(lblcaminho, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtnomepadrao)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbabrir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbabrirbanco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbcriar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbagrupar)
-                            .addComponent(jbclassificar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(264, 264, 264))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jldados)
+                                .addComponent(jbabrirbanco, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                                .addComponent(jbagrupar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbcriar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbclassificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel1))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jldados)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jbabrirbanco, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbabrir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jldados)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 74, Short.MAX_VALUE)
-                        .addComponent(jbagrupar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jbcriar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jbclassificar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(78, 78, 78)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbabrirbanco)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblcaminho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtnomepadrao, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53)
+                        .addComponent(jbagrupar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbcriar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbclassificar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jbabrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbabrirActionPerformed
-
-    }//GEN-LAST:event_jbabrirActionPerformed
 
     private void jbagruparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbagruparActionPerformed
         // TODO add your handling code here:
@@ -146,14 +299,31 @@ public class ViewPadrao extends javax.swing.JFrame {
     }//GEN-LAST:event_jbcriarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbabrir;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JButton jbabrirbanco;
     private javax.swing.JButton jbagrupar;
     private javax.swing.JButton jbclassificar;
     private javax.swing.JButton jbcriar;
     private javax.swing.JLabel jldados;
-    private javax.swing.JList jllista;
+    private javax.swing.JLabel lblcaminho;
+    private javax.swing.JRadioButton rbeuclidiana;
+    private javax.swing.JRadioButton rbfoursurf;
+    private javax.swing.JRadioButton rbinf;
+    private javax.swing.JRadioButton rbmanhattan;
+    private javax.swing.JRadioButton rbnot;
+    private javax.swing.JRadioButton rbsup;
+    private javax.swing.JRadioButton rbtwosurf;
+    private javax.swing.JRadioButton rbyest;
+    private javax.swing.JTextField txtnomepadrao;
     // End of variables declaration//GEN-END:variables
 
     public JButton getJbclassificar() {
@@ -162,14 +332,6 @@ public class ViewPadrao extends javax.swing.JFrame {
 
     public void setJbclassificar(JButton jbclassificar) {
         this.jbclassificar = jbclassificar;
-    }
-    
-    public JButton getJbabrir() {
-        return jbabrir;
-    }
-
-    public void setJbabrir(JButton jbabrir) {
-        this.jbabrir = jbabrir;
     }
 
     public JButton getJbabrirbanco() {
@@ -204,12 +366,84 @@ public class ViewPadrao extends javax.swing.JFrame {
         this.jldados = jldados;
     }
 
-    public JList getJllista() {
-        return jllista;
+    public JRadioButton getRbfoursurf() {
+        return rbfoursurf;
     }
 
-    public void setJllista(JList jllista) {
-        this.jllista = jllista;
+    public void setRbfoursurf(JRadioButton rbfoursurf) {
+        this.rbfoursurf = rbfoursurf;
+    }
+
+    public JRadioButton getRbnot() {
+        return rbnot;
+    }
+
+    public void setRbnot(JRadioButton rbnot) {
+        this.rbnot = rbnot;
+    }
+
+    public JRadioButton getRbtwosurf() {
+        return rbtwosurf;
+    }
+
+    public void setRbtwosurf(JRadioButton rbtwosurf) {
+        this.rbtwosurf = rbtwosurf;
+    }
+
+    public JRadioButton getRbyest() {
+        return rbyest;
+    }
+
+    public void setRbyest(JRadioButton rbyest) {
+        this.rbyest = rbyest;
+    }
+
+    public JLabel getLblcaminho() {
+        return lblcaminho;
+    }
+
+    public void setLblcaminho(JLabel lblcaminho) {
+        this.lblcaminho = lblcaminho;
+    }
+
+    public JTextField getTxtnomepadrao() {
+        return txtnomepadrao;
+    }
+
+    public void setTxtnomepadrao(JTextField txtnomepadrao) {
+        this.txtnomepadrao = txtnomepadrao;
+    }
+
+    public JRadioButton getRbeuclidiana() {
+        return rbeuclidiana;
+    }
+
+    public void setRbeuclidiana(JRadioButton rbeuclidiana) {
+        this.rbeuclidiana = rbeuclidiana;
+    }
+
+    public JRadioButton getRbmanhattan() {
+        return rbmanhattan;
+    }
+
+    public void setRbmanhattan(JRadioButton rbmanhattan) {
+        this.rbmanhattan = rbmanhattan;
+    }
+
+    public JRadioButton getRbinf() {
+        return rbinf;
+    }
+
+    public void setRbinf(JRadioButton rbinf) {
+        this.rbinf = rbinf;
+    }
+
+    public JRadioButton getRbsup() {
+        return rbsup;
+    }
+
+    public void setRbsup(JRadioButton rbsup) {
+        this.rbsup = rbsup;
     }
 
 }

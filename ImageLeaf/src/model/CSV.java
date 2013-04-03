@@ -115,7 +115,6 @@ public class CSV {
             ex.printStackTrace();
         }
         this.tabela = new String[numlinha][tabela.get(0).size()];
-        System.out.println(numlinha + "--" + tabela.get(0).size());
         for(int line = 0; line < numlinha;line++){
             for(int column = 0; column < tabela.get(0).size();column++){
                 try{

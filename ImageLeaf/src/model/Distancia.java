@@ -13,12 +13,24 @@ public class Distancia {
     //calcula a distancia euclidiana entre dois vetores
     public static Double Euclidiana(double[] histgrama1, double[] histograma2) {
 
-        int RANGE = 225;
+        int RANGE = 256;
 
         Double soma = 0.0;
         for (int i = 0; i < RANGE; i++) {
             soma += Math.pow(Math.abs(histgrama1[i] - histograma2[i]), 2);
         }
         return Math.sqrt(soma);
+    }
+    
+    //calcula a distancia Manhattan entre dois vetores
+    public static Double Manhattan(double[] histgrama1, double[] histograma2) {
+
+        int RANGE = 256;
+
+        Double soma = 0.0;
+        for (int i = 0; i < RANGE; i++) {
+            soma += Math.abs(histgrama1[i] - histograma2[i]);
+        }
+        return soma;
     }
 }

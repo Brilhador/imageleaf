@@ -18,6 +18,7 @@ import javax.swing.JFileChooser;
 import model.Filtro;
 import model.Histograma;
 import model.Limiar;
+import model.MyImage;
 import view.ViewPDI;
 
 /**
@@ -49,7 +50,7 @@ public class ControlPDI {
                     caminho = cFile.getSelectedFile().getAbsolutePath();
                     try {
                         //redimensionando a imagem para exibir no label
-                        BufferedImage imagOut = model.Image.resizeImage(ImageIO.read(new File(caminho)), view.getJlImage().getWidth(), view.getJlImage().getHeight());
+                        BufferedImage imagOut = model.MyImage.resizeImage(ImageIO.read(new File(caminho)), view.getJlImage().getWidth(), view.getJlImage().getHeight());
                         view.getJlImage().setIcon(new ImageIcon(imagOut));
                     } catch (IOException ex) {
                         ex.printStackTrace();
@@ -85,7 +86,7 @@ public class ControlPDI {
                     Logger.getLogger(ControlPDI.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 //converte a imagem para preto e branco
-                image = model.Image.convertToGray((BufferedImage) image);
+                image = model.MyImage.convertToGray((BufferedImage) image);
                 int limiar = 32;
                 //filtros de suavização
                 if (view.getJrpassabaixas().isSelected()) {
@@ -103,8 +104,8 @@ public class ControlPDI {
                 //limiar automatico por maxima soma das entropias
                 if (view.getJrmaxentropia().isSelected()) {
                     BufferedImage BUimage = (BufferedImage) image;
-                    limiar = Limiar.otsuTreshold(Histograma.histogramaGray((BufferedImage) image), BUimage.getHeight() * BUimage.getWidth());
-                    image = Limiar.limiarizacao((BufferedImage)image, limiar);
+                    //limiar = Limiar.otsuTreshold(Histograma.histogramaGray((BufferedImage) image), BUimage.getHeight() * BUimage.getWidth());
+                    image = MyImage.extractObj(BUimage);
                 }
                 //detectores de borda
                 if (view.getJrsobel().isSelected()) {
@@ -118,7 +119,7 @@ public class ControlPDI {
                     image = Limiar.limiarizacao((BufferedImage) image, img, limiar);
                 }
                 view.getJllimiar().setText(limiar + "");
-                BufferedImage imagOut = model.Image.resizeImage((BufferedImage) image, view.getJlImage().getWidth(), view.getJlImage().getHeight());
+                BufferedImage imagOut = model.MyImage.resizeImage((BufferedImage) image, view.getJlImage().getWidth(), view.getJlImage().getHeight());
                 view.getJlImage().setIcon(new ImageIcon(imagOut));
             }
         });
