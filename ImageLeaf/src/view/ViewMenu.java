@@ -16,12 +16,12 @@ import javax.swing.JButton;
  *
  * @author anderson
  */
-public class ViewPrincipal extends javax.swing.JFrame {
+public class ViewMenu extends javax.swing.JFrame {
 
     /**
      * Creates new form ViewPrincipal
      */
-    public ViewPrincipal() {
+    public ViewMenu() {
         initComponents();
     }
 
@@ -37,6 +37,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jbclassificar = new javax.swing.JButton();
         jbpdi = new javax.swing.JButton();
         jbpadrao = new javax.swing.JButton();
+        jbcurvature = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -62,6 +63,13 @@ public class ViewPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jbcurvature.setText("Curvature");
+        jbcurvature.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbcurvatureActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,6 +77,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbcurvature, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbpdi, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbpadrao, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbclassificar, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -83,7 +92,9 @@ public class ViewPrincipal extends javax.swing.JFrame {
                 .addComponent(jbpadrao, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbpdi, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbcurvature, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -99,8 +110,14 @@ private void jbpdiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
 
     private void jbpadraoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbpadraoActionPerformed
     }//GEN-LAST:event_jbpadraoActionPerformed
+
+    private void jbcurvatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbcurvatureActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbcurvatureActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbclassificar;
+    private javax.swing.JButton jbcurvature;
     private javax.swing.JButton jbpadrao;
     private javax.swing.JButton jbpdi;
     // End of variables declaration//GEN-END:variables
@@ -128,4 +145,14 @@ private void jbpdiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
     public void setJbpdi(JButton jbpdi) {
         this.jbpdi = jbpdi;
     }
+
+    public JButton getJbcurvature() {
+        return jbcurvature;
+    }
+
+    public void setJbcurvature(JButton jbcurvature) {
+        this.jbcurvature = jbcurvature;
+    }
+    
+    
 }
