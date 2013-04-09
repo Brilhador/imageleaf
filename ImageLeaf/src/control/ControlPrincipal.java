@@ -4,6 +4,7 @@
  */
 package control;
 
+import control.blur.ControlBlurLow;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -21,6 +22,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuKeyEvent;
@@ -49,7 +51,8 @@ public class ControlPrincipal {
     }
 
     private void initComponents() {
-
+        
+        //Menu FILE
         view.getMenuOpen().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,6 +67,22 @@ public class ControlPrincipal {
                 }
             }
         });
+        
+        //menu Edit
+        
+        //menu filtes
+        view.getmFilterBlurLow().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(getFrameSelected() != null){
+                    new ControlBlurLow(getImageToFrame(getFrameSelected()), view);
+                }else{
+                    JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+
     }
 
     //metodos
@@ -89,9 +108,23 @@ public class ControlPrincipal {
         }
     }
 
-    private BufferedImage getImageToFrame(JFrame frame) {
+    private BufferedImage getImageToFrame(JInternalFrame frame) {
         //pegar a imagem que esta dentro da internalFrame
         JXImageView imageView = (JXImageView) frame.getRootPane().getContentPane().getComponent(0);
         return (BufferedImage) imageView.getImage();
+    }
+    
+    private void setImageToFrame(BufferedImage image, JInternalFrame frame){
+        //criando um JXImageView
+        JXImageView imageView = new JXImageView();
+        imageView.setImage(image);
+        imageView.setScale(0.5);
+        //adicionado ao frame
+        frame.add(imageView, BorderLayout.CENTER);
+        frame.setSize(image.getWidth()/2, image.getHeight()/2);
+    }
+    
+    public JInternalFrame getFrameSelected(){
+        return view.getjPanelPrincipal().getSelectedFrame();
     }
 }
