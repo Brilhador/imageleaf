@@ -31,7 +31,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblImageCurvature" max="32767" attributes="0"/>
-                          <Component id="btnGenerate" pref="480" max="32767" attributes="0"/>
+                          <Component id="btnGenerate" pref="638" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="pgBar" min="-2" pref="14" max="-2" attributes="0"/>
@@ -50,10 +50,10 @@
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="lblImage" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="btnGenerate" pref="34" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="btnGenerate" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblImageCurvature" min="-2" pref="236" max="-2" attributes="0"/>
+                      <Component id="lblImageCurvature" pref="297" max="32767" attributes="0"/>
                   </Group>
                   <Component id="pgBar" max="32767" attributes="0"/>
               </Group>
