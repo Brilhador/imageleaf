@@ -21,6 +21,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.SwingWorker;
 import model.Filtro;
 import model.MyImage;
+import model.components.JImageInternalFrame;
 import org.jdesktop.swingx.JXImageView;
 import view.blur.ViewBlurLow;
 import view.viewPrincipal;
@@ -42,6 +43,7 @@ public class ControlBlurLow {
         this.parentFrame = parentFrame;
         view = new ViewBlurLow();
         view.setLocationRelativeTo(null);
+        view.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         view.setVisible(true);
     }
@@ -85,13 +87,8 @@ public class ControlBlurLow {
                     protected Object doInBackground() throws Exception {
                         startProgressBar();
                         filterImage = Filtro.passaBaixas(image, view.getSlMaskSize().getValue());
-                        JInternalFrame frame = parentFrame.getjPanelPrincipal().getSelectedFrame();
-                        JXImageView imageView = (JXImageView) frame.getRootPane().getContentPane().getComponent(0);
-                        imageView.setImage(filterImage);
-                        imageView.setScale(0.5);
-                        //adicionado ao frame
-                        frame.add(imageView, BorderLayout.CENTER);
-                        frame.setSize(filterImage.getWidth() / 2, filterImage.getHeight() / 2);
+                        JImageInternalFrame frame = (JImageInternalFrame) parentFrame.getjPanelPrincipal().getSelectedFrame();
+                        frame.setImage(filterImage);
                         parentFrame.repaint();
                         stopProgressBar();
                         view.dispose();

@@ -4,21 +4,17 @@
  */
 package control.blur;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
-import javax.swing.JInternalFrame;
+import javax.swing.JFrame;
 import javax.swing.SwingWorker;
-import javax.swing.UIManager;
 import model.Filtro;
 import model.MyImage;
-import org.jdesktop.swingx.JXImageView;
-import view.blur.ViewBlurLow;
+import model.components.JImageInternalFrame;
 import view.blur.ViewBlurMedian;
 import view.viewPrincipal;
 
@@ -39,6 +35,7 @@ public class ControlBlurMedian {
         this.parentFrame = parentFrame;
         view = new ViewBlurMedian();
         view.setLocationRelativeTo(null);
+        view.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         view.setVisible(true);
     }
@@ -80,15 +77,12 @@ public class ControlBlurMedian {
                 SwingWorker work = new SwingWorker() {
                     @Override
                     protected Object doInBackground() throws Exception {
+                        startProgressBar();
                         filterImage = Filtro.mediana(image, view.getSlMaskSize().getValue());
-                        JInternalFrame frame = parentFrame.getjPanelPrincipal().getSelectedFrame();
-                        JXImageView imageView = (JXImageView) frame.getRootPane().getContentPane().getComponent(0);
-                        imageView.setImage(filterImage);
-                        imageView.setScale(0.5);
-                        //adicionado ao frame
-                        frame.add(imageView, BorderLayout.CENTER);
-                        frame.setSize(filterImage.getWidth() / 2, filterImage.getHeight() / 2);
+                        JImageInternalFrame frame = (JImageInternalFrame) parentFrame.getjPanelPrincipal().getSelectedFrame();
+                        frame.setImage(filterImage);
                         parentFrame.repaint();
+                        stopProgressBar();
                         view.dispose();
                         return null;
                     }

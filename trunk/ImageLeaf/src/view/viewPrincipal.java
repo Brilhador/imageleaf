@@ -31,7 +31,6 @@ public class viewPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jToolBar1 = new javax.swing.JToolBar();
         jPanelPrincipal = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         mFile = new javax.swing.JMenu();
@@ -42,15 +41,13 @@ public class viewPrincipal extends javax.swing.JFrame {
         mFilterBlurLow = new javax.swing.JMenuItem();
         mFilterBlurMedian = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        mFilterEdgeSobel = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         mCurvature = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        mCurvatureChainCode = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jToolBar1.setRollover(true);
 
         mFile.setText("File");
 
@@ -81,8 +78,8 @@ public class viewPrincipal extends javax.swing.JFrame {
 
         jMenu2.setText("Edge - Detect");
 
-        jMenuItem4.setText("Sobel");
-        jMenu2.add(jMenuItem4);
+        mFilterEdgeSobel.setText("Sobel");
+        jMenu2.add(mFilterEdgeSobel);
 
         jMenuItem5.setText("Prewitt");
         jMenu2.add(jMenuItem5);
@@ -96,8 +93,8 @@ public class viewPrincipal extends javax.swing.JFrame {
 
         mCurvature.setText("Curvature");
 
-        jMenuItem2.setText("Chain Code");
-        mCurvature.add(jMenuItem2);
+        mCurvatureChainCode.setText("Chain Code");
+        mCurvature.add(mCurvatureChainCode);
 
         jMenuBar1.add(mCurvature);
 
@@ -107,15 +104,13 @@ public class viewPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-            .addComponent(jPanelPrincipal)
+            .addComponent(jPanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(jPanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
         );
 
         pack();
@@ -128,18 +123,17 @@ public class viewPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JDesktopPane jPanelPrincipal;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenu mCurvature;
+    private javax.swing.JMenuItem mCurvatureChainCode;
     private javax.swing.JMenu mEdit;
     private javax.swing.JMenu mFile;
     private javax.swing.JMenu mFilterBlur;
     private javax.swing.JMenuItem mFilterBlurLow;
     private javax.swing.JMenuItem mFilterBlurMedian;
+    private javax.swing.JMenuItem mFilterEdgeSobel;
     private javax.swing.JMenu mFilters;
     private javax.swing.JMenuItem menuOpen;
     // End of variables declaration//GEN-END:variables
@@ -208,6 +202,22 @@ public class viewPrincipal extends javax.swing.JFrame {
 
     public void setmFilterBlurMedian(JMenuItem mFilterBlurMedian) {
         this.mFilterBlurMedian = mFilterBlurMedian;
+    }
+
+    public JMenuItem getmFilterEdgeSobel() {
+        return mFilterEdgeSobel;
+    }
+
+    public void setmFilterEdgeSobel(JMenuItem mFilterEdgeSobel) {
+        this.mFilterEdgeSobel = mFilterEdgeSobel;
+    }
+
+    public JMenuItem getmCurvatureChainCode() {
+        return mCurvatureChainCode;
+    }
+
+    public void setmCurvatureChainCode(JMenuItem mCurvatureChainCode) {
+        this.mCurvatureChainCode = mCurvatureChainCode;
     }
 
     
