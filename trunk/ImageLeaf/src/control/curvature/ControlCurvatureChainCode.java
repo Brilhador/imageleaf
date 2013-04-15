@@ -4,12 +4,16 @@
  */
 package control.curvature;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
+import javax.swing.SwingWorker;
+import model.ChainCode;
 import model.MyImage;
 import view.curvature.ViewChainCode;
 
@@ -36,11 +40,22 @@ public class ControlCurvatureChainCode {
     private void initComponents() {
         
         stopProgressBar();
+        carregaImagePreview(image);
         
         view.getBtnGenerate().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                SwingWorker work = new SwingWorker() {
+
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        startProgressBar();
+                        ArrayList<Dimension> lista = new ChainCode(imageBorder).getChainCode();
+                        stopProgressBar();
+                        return null;
+                    }
+                };
+                work.execute();
             }
         });
         
