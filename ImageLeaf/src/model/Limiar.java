@@ -51,9 +51,9 @@ public class Limiar {
             for (int y = 0; y < img.getHeight(); y++) {
                 cor = (Color.getColor("red", img.getRGB(x, y)).getRed() + Color.getColor("green", img.getRGB(x, y)).getGreen() + Color.getColor("blue", img.getRGB(x, y)).getBlue()) / 3;
                 if (cor >= limiar) {
-                    boolImg[x][y] = false;
-                } else {
                     boolImg[x][y] = true;
+                } else {
+                    boolImg[x][y] = false;
 
                 }
             }

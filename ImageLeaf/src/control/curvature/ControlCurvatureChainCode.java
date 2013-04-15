@@ -51,10 +51,10 @@ public class ControlCurvatureChainCode {
                     @Override
                     protected Object doInBackground() throws Exception {
                         startProgressBar();
-                        ArrayList<Dimension> lista = new ChainCode(imageBorder).getChainCode();
+                        ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                         int width = view.getLblImageCurvature().getWidth();
                         int height = view.getLblImageCurvature().getHeight();
-                        BufferedImage grafico = Grafico.curvature(lista, width, height, "Curvature");
+                        BufferedImage grafico = Grafico.curvatureDimension(lista, width, height, "Curvature");
                         view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
                         stopProgressBar();
                         return null;

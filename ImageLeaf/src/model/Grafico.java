@@ -20,12 +20,37 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author Anderson
  */
 public class Grafico {
-
-    public static BufferedImage curvature(ArrayList<Dimension> lista, int sizeWidth, int sizeHeight, String title) {
+    
+    public static BufferedImage curvatureDimension(ArrayList<Dimension> lista, int sizeWidth, int sizeHeight, String title) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        for (Dimension dimension : lista) {
-            dataset.addValue(dimension.width, "curve", dimension.height + "");
+        for (int i = 0; i < lista.size(); i++) {
+            Dimension dimension = lista.get(i);
+            dataset.addValue(dimension.width, title, "" + i);
+        }
+
+        JFreeChart chart = ChartFactory.createLineChart(
+                title,
+                "X",
+                "Y",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                false,
+                false);
+
+        //custom chart
+        chart.getCategoryPlot().getRenderer().setSeriesPaint(0, Color.RED);
+
+        return chart.createBufferedImage(sizeWidth, sizeHeight);
+
+    }
+
+    public static BufferedImage curvatureChainCode(ArrayList<Integer> lista, int sizeWidth, int sizeHeight, String title) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        for (int i = 0; i < lista.size(); i++) {
+                dataset.addValue(lista.get(i), "curve", "" + i);
         }
 
         JFreeChart chart = ChartFactory.createLineChart(
