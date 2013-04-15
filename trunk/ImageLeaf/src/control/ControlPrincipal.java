@@ -5,6 +5,7 @@
 package control;
 
 import control.blur.ControlBlurLow;
+import control.blur.ControlBlurMedian;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.Action;
+import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -51,7 +54,7 @@ public class ControlPrincipal {
     }
 
     private void initComponents() {
-        
+
         //Menu FILE
         view.getMenuOpen().addActionListener(new ActionListener() {
             @Override
@@ -61,23 +64,33 @@ public class ControlPrincipal {
                 JFileChooser chooser = new JFileChooser();
                 chooser.setFileFilter(filter);
                 if (chooser.showOpenDialog(view) == JFileChooser.APPROVE_OPTION) {
-                        //get path of image selected
-                        String path = chooser.getSelectedFile().getAbsolutePath();
-                        addFrameImage(path);
+                    //get path of image selected
+                    String path = chooser.getSelectedFile().getAbsolutePath();
+                    addFrameImage(path);
                 }
             }
         });
-        
+
         //menu Edit
-        
+
         //menu filtes
         view.getmFilterBlurLow().addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(getFrameSelected() != null){
-                    new ControlBlurLow(getImageToFrame(getFrameSelected()), view);
-                }else{
+                if (getFrameSelected() != null) {
+                    new ControlBlurLow(getImageInFrame(getFrameSelected()), view);
+                } else {
+                    JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+
+        view.getmFilterBlurMedian().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (getFrameSelected() != null) {
+                    new ControlBlurMedian(getImageInFrame(getFrameSelected()), view);
+                } else {
                     JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
@@ -96,7 +109,7 @@ public class ControlPrincipal {
             //criando um frame
             JInternalFrame frame = new JInternalFrame();
             frame.add(imageView, BorderLayout.CENTER);
-            frame.setSize(image.getWidth()/2, image.getHeight()/2);
+            frame.setSize(image.getWidth() / 2, image.getHeight() / 2);
             frame.setResizable(true);
             frame.setClosable(true);
             frame.setVisible(true);
@@ -108,23 +121,23 @@ public class ControlPrincipal {
         }
     }
 
-    private BufferedImage getImageToFrame(JInternalFrame frame) {
+    private BufferedImage getImageInFrame(JInternalFrame frame) {
         //pegar a imagem que esta dentro da internalFrame
         JXImageView imageView = (JXImageView) frame.getRootPane().getContentPane().getComponent(0);
         return (BufferedImage) imageView.getImage();
     }
-    
-    private void setImageToFrame(BufferedImage image, JInternalFrame frame){
+
+    private void setImageToFrame(BufferedImage image, JInternalFrame frame) {
         //criando um JXImageView
         JXImageView imageView = new JXImageView();
         imageView.setImage(image);
         imageView.setScale(0.5);
         //adicionado ao frame
         frame.add(imageView, BorderLayout.CENTER);
-        frame.setSize(image.getWidth()/2, image.getHeight()/2);
+        frame.setSize(image.getWidth() / 2, image.getHeight() / 2);
     }
-    
-    public JInternalFrame getFrameSelected(){
+
+    public JInternalFrame getFrameSelected() {
         return view.getjPanelPrincipal().getSelectedFrame();
     }
 }

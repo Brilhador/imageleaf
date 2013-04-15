@@ -40,7 +40,7 @@ public class viewPrincipal extends javax.swing.JFrame {
         mFilters = new javax.swing.JMenu();
         mFilterBlur = new javax.swing.JMenu();
         mFilterBlurLow = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        mFilterBlurMedian = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -74,8 +74,8 @@ public class viewPrincipal extends javax.swing.JFrame {
         });
         mFilterBlur.add(mFilterBlurLow);
 
-        jMenuItem3.setText("Median");
-        mFilterBlur.add(jMenuItem3);
+        mFilterBlurMedian.setText("Median");
+        mFilterBlur.add(mFilterBlurMedian);
 
         mFilters.add(mFilterBlur);
 
@@ -129,7 +129,6 @@ public class viewPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -140,6 +139,7 @@ public class viewPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu mFile;
     private javax.swing.JMenu mFilterBlur;
     private javax.swing.JMenuItem mFilterBlurLow;
+    private javax.swing.JMenuItem mFilterBlurMedian;
     private javax.swing.JMenu mFilters;
     private javax.swing.JMenuItem menuOpen;
     // End of variables declaration//GEN-END:variables
@@ -200,6 +200,14 @@ public class viewPrincipal extends javax.swing.JFrame {
 
     public void setmFilterBlurLow(JMenuItem mFilterBlurLow) {
         this.mFilterBlurLow = mFilterBlurLow;
+    }
+
+    public JMenuItem getmFilterBlurMedian() {
+        return mFilterBlurMedian;
+    }
+
+    public void setmFilterBlurMedian(JMenuItem mFilterBlurMedian) {
+        this.mFilterBlurMedian = mFilterBlurMedian;
     }
 
     
