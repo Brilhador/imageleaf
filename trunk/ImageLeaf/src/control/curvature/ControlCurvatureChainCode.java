@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 import model.ChainCode;
+import model.Grafico;
 import model.MyImage;
 import view.curvature.ViewChainCode;
 
@@ -51,6 +52,10 @@ public class ControlCurvatureChainCode {
                     protected Object doInBackground() throws Exception {
                         startProgressBar();
                         ArrayList<Dimension> lista = new ChainCode(imageBorder).getChainCode();
+                        int width = view.getLblImageCurvature().getWidth();
+                        int height = view.getLblImageCurvature().getHeight();
+                        BufferedImage grafico = Grafico.curvature(lista, width, height, "Curvature");
+                        view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
                         stopProgressBar();
                         return null;
                     }
