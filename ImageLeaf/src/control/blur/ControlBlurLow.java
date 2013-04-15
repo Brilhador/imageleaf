@@ -7,6 +7,8 @@ package control.blur;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.SwingWorker;
 import model.Filtro;
 import model.MyImage;
 import org.jdesktop.swingx.JXImageView;
@@ -27,15 +30,14 @@ import view.viewPrincipal;
  * @author anderson
  */
 public class ControlBlurLow {
-    
+
     private viewPrincipal parentFrame = null;
     private ViewBlurLow view = null;
     private BufferedImage image = null;
-    BufferedImage filterImage = null;
-    
-    
+    private BufferedImage filterImage = null;
+
     //constructor
-    public ControlBlurLow(BufferedImage image, viewPrincipal parentFrame){
+    public ControlBlurLow(BufferedImage image, viewPrincipal parentFrame) {
         this.image = image;
         this.parentFrame = parentFrame;
         view = new ViewBlurLow();
@@ -43,54 +45,92 @@ public class ControlBlurLow {
         initComponents();
         view.setVisible(true);
     }
-    
-    private void initComponents(){
-        
+
+    private void initComponents() {
+
         //carrega a image na preview
         carregaImagePreview(image);
-        
-        view.getBtnPreview().addActionListener(new ActionListener() {
+        stopProgressBar();
 
+        view.getBtnPreview().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    filterImage = Filtro.passaBaixas(image, view.getSlMaskSize().getValue()); 
-                    carregaImagePreview(filterImage);
+                SwingWorker work = new SwingWorker() {
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        startProgressBar();
+                        filterImage = Filtro.passaBaixas(image, view.getSlMaskSize().getValue());
+                        carregaImagePreview(filterImage);
+                        stopProgressBar();
+                        return null;
+                    }
+                };
+                work.execute();
             }
         });
-        
-        view.getBtnRestore().addActionListener(new ActionListener() {
 
+        view.getBtnRestore().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 carregaImagePreview(image);
+                filterImage = null;
             }
         });
-        
-        view.getBtnApply().addActionListener(new ActionListener() {
 
+        view.getBtnApply().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                filterImage = Filtro.passaBaixas(image, view.getSlMaskSize().getValue()); 
-                JInternalFrame frame = parentFrame.getjPanelPrincipal().getSelectedFrame();
-                JXImageView imageView = (JXImageView) frame.getRootPane().getContentPane().getComponent(0);
-                imageView.setImage(filterImage);
-                imageView.setScale(0.5);
-                //adicionado ao frame
-                frame.add(imageView, BorderLayout.CENTER);
-                frame.setSize(filterImage.getWidth()/2, filterImage.getHeight()/2);
-                parentFrame.repaint();
-                view.dispose();
+                SwingWorker work = new SwingWorker() {
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        startProgressBar();
+                        filterImage = Filtro.passaBaixas(image, view.getSlMaskSize().getValue());
+                        JInternalFrame frame = parentFrame.getjPanelPrincipal().getSelectedFrame();
+                        JXImageView imageView = (JXImageView) frame.getRootPane().getContentPane().getComponent(0);
+                        imageView.setImage(filterImage);
+                        imageView.setScale(0.5);
+                        //adicionado ao frame
+                        frame.add(imageView, BorderLayout.CENTER);
+                        frame.setSize(filterImage.getWidth() / 2, filterImage.getHeight() / 2);
+                        parentFrame.repaint();
+                        stopProgressBar();
+                        view.dispose();
+                        return null;
+                    }
+                };
+                work.execute();
             }
         });
-        
+
+        //ação ao redimensionar Jframe
+        view.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                if (filterImage == null) {
+                    carregaImagePreview(image);
+                } else {
+                    carregaImagePreview(filterImage);
+                }
+            }
+        });
+
     }
-    
+
     //carregar image no lblImagePreview
-    public void carregaImagePreview(BufferedImage image){
+    public void carregaImagePreview(BufferedImage image) {
         int width = view.getLblImagePreview().getWidth();
         int heigth = view.getLblImagePreview().getHeight();
         BufferedImage resizeImage = MyImage.resizeImage(image, width, heigth);
         view.getLblImagePreview().setIcon(new ImageIcon(resizeImage));
     }
-    
+
+    public void startProgressBar() {
+        view.getPgBar().setIndeterminate(true);
+        view.getPgBar().setVisible(true);
+    }
+
+    public void stopProgressBar() {
+        view.getPgBar().setVisible(false);
+        view.getPgBar().setIndeterminate(false);
+    }
 }

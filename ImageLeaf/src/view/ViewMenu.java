@@ -114,7 +114,6 @@ private void jbpdiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
     private void jbcurvatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbcurvatureActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbcurvatureActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbclassificar;
     private javax.swing.JButton jbcurvature;
@@ -153,6 +152,4 @@ private void jbpdiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
     public void setJbcurvature(JButton jbcurvature) {
         this.jbcurvature = jbcurvature;
     }
-    
-    
 }
