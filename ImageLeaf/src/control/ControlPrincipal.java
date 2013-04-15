@@ -6,6 +6,8 @@ package control;
 
 import control.blur.ControlBlurLow;
 import control.blur.ControlBlurMedian;
+import control.curvature.ControlCurvatureChainCode;
+import control.edge.ControlEdgeSobel;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -33,6 +35,7 @@ import javax.swing.event.MenuKeyListener;
 import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileFilter;
 import model.ChainCode;
+import model.components.JImageInternalFrame;
 import org.jfree.ui.ExtensionFileFilter;
 import view.viewPrincipal;
 import org.jdesktop.swingx.JXImageView;
@@ -78,7 +81,7 @@ public class ControlPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
-                    new ControlBlurLow(getImageInFrame(getFrameSelected()), view);
+                    new ControlBlurLow(getFrameSelected().getImage(), view);
                 } else {
                     JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -89,7 +92,40 @@ public class ControlPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
-                    new ControlBlurMedian(getImageInFrame(getFrameSelected()), view);
+                    new ControlBlurMedian(getFrameSelected().getImage(), view);
+                } else {
+                    JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        
+        //filtes edge-detect
+        view.getmFilterEdgeSobel().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (getFrameSelected() != null) {
+                    new ControlEdgeSobel(getFrameSelected().getImage(), view);
+                } else {
+                    JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        
+        //curvature chain code
+        view.getmCurvatureChainCode().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (getFrameSelected() != null) {
+                    if(getFrameSelected().getImageBorder() != null){
+                         new ControlCurvatureChainCode(getFrameSelected().getImage(), getFrameSelected().getImageBorder());
+                    }else{
+                        int response = JOptionPane.showConfirmDialog(view, "As bordas da imagem nao foram identificadas, deseja identifica-las agora?", null, JOptionPane.YES_NO_OPTION);
+                        if(response == JOptionPane.YES_OPTION){
+                            new ControlEdgeSobel(getFrameSelected().getImage(), view);
+                        }
+                    }
                 } else {
                     JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -101,18 +137,8 @@ public class ControlPrincipal {
     //metodos
     private void addFrameImage(String path) {
         try {
-            //criando um imageView
-            JXImageView imageView = new JXImageView();
             BufferedImage image = ImageIO.read(new File(path));
-            imageView.setImage(image);
-            imageView.setScale(0.5);
-            //criando um frame
-            JInternalFrame frame = new JInternalFrame();
-            frame.add(imageView, BorderLayout.CENTER);
-            frame.setSize(image.getWidth() / 2, image.getHeight() / 2);
-            frame.setResizable(true);
-            frame.setClosable(true);
-            frame.setVisible(true);
+            JImageInternalFrame frame = new JImageInternalFrame(image);
             //adicionando o frame 
             view.getjPanelPrincipal().add(frame);
             view.getjPanelPrincipal().validate();
@@ -121,23 +147,7 @@ public class ControlPrincipal {
         }
     }
 
-    private BufferedImage getImageInFrame(JInternalFrame frame) {
-        //pegar a imagem que esta dentro da internalFrame
-        JXImageView imageView = (JXImageView) frame.getRootPane().getContentPane().getComponent(0);
-        return (BufferedImage) imageView.getImage();
-    }
-
-    private void setImageToFrame(BufferedImage image, JInternalFrame frame) {
-        //criando um JXImageView
-        JXImageView imageView = new JXImageView();
-        imageView.setImage(image);
-        imageView.setScale(0.5);
-        //adicionado ao frame
-        frame.add(imageView, BorderLayout.CENTER);
-        frame.setSize(image.getWidth() / 2, image.getHeight() / 2);
-    }
-
-    public JInternalFrame getFrameSelected() {
-        return view.getjPanelPrincipal().getSelectedFrame();
+    public JImageInternalFrame getFrameSelected() {
+        return (JImageInternalFrame) view.getjPanelPrincipal().getSelectedFrame();
     }
 }

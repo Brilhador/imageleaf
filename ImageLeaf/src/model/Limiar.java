@@ -91,15 +91,16 @@ public class Limiar {
     // matriz) com liminar por parametro, que retona uma imagem
     public static BufferedImage limiarizacao(BufferedImage img, int[][] g, int limiar) {
         //Imagem de saida
-        BufferedImage imgOut = img;
+        BufferedImage imgOut = new BufferedImage(
+                img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
 
         // atribuido valores a imagem dos pixels
         for (int x = 0; x < img.getWidth(); x++) {
             for (int y = 0; y < img.getHeight(); y++) {
                 if (g[x][y] >= limiar) {
-                    imgOut.setRGB(x, y, Color.WHITE.getRGB());
-                } else {
                     imgOut.setRGB(x, y, Color.BLACK.getRGB());
+                } else {
+                    imgOut.setRGB(x, y, Color.WHITE.getRGB());
                 }
             }
         }
