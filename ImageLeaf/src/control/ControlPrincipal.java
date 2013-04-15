@@ -8,37 +8,20 @@ import control.blur.ControlBlurLow;
 import control.blur.ControlBlurMedian;
 import control.curvature.ControlCurvatureChainCode;
 import control.edge.ControlEdgeSobel;
-import java.awt.BorderLayout;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.Action;
-import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuKeyEvent;
-import javax.swing.event.MenuKeyListener;
-import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileFilter;
-import model.ChainCode;
 import model.components.JImageInternalFrame;
 import org.jfree.ui.ExtensionFileFilter;
 import view.viewPrincipal;
-import org.jdesktop.swingx.JXImageView;
 
 /**
  *
@@ -60,6 +43,7 @@ public class ControlPrincipal {
 
         //Menu FILE
         view.getMenuOpen().addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
 //                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -78,6 +62,7 @@ public class ControlPrincipal {
 
         //menu filtes
         view.getmFilterBlurLow().addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
@@ -89,6 +74,7 @@ public class ControlPrincipal {
         });
 
         view.getmFilterBlurMedian().addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
@@ -98,7 +84,7 @@ public class ControlPrincipal {
                 }
             }
         });
-        
+
         //filtes edge-detect
         view.getmFilterEdgeSobel().addActionListener(new ActionListener() {
 
@@ -111,7 +97,7 @@ public class ControlPrincipal {
                 }
             }
         });
-        
+
         //curvature chain code
         view.getmCurvatureChainCode().addActionListener(new ActionListener() {
 

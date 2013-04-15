@@ -77,9 +77,9 @@ public class Limiar {
             // colunas
             for (int y = 0; y < img[0].length; y++) {
                 if (img[x][y] >= liminar) {
-                    borda[x][y] = true;// branco
+                    borda[x][y] = true;
                 } else {
-                    borda[x][y] = false;// preto
+                    borda[x][y] = false;
                 }
             }
         }

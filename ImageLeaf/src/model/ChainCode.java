@@ -44,9 +44,17 @@ public class ChainCode {
     }
     
     //pega o valor da direçao
-    private int getNextDirection(int x, int y){
-        int direction = 0;
+    private int getNextDirection(int lastDirection, int x, int y){
+        int direction = lastDirection;
         while(direction < 8){
+            Dimension d = getNextCoordinates(x, y, direction);
+            if(d != null){
+                return direction;
+            }
+            direction++;
+        }
+        direction = 0;
+        while(direction < lastDirection){
             Dimension d = getNextCoordinates(x, y, direction);
             if(d != null){
                 return direction;
@@ -98,8 +106,11 @@ public class ChainCode {
         //coordenada auxiliares
         int x = startx;
         int y = starty;
+        int lastDirection = 0;
+        System.out.println("Inicial: " + x + "," + y);
         do{
-            Dimension d = getNextCoordinates(x, y, getNextDirection(x, y));
+            lastDirection = getNextDirection(lastDirection, x, y);
+            Dimension d = getNextCoordinates(x, y, lastDirection);
             if(d != null){
                 lista.add(d);
                 x = d.width;
