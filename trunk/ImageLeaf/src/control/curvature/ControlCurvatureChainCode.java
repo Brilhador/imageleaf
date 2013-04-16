@@ -7,6 +7,8 @@ package control.curvature;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -26,6 +28,7 @@ public class ControlCurvatureChainCode {
     
     private ViewChainCode view = null;
     private BufferedImage image = null;
+    private BufferedImage grafico = null;
     private boolean[][] imageBorder = null;
     
     public ControlCurvatureChainCode(BufferedImage image, boolean[][] border) {
@@ -53,14 +56,29 @@ public class ControlCurvatureChainCode {
                         startProgressBar();
                         ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                         int width = view.getLblImageCurvature().getWidth();
-                        int height = view.getLblImageCurvature().getHeight();
-                        BufferedImage grafico = Grafico.curvatureDimension(lista, width, height, "Curvature");
+                        int heigth = view.getLblImageCurvature().getHeight();
+                        grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");
                         view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
                         stopProgressBar();
                         return null;
                     }
                 };
                 work.execute();
+            }
+        });
+        
+        //ação ao redimensionar Jframe
+        view.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                if (grafico == null) {
+                    carregaImagePreview(image);
+                } else {
+                    int width = view.getLblImageCurvature().getWidth();
+                    int heigth = view.getLblImageCurvature().getHeight();
+                    BufferedImage resizeImage = MyImage.resizeImage(grafico, width, heigth);
+                    view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
+                }
             }
         });
         
