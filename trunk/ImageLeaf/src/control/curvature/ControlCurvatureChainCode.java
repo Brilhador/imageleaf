@@ -25,12 +25,12 @@ import view.curvature.ViewChainCode;
  * @author anderson
  */
 public class ControlCurvatureChainCode {
-    
+
     private ViewChainCode view = null;
     private BufferedImage image = null;
     private BufferedImage grafico = null;
     private boolean[][] imageBorder = null;
-    
+
     public ControlCurvatureChainCode(BufferedImage image, boolean[][] border) {
         view = new ViewChainCode();
         this.image = image;
@@ -40,23 +40,22 @@ public class ControlCurvatureChainCode {
         initComponents();
         view.setVisible(true);
     }
-    
+
     private void initComponents() {
-        
+
         stopProgressBar();
         carregaImagePreview(image);
-        
+
         view.getBtnGenerate().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SwingWorker work = new SwingWorker() {
-
                     @Override
                     protected Object doInBackground() throws Exception {
-                        startProgressBar();
-                        ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                         int width = view.getLblImageCurvature().getWidth();
                         int heigth = view.getLblImageCurvature().getHeight();
+                        startProgressBar();
+                        ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                         grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");
                         view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
                         stopProgressBar();
@@ -66,24 +65,9 @@ public class ControlCurvatureChainCode {
                 work.execute();
             }
         });
-        
-        //ação ao redimensionar Jframe
-        view.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                if (grafico == null) {
-                    carregaImagePreview(image);
-                } else {
-                    int width = view.getLblImageCurvature().getWidth();
-                    int heigth = view.getLblImageCurvature().getHeight();
-                    BufferedImage resizeImage = MyImage.resizeImage(grafico, width, heigth);
-                    view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
-                }
-            }
-        });
-        
+
     }
-    
+
     //carregar image no lblImagePreview
     public void carregaImagePreview(BufferedImage image) {
         int width = view.getLblImage().getWidth();
