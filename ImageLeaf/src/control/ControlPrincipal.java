@@ -123,8 +123,9 @@ public class ControlPrincipal {
     //metodos
     private void addFrameImage(String path) {
         try {
-            BufferedImage image = ImageIO.read(new File(path));
-            JImageInternalFrame frame = new JImageInternalFrame(image);
+            File fileImage = new File(path);
+            BufferedImage image = ImageIO.read(fileImage);
+            JImageInternalFrame frame = new JImageInternalFrame(fileImage.getName(), image);
             //adicionando o frame 
             view.getjPanelPrincipal().add(frame);
             view.getjPanelPrincipal().validate();
