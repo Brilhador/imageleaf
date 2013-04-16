@@ -26,7 +26,8 @@ public class Grafico {
 
         for (int i = 0; i < lista.size(); i++) {
             Dimension dimension = lista.get(i);
-            dataset.addValue(dimension.width, title, "" + i);
+            dataset.addValue(dimension.width, "curve - (x)", "" + i);
+            dataset.addValue(dimension.height, "curve - (y)", "" + i);
         }
 
         JFreeChart chart = ChartFactory.createLineChart(
@@ -41,6 +42,7 @@ public class Grafico {
 
         //custom chart
         chart.getCategoryPlot().getRenderer().setSeriesPaint(0, Color.RED);
+        chart.getCategoryPlot().getRenderer().setSeriesPaint(1, Color.BLUE);
 
         return chart.createBufferedImage(sizeWidth, sizeHeight);
 

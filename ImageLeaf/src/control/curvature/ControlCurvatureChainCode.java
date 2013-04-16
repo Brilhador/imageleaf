@@ -4,7 +4,9 @@
  */
 package control.curvature;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -56,6 +58,7 @@ public class ControlCurvatureChainCode {
                         int heigth = view.getLblImageCurvature().getHeight();
                         startProgressBar();
                         ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
+                        drawPathChainCode(lista);
                         grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");
                         view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
                         stopProgressBar();
@@ -85,5 +88,18 @@ public class ControlCurvatureChainCode {
     public void stopProgressBar() {
         view.getPgBar().setVisible(false);
         view.getPgBar().setIndeterminate(false);
+    }
+    
+    public void drawPathChainCode(ArrayList<Dimension> lista){
+        BufferedImage drawImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+        Graphics2D g2d = drawImage.createGraphics();
+        g2d.drawImage(image, null, 0, 0);
+        g2d.dispose();
+        for (Dimension dimension : lista) {
+            drawImage.setRGB(dimension.width, dimension.height, Color.RED.getRGB());
+        }
+//        Dimension dimension = lista.get(0);
+//        drawImage.setRGB(dimension.width, dimension.height, Color.RED.getRGB());
+        carregaImagePreview(drawImage);
     }
 }

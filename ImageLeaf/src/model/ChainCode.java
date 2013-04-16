@@ -19,6 +19,9 @@ public class ChainCode {
     private int heigth = 0;
     private int startx = 0;
     private int starty = 0;
+    private int lastx = 0;
+    private int lasty = 0;
+    private int lastDirection = 0;
 
     //construtor
     public ChainCode(boolean[][] imageBorder) {
@@ -30,7 +33,7 @@ public class ChainCode {
 
     private void getInicialPixel() {
         //pega o pixel inicial            
-        for (int j = heigth - 1; j >= 0; j--) {
+        for (int j = 0; j < heigth; j++) {
             for (int i = width - 1; i >= 0; i--) {
                 if (imageBorder[i][j]) {
                     startx = i;
@@ -42,20 +45,29 @@ public class ChainCode {
     }
 
     //pega o valor da direçao
+    //pensa numa logica para essa busca
     private int getNextDirection(int lastDirection, int x, int y) {
-        int direction = lastDirection / 2;
+        int direction = (lastDirection == 0)?0:(lastDirection + 7) % 8;
         while (direction < 8) {
             Dimension d = getNextCoordinates(x, y, direction);
-            if (d != null) {
-                return direction;
+            if (d != null ){
+                if ((d.width != lastx || d.height != lasty)) {
+                    System.out.println(direction);
+                    lastDirection = direction;
+                    return direction;
+                }
             }
             direction++;
         }
-        direction = 0;
-        while (direction < lastDirection) {
+        direction = (lastDirection + 7) % 8;
+        while (0 < direction) {
             Dimension d = getNextCoordinates(x, y, direction);
-            if (d != null) {
-                return direction;
+            if (d != null){
+                if ((d.width != lastx || d.height != lasty)) {
+                    System.out.println(direction);
+                    lastDirection = direction;
+                    return direction;
+                }
             }
             direction++;
         }
@@ -104,13 +116,14 @@ public class ChainCode {
         //coordenada auxiliares
         int x = startx;
         int y = starty;
-        int lastDirection = 0;
-        System.out.println("Inicial: " + x + "," + y);
+        Dimension d = null;
+        System.out.println("Inicial: \n" + x + "," + y);
         do {
-            lastDirection = getNextDirection(lastDirection, x, y);
-            Dimension d = getNextCoordinates(x, y, lastDirection);
+            d = getNextCoordinates(x, y, getNextDirection(lastDirection, x, y));
             if (d != null) {
                 lista.add(d);
+                lastx = x;
+                lasty = y;
                 x = d.width;
                 y = d.height;
                 System.out.println(x + "," + y);
@@ -143,6 +156,7 @@ public class ChainCode {
                 y = d.height;
                 System.out.println(lastDirection);
             } else {
+                System.out.println("Direcao igual a nulo");
                 break;
             }
         } while ((startx != x || starty != y));
