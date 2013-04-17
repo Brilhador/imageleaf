@@ -98,8 +98,8 @@ public class ControlCurvatureChainCode {
         for (Dimension dimension : lista) {
             drawImage.setRGB(dimension.width, dimension.height, Color.RED.getRGB());
         }
-//        Dimension dimension = lista.get(0);
-//        drawImage.setRGB(dimension.width, dimension.height, Color.RED.getRGB());
+        Dimension dimension = lista.get(0);
+        drawImage.setRGB(dimension.width, dimension.height, Color.GREEN.getRGB());
         carregaImagePreview(drawImage);
     }
 }
