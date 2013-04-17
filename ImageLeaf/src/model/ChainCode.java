@@ -46,32 +46,34 @@ public class ChainCode {
 
     //pega o valor da direçao
     //pensa numa logica para essa busca
-    private int getNextDirection(int lastDirection, int x, int y) {
-        int direction = (lastDirection == 0)?0:(lastDirection + 7) % 8;
+    private Dimension getNextDirection(int x, int y) {
+        int point = ((lastDirection % 2) == 0)?((lastDirection+7)%8):((lastDirection+6)%8);
+        int direction = point;
+        Dimension d = null;
         while (direction < 8) {
-            Dimension d = getNextCoordinates(x, y, direction);
+            d = getNextCoordinates(x, y, direction);
             if (d != null ){
                 if ((d.width != lastx || d.height != lasty)) {
                     System.out.println(direction);
                     lastDirection = direction;
-                    return direction;
+                    return d;
                 }
             }
             direction++;
         }
-        direction = (lastDirection + 7) % 8;
-        while (0 < direction) {
-            Dimension d = getNextCoordinates(x, y, direction);
+        direction = 0;
+        while (0 < point) {
+            d = getNextCoordinates(x, y, direction);
             if (d != null){
                 if ((d.width != lastx || d.height != lasty)) {
                     System.out.println(direction);
                     lastDirection = direction;
-                    return direction;
+                    return d;
                 }
             }
             direction++;
         }
-        return -1;
+        return null;
     }
 
     /*
@@ -119,7 +121,7 @@ public class ChainCode {
         Dimension d = null;
         System.out.println("Inicial: \n" + x + "," + y);
         do {
-            d = getNextCoordinates(x, y, getNextDirection(lastDirection, x, y));
+            d = getNextDirection(x, y);
             if (d != null) {
                 lista.add(d);
                 lastx = x;
@@ -128,35 +130,6 @@ public class ChainCode {
                 y = d.height;
                 System.out.println(x + "," + y);
             } else {
-                break;
-            }
-        } while ((startx != x || starty != y));
-        System.out.println("finalizado");
-        return lista;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public ArrayList<Integer> getChainCode() {
-        //gera chain code
-        ArrayList<Integer> lista = new ArrayList<>();
-        //coordenada auxiliares
-        int x = startx;
-        int y = starty;
-        int lastDirection = 0;
-        System.out.println("Inicial: " + x + "," + y);
-        do {
-            lastDirection = getNextDirection(lastDirection, x, y);
-            Dimension d = getNextCoordinates(x, y, lastDirection);
-            if (d != null) {
-                lista.add(lastDirection);
-                x = d.width;
-                y = d.height;
-                System.out.println(lastDirection);
-            } else {
-                System.out.println("Direcao igual a nulo");
                 break;
             }
         } while ((startx != x || starty != y));

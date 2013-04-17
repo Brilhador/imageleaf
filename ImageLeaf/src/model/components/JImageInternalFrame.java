@@ -104,6 +104,7 @@ public class JImageInternalFrame extends JInternalFrame {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    image = firstImage;
                     imageView.setImage(firstImage);
                     imageView.setScale(0.5);
                     imageBorder = null;
