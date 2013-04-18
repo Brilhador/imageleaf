@@ -52,7 +52,7 @@ public class Grafico {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         for (int i = 0; i < lista.size(); i++) {
-                dataset.addValue(lista.get(i), "curve", "" + i);
+                dataset.addValue(lista.get(i), "chain code", "" + i);
         }
 
         JFreeChart chart = ChartFactory.createLineChart(

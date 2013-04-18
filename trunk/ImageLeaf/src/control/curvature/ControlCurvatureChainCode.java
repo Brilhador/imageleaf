@@ -13,8 +13,11 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import model.ChainCode;
 import model.Grafico;
 import view.curvature.ViewChainCode;
@@ -44,6 +47,7 @@ public class ControlCurvatureChainCode {
 
         stopProgressBar();
         carregaImagePreview(image);
+        view.getRbCoordinates().setSelected(true);
 
         view.getBtnGenerate().addActionListener(new ActionListener() {
             @Override
@@ -54,15 +58,45 @@ public class ControlCurvatureChainCode {
                         int width = view.getLblImageCurvature().getWidth();
                         int heigth = view.getLblImageCurvature().getHeight();
                         startProgressBar();
-                        ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
-                        drawPathChainCode(lista);
-                        grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");
-                        view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
+                        if(view.getRbCoordinates().isSelected()){
+                            ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
+                            drawPathChainCode(lista);
+                            grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");
+                            view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
+                        }else if(view.getRbChainCode().isSelected()){
+                            ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
+                            ArrayList<Integer> listaCode = new ChainCode(imageBorder).getChainCode();
+                            drawPathChainCode(lista);
+                            grafico = Grafico.curvatureChainCode(listaCode, width, heigth, "Curvature");
+                            view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
+                        }else{
+                            JOptionPane.showMessageDialog(view, "Selecione um tipo de curvatura", "", JOptionPane.INFORMATION_MESSAGE);
+                        }
                         stopProgressBar();
                         return null;
                     }
                 };
                 work.execute();
+            }
+        });
+        
+        view.getRbCoordinates().addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if(view.getRbCoordinates().isSelected()){
+                    view.getRbChainCode().setSelected(false);
+                }
+            }
+        });
+        
+        view.getRbChainCode().addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if(view.getRbChainCode().isSelected()){
+                    view.getRbCoordinates().setSelected(false);
+                }
             }
         });
     }
