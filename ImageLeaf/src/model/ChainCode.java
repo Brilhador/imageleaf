@@ -47,12 +47,12 @@ public class ChainCode {
     //pega o valor da direçao
     //pensa numa logica para essa busca
     private Dimension getNextDirection(int x, int y) {
-        int point = ((lastDirection % 2) == 0)?((lastDirection+7)%8):((lastDirection+6)%8);
+        int point = ((lastDirection % 2) == 0) ? ((lastDirection + 7) % 8) : ((lastDirection + 6) % 8);
         int direction = point;
         Dimension d = null;
         while (direction < 8) {
             d = getNextCoordinates(x, y, direction);
-            if (d != null ){
+            if (d != null) {
                 if ((d.width != lastx || d.height != lasty)) {
                     System.out.println(direction);
                     lastDirection = direction;
@@ -62,9 +62,9 @@ public class ChainCode {
             direction++;
         }
         direction = 0;
-        while (0 < point) {
+        while (direction < point) {
             d = getNextCoordinates(x, y, direction);
-            if (d != null){
+            if (d != null) {
                 if ((d.width != lastx || d.height != lasty)) {
                     System.out.println(direction);
                     lastDirection = direction;
@@ -73,7 +73,7 @@ public class ChainCode {
             }
             direction++;
         }
-        return null;
+        return d;
     }
 
     /*
@@ -122,17 +122,18 @@ public class ChainCode {
         System.out.println("Inicial: \n" + x + "," + y);
         do {
             d = getNextDirection(x, y);
-            if (d != null) {
-                lista.add(d);
-                lastx = x;
-                lasty = y;
-                x = d.width;
-                y = d.height;
-                System.out.println(x + "," + y);
-            } else {
-                break;
+            if(d == null){
+                System.out.println("Erro, dimensao igual a nulo");
+                return lista;
             }
-        } while ((startx != x || starty != y));
+            //se nao for nulo continua 
+            lista.add(d);
+            lastx = x;
+            lasty = y;
+            x = d.width;
+            y = d.height;
+            System.out.println(x + "," + y);
+        } while ((startx != x || starty != y));//sai quando encontra o ponto inicial
         System.out.println("finalizado");
         return lista;
     }

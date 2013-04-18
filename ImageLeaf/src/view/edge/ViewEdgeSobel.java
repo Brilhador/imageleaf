@@ -4,11 +4,9 @@
  */
 package view.edge;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
-import javax.swing.JSlider;
+import model.components.JImageView;
+import org.jdesktop.swingx.JXImageView;
 
 /**
  *
@@ -32,7 +30,6 @@ public class ViewEdgeSobel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblImagePreview = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -46,10 +43,9 @@ public class ViewEdgeSobel extends javax.swing.JFrame {
         btnRestore = new javax.swing.JButton();
         btnApply = new javax.swing.JButton();
         pgBar = new javax.swing.JProgressBar();
+        ImagePreview = new JImageView();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        lblImagePreview.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel1.setText("Sobel");
 
@@ -119,6 +115,19 @@ public class ViewEdgeSobel extends javax.swing.JFrame {
 
         btnApply.setText("Apply");
 
+        ImagePreview.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout ImagePreviewLayout = new javax.swing.GroupLayout(ImagePreview);
+        ImagePreview.setLayout(ImagePreviewLayout);
+        ImagePreviewLayout.setHorizontalGroup(
+            ImagePreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 192, Short.MAX_VALUE)
+        );
+        ImagePreviewLayout.setVerticalGroup(
+            ImagePreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -132,18 +141,18 @@ public class ViewEdgeSobel extends javax.swing.JFrame {
                     .addComponent(btnPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblImagePreview, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ImagePreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPreview)
@@ -154,7 +163,7 @@ public class ViewEdgeSobel extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(pgBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 2, Short.MAX_VALUE))
-                    .addComponent(lblImagePreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(ImagePreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -162,6 +171,7 @@ public class ViewEdgeSobel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.jdesktop.swingx.JXImageView ImagePreview;
     private javax.swing.JButton btnApply;
     private javax.swing.JButton btnPreview;
     private javax.swing.JButton btnRestore;
@@ -169,7 +179,6 @@ public class ViewEdgeSobel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JLabel lblImagePreview;
     private javax.swing.JLabel lblValueLimiar;
     private javax.swing.JProgressBar pgBar;
     private javax.swing.JRadioButton rbManual;
@@ -202,13 +211,14 @@ public class ViewEdgeSobel extends javax.swing.JFrame {
         this.btnRestore = btnRestore;
     }
 
-    public javax.swing.JLabel getLblImagePreview() {
-        return lblImagePreview;
+    public JImageView getImagePreview() {
+        return (JImageView) ImagePreview;
     }
 
-    public void setLblImagePreview(javax.swing.JLabel lblImagePreview) {
-        this.lblImagePreview = lblImagePreview;
+    public void setImagePreview(JImageView ImagePreview) {
+        this.ImagePreview = ImagePreview;
     }
+
 
     public javax.swing.JLabel getLblValueLimiar() {
         return lblValueLimiar;

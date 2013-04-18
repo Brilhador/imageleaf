@@ -115,10 +115,7 @@ public class ControlBlurLow {
 
     //carregar image no lblImagePreview
     public void carregaImagePreview(BufferedImage image) {
-        int width = view.getLblImagePreview().getWidth();
-        int heigth = view.getLblImagePreview().getHeight();
-        BufferedImage resizeImage = MyImage.resizeImage(image, width, heigth);
-        view.getLblImagePreview().setIcon(new ImageIcon(resizeImage));
+        view.getImagePreview().setImageResize(image);
     }
 
     public void startProgressBar() {

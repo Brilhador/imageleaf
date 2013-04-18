@@ -62,18 +62,18 @@ public class ControlEdgeSobel {
                     protected Object doInBackground() throws Exception {
                         startProgressBar();
                         int valueLimiar = 0;
-                        if(view.getRbMaxEntropy().isSelected()){
+                        if (view.getRbMaxEntropy().isSelected()) {
                             int total = image.getWidth() * image.getHeight();
                             valueLimiar = Limiar.maxentropia(Histograma.histogramaGray(image), total);
                             view.getLblValueLimiar().setText(valueLimiar + "");
-                        }else if(view.getRbOtsu().isSelected()){
+                        } else if (view.getRbOtsu().isSelected()) {
                             int total = image.getWidth() * image.getHeight();
                             valueLimiar = Limiar.otsuTreshold(Histograma.histogramaGray(image), total);
                             view.getLblValueLimiar().setText(valueLimiar + "");
-                        }else if(view.getRbManual().isSelected()){
+                        } else if (view.getRbManual().isSelected()) {
                             valueLimiar = view.getSlLimiarValue().getValue();
                         }
-                        int [][] borderDetect = Filtro.bordaSobel(image);
+                        int[][] borderDetect = Filtro.bordaSobel(image);
                         filterImage = image;
                         filterImage = Limiar.limiarizacao(filterImage, borderDetect, valueLimiar);
                         carregaImagePreview(filterImage);
@@ -101,18 +101,18 @@ public class ControlEdgeSobel {
                     protected Object doInBackground() throws Exception {
                         startProgressBar();
                         int valueLimiar = 0;
-                        if(view.getRbMaxEntropy().isSelected()){
+                        if (view.getRbMaxEntropy().isSelected()) {
                             int total = image.getWidth() * image.getHeight();
                             valueLimiar = Limiar.maxentropia(Histograma.histogramaGray(image), total);
                             view.getLblValueLimiar().setText(valueLimiar + "");
-                        }else if(view.getRbOtsu().isSelected()){
+                        } else if (view.getRbOtsu().isSelected()) {
                             int total = image.getWidth() * image.getHeight();
                             valueLimiar = Limiar.otsuTreshold(Histograma.histogramaGray(image), total);
                             view.getLblValueLimiar().setText(valueLimiar + "");
-                        }else if(view.getRbManual().isSelected()){
+                        } else if (view.getRbManual().isSelected()) {
                             valueLimiar = view.getSlLimiarValue().getValue();
                         }
-                        int [][] borderDetect = Filtro.bordaSobel(image);
+                        int[][] borderDetect = Filtro.bordaSobel(image);
                         //copiando a imagem original para a image de manipulacao
                         filterImage = image;
                         filterImage = Limiar.limiarizacao(filterImage, borderDetect, valueLimiar);
@@ -177,26 +177,23 @@ public class ControlEdgeSobel {
                 }
             }
         });
-        
+
         //evento slide bar para alterar o valor limiar
         view.getSlLimiarValue().addChangeListener(new ChangeListener() {
-
             @Override
             public void stateChanged(ChangeEvent e) {
                 if (view.getRbManual().isSelected()) {
                     int value = view.getSlLimiarValue().getValue();
                     view.getLblValueLimiar().setText(value + "");
-                }}
+                }
+            }
         });
     }
 
     //metodos adicionais
     //carregar image no lblImagePreview
     public void carregaImagePreview(BufferedImage image) {
-        int width = view.getLblImagePreview().getWidth();
-        int heigth = view.getLblImagePreview().getHeight();
-        BufferedImage resizeImage = MyImage.resizeImage(image, width, heigth);
-        view.getLblImagePreview().setIcon(new ImageIcon(resizeImage));
+        view.getImagePreview().setImageResize(image);
     }
 
     public void startProgressBar() {
