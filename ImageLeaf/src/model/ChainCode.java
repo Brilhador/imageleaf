@@ -137,4 +137,30 @@ public class ChainCode {
         System.out.println("finalizado");
         return lista;
     }
+    
+    public ArrayList<Integer> getChainCode() {
+        //gera chain code
+        ArrayList<Integer> lista = new ArrayList<>();
+        //coordenada auxiliares
+        int x = startx;
+        int y = starty;
+        Dimension d = null;
+        System.out.println("Inicial: \n" + x + "," + y);
+        do {
+            d = getNextDirection(x, y);
+            if(d == null){
+                System.out.println("Erro, dimensao igual a nulo");
+                return lista;
+            }
+            //se nao for nulo continua 
+            lista.add(lastDirection);
+            lastx = x;
+            lasty = y;
+            x = d.width;
+            y = d.height;
+            System.out.println(x + "," + y);
+        } while ((startx != x || starty != y));//sai quando encontra o ponto inicial
+        System.out.println("finalizado");
+        return lista;
+    }
 }

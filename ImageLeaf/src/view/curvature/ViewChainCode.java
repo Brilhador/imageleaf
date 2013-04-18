@@ -5,6 +5,7 @@
 package view.curvature;
 
 import javax.swing.JProgressBar;
+import javax.swing.JRadioButton;
 import model.components.JImageView;
 import org.jdesktop.swingx.JXImageView;
 
@@ -35,6 +36,8 @@ public class ViewChainCode extends javax.swing.JFrame {
         btnGenerate = new javax.swing.JButton();
         pgBar = new javax.swing.JProgressBar();
         ImageView = new JImageView();
+        rbCoordinates = new javax.swing.JRadioButton();
+        rbChainCode = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +62,10 @@ public class ViewChainCode extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        rbCoordinates.setText("Coordinates");
+
+        rbChainCode.setText("Chain Code");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,8 +77,14 @@ public class ViewChainCode extends javax.swing.JFrame {
                         .addComponent(ImageView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblImageCurvature, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE))
+                            .addComponent(lblImageCurvature, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(rbCoordinates)
+                                .addGap(26, 26, 26)
+                                .addComponent(rbChainCode)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pgBar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1))
@@ -85,7 +98,10 @@ public class ViewChainCode extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnGenerate)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnGenerate)
+                            .addComponent(rbCoordinates)
+                            .addComponent(rbChainCode))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblImageCurvature, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
                     .addComponent(pgBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -102,6 +118,8 @@ public class ViewChainCode extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblImageCurvature;
     private javax.swing.JProgressBar pgBar;
+    private javax.swing.JRadioButton rbChainCode;
+    private javax.swing.JRadioButton rbCoordinates;
     // End of variables declaration//GEN-END:variables
 
     public javax.swing.JButton getBtnGenerate() {
@@ -135,6 +153,22 @@ public class ViewChainCode extends javax.swing.JFrame {
 
     public void setPgBar(JProgressBar pgBar) {
         this.pgBar = pgBar;
+    }
+
+    public JRadioButton getRbChainCode() {
+        return rbChainCode;
+    }
+
+    public void setRbChainCode(JRadioButton rbChainCode) {
+        this.rbChainCode = rbChainCode;
+    }
+
+    public JRadioButton getRbCoordinates() {
+        return rbCoordinates;
+    }
+
+    public void setRbCoordinates(JRadioButton rbCoordinates) {
+        this.rbCoordinates = rbCoordinates;
     }
     
 }
