@@ -9,8 +9,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -19,7 +17,6 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 import model.ChainCode;
 import model.Grafico;
-import model.MyImage;
 import view.curvature.ViewChainCode;
 
 /**
@@ -68,15 +65,11 @@ public class ControlCurvatureChainCode {
                 work.execute();
             }
         });
-
     }
 
     //carregar image no lblImagePreview
     public void carregaImagePreview(BufferedImage image) {
-        int width = view.getLblImage().getWidth();
-        int heigth = view.getLblImage().getHeight();
-        BufferedImage resizeImage = MyImage.resizeImage(image, width, heigth);
-        view.getLblImage().setIcon(new ImageIcon(resizeImage));
+        view.getImageView().setImageResize(image);
     }
 
     public void startProgressBar() {
@@ -89,8 +82,8 @@ public class ControlCurvatureChainCode {
         view.getPgBar().setVisible(false);
         view.getPgBar().setIndeterminate(false);
     }
-    
-    public void drawPathChainCode(ArrayList<Dimension> lista){
+
+    public void drawPathChainCode(ArrayList<Dimension> lista) {
         BufferedImage drawImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
         Graphics2D g2d = drawImage.createGraphics();
         g2d.drawImage(image, null, 0, 0);
@@ -100,6 +93,10 @@ public class ControlCurvatureChainCode {
         }
         Dimension dimension = lista.get(0);
         drawImage.setRGB(dimension.width, dimension.height, Color.GREEN.getRGB());
+        drawImage.setRGB(dimension.width + 1, dimension.height, Color.GREEN.getRGB());//0
+        drawImage.setRGB(dimension.width, dimension.height - 1, Color.GREEN.getRGB());//2
+        drawImage.setRGB(dimension.width - 1, dimension.height, Color.GREEN.getRGB());//4
+        drawImage.setRGB(dimension.width, dimension.height + 1, Color.GREEN.getRGB());//6
         carregaImagePreview(drawImage);
     }
 }

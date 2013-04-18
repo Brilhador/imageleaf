@@ -8,7 +8,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JToolBar;
@@ -20,7 +19,7 @@ import org.jdesktop.swingx.JXImageView;
  */
 public class JImageInternalFrame extends JInternalFrame {
 
-    private JXImageView imageView = null;
+    private JImageView imageView = null;
     private ToolBar toolBar = null;
     private BufferedImage firstImage = null;
     private BufferedImage image = null;
@@ -32,7 +31,7 @@ public class JImageInternalFrame extends JInternalFrame {
         firstImage = imageIn;
         image = imageIn;
         //adding JXImageVIew in Jframe
-        imageView = new JXImageView();
+        imageView = new JImageView();
         imageView.setImage(image);
         imageView.setScale(0.5);
         this.add(imageView, BorderLayout.CENTER);
@@ -49,7 +48,7 @@ public class JImageInternalFrame extends JInternalFrame {
         firstImage = imageIn;
         image = imageIn;
         //adding JXImageVIew in Jframe
-        imageView = new JXImageView();
+        imageView = new JImageView();
         imageView.setImage(image);
         imageView.setScale(0.5);
         this.add(imageView, BorderLayout.CENTER);

@@ -5,13 +5,10 @@
 package view.blur;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import javax.swing.JProgressBar;
-import javax.swing.JSlider;
-import javax.swing.JToggleButton;
+import model.components.JImageView;
+import org.jdesktop.swingx.JXImageView;
 
 /**
  *
@@ -35,7 +32,6 @@ public class ViewBlurLow extends JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblImagePreview = new javax.swing.JLabel();
         btnApply = new javax.swing.JToggleButton();
         lblLowPass = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -44,11 +40,10 @@ public class ViewBlurLow extends JFrame{
         btnPreview = new javax.swing.JToggleButton();
         btnRestore = new javax.swing.JButton();
         pgBar = new javax.swing.JProgressBar();
+        ImagePreview = new JImageView();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModalExclusionType(null);
-
-        lblImagePreview.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnApply.setText("Apply");
 
@@ -92,6 +87,19 @@ public class ViewBlurLow extends JFrame{
 
         btnRestore.setText("Restore");
 
+        ImagePreview.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout ImagePreviewLayout = new javax.swing.GroupLayout(ImagePreview);
+        ImagePreview.setLayout(ImagePreviewLayout);
+        ImagePreviewLayout.setHorizontalGroup(
+            ImagePreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 178, Short.MAX_VALUE)
+        );
+        ImagePreviewLayout.setVerticalGroup(
+            ImagePreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,18 +113,18 @@ public class ViewBlurLow extends JFrame{
                     .addComponent(btnApply, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pgBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(6, 6, 6)
-                .addComponent(lblImagePreview, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-                .addGap(8, 8, 8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ImagePreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(11, 11, 11)
+                .addComponent(lblLowPass)
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblLowPass)
-                        .addGap(6, 6, 6)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(11, 11, 11)
                         .addComponent(btnPreview)
@@ -126,20 +134,20 @@ public class ViewBlurLow extends JFrame{
                         .addComponent(btnApply)
                         .addGap(36, 36, 36)
                         .addComponent(pgBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(lblImagePreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(13, 13, 13))
+                        .addGap(0, 1, Short.MAX_VALUE))
+                    .addComponent(ImagePreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.jdesktop.swingx.JXImageView ImagePreview;
     private javax.swing.JToggleButton btnApply;
     private javax.swing.JToggleButton btnPreview;
     private javax.swing.JButton btnRestore;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblImagePreview;
     private javax.swing.JLabel lblLowPass;
     private javax.swing.JLabel lblMaskSize;
     private javax.swing.JProgressBar pgBar;
@@ -164,12 +172,12 @@ public class ViewBlurLow extends JFrame{
         this.btnPreview = btnPreview;
     }
 
-    public javax.swing.JLabel getLblImagePreview() {
-        return lblImagePreview;
+    public JImageView getImagePreview() {
+        return (JImageView) ImagePreview;
     }
 
-    public void setLblImagePreview(javax.swing.JLabel lblImagePreview) {
-        this.lblImagePreview = lblImagePreview;
+    public void setImagePreview(JImageView ImagePreview) {
+        this.ImagePreview = ImagePreview;
     }
 
     public javax.swing.JSlider getSlMaskSize() {

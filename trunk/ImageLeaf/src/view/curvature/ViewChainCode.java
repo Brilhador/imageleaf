@@ -5,6 +5,8 @@
 package view.curvature;
 
 import javax.swing.JProgressBar;
+import model.components.JImageView;
+import org.jdesktop.swingx.JXImageView;
 
 /**
  *
@@ -29,22 +31,33 @@ public class ViewChainCode extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        lblImage = new javax.swing.JLabel();
         lblImageCurvature = new javax.swing.JLabel();
         btnGenerate = new javax.swing.JButton();
         pgBar = new javax.swing.JProgressBar();
+        ImageView = new JImageView();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Chain Code");
-
-        lblImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblImageCurvature.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnGenerate.setText("Generate Curvature");
 
         pgBar.setName(""); // NOI18N
+
+        ImageView.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout ImageViewLayout = new javax.swing.GroupLayout(ImageView);
+        ImageView.setLayout(ImageViewLayout);
+        ImageViewLayout.setHorizontalGroup(
+            ImageViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 193, Short.MAX_VALUE)
+        );
+        ImageViewLayout.setVerticalGroup(
+            ImageViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -54,11 +67,11 @@ public class ViewChainCode extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ImageView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblImageCurvature, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE))
+                            .addComponent(btnGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pgBar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1))
@@ -71,12 +84,12 @@ public class ViewChainCode extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnGenerate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblImageCurvature, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
-                    .addComponent(pgBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblImageCurvature, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
+                    .addComponent(pgBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ImageView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -84,9 +97,9 @@ public class ViewChainCode extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.jdesktop.swingx.JXImageView ImageView;
     private javax.swing.JButton btnGenerate;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblImageCurvature;
     private javax.swing.JProgressBar pgBar;
     // End of variables declaration//GEN-END:variables
@@ -99,13 +112,14 @@ public class ViewChainCode extends javax.swing.JFrame {
         this.btnGenerate = btnGenerate;
     }
 
-    public javax.swing.JLabel getLblImage() {
-        return lblImage;
+    public JImageView getImageView() {
+        return (JImageView) ImageView;
     }
 
-    public void setLblImage(javax.swing.JLabel lblImage) {
-        this.lblImage = lblImage;
+    public void setImageView(JImageView ImageView) {
+        this.ImageView = ImageView;
     }
+    
 
     public javax.swing.JLabel getLblImageCurvature() {
         return lblImageCurvature;
