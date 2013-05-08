@@ -6,9 +6,6 @@ package control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import view.ViewClassificar;
-import view.ViewPDI;
-import view.ViewPadrao;
 import view.ViewMenu;
 
 /**

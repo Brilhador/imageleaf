@@ -20,6 +20,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import model.ChainCode;
 import model.Grafico;
+import model.Signature;
 import view.curvature.ViewChainCode;
 
 /**
@@ -66,6 +67,8 @@ public class ControlCurvatureChainCode {
                         }else if(view.getRbChainCode().isSelected()){
                             ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                             ArrayList<Integer> listaCode = new ChainCode(imageBorder).getChainCode();
+                            Signature sig = new Signature();
+                            sig.createSignalBorders(10, listaCode);
                             drawPathChainCode(lista);
                             grafico = Grafico.curvatureChainCode(listaCode, width, heigth, "Curvature");
                             view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
