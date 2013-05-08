@@ -37,9 +37,9 @@ public class RunApp {
                             Logger.getLogger(RunApp.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                    new ManageDirectory().criarDiretorio(new ManageDirectory().getDiretorioPadrao());
-                    new ControlMenu();
                 }
+                new ManageDirectory().criarDiretorio(new ManageDirectory().getDiretorioPadrao());
+                new ControlMenu();
             }
         });
     }
