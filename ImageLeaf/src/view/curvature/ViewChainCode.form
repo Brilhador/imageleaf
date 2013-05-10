@@ -30,13 +30,15 @@
                       <Component id="ImageView" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblImageCurvature" pref="630" max="32767" attributes="0"/>
+                          <Component id="lblImageCurvature" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="btnGenerate" min="-2" pref="278" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="rbCoordinates" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="rbChainCode" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="rbHistChain" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -61,6 +63,7 @@
                           <Component id="btnGenerate" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="rbCoordinates" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="rbChainCode" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="rbHistChain" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblImageCurvature" pref="236" max="32767" attributes="0"/>
@@ -131,6 +134,11 @@
     <Component class="javax.swing.JRadioButton" name="rbChainCode">
       <Properties>
         <Property name="text" type="java.lang.String" value="Chain Code"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="rbHistChain">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Histograma Chain"/>
       </Properties>
     </Component>
   </SubComponents>

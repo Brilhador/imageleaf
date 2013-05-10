@@ -59,20 +59,39 @@ public class ControlCurvatureChainCode {
                         int width = view.getLblImageCurvature().getWidth();
                         int heigth = view.getLblImageCurvature().getHeight();
                         startProgressBar();
-                        if(view.getRbCoordinates().isSelected()){
+                        if (view.getRbCoordinates().isSelected()) {
                             ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
-                            drawPathChainCode(lista);
-                            grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");
-                            view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
-                        }else if(view.getRbChainCode().isSelected()){
+                            if (lista != null) {
+                                drawPathChainCode(lista);
+                                grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");
+                                view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
+                            } else {
+                                JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else if (view.getRbChainCode().isSelected()) {
                             ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
-                            ArrayList<Integer> listaCode = new ChainCode(imageBorder).getChainCode();
-                            Signature sig = new Signature();
-                            sig.createSignalBorders(10, listaCode);
-                            drawPathChainCode(lista);
-                            grafico = Grafico.curvatureChainCode(listaCode, width, heigth, "Curvature");
-                            view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
-                        }else{
+                            if (lista != null) {
+                                ArrayList<Integer> listaCode = new ChainCode(imageBorder).getChainCode();
+                                Signature sig = new Signature();
+                                sig.createSignalBorders(10, listaCode);
+                                drawPathChainCode(lista);
+                                grafico = Grafico.curvatureChainCode(listaCode, width, heigth, "Curvature");
+                                view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
+                            } else {
+                                JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else if (view.getRbHistChain().isSelected()) {
+                            ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
+                            if (lista != null) {
+                                int[] histChain = new ChainCode(imageBorder).getHistograma();
+                                drawPathChainCode(lista);
+                                grafico = Grafico.histograma(histChain, width, heigth, "Histogram Chain Code", "Direction", "Frequency");
+                                view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
+                            } else {
+                                JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
+                            }
+
+                        } else {
                             JOptionPane.showMessageDialog(view, "Selecione um tipo de curvatura", "", JOptionPane.INFORMATION_MESSAGE);
                         }
                         stopProgressBar();
@@ -82,23 +101,33 @@ public class ControlCurvatureChainCode {
                 work.execute();
             }
         });
-        
-        view.getRbCoordinates().addChangeListener(new ChangeListener() {
 
+        view.getRbCoordinates().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                if(view.getRbCoordinates().isSelected()){
+                if (view.getRbCoordinates().isSelected()) {
                     view.getRbChainCode().setSelected(false);
+                    view.getRbHistChain().setSelected(false);
                 }
             }
         });
-        
-        view.getRbChainCode().addChangeListener(new ChangeListener() {
 
+        view.getRbChainCode().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                if(view.getRbChainCode().isSelected()){
+                if (view.getRbChainCode().isSelected()) {
                     view.getRbCoordinates().setSelected(false);
+                    view.getRbHistChain().setSelected(false);
+                }
+            }
+        });
+
+        view.getRbHistChain().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (view.getRbHistChain().isSelected()) {
+                    view.getRbCoordinates().setSelected(false);
+                    view.getRbChainCode().setSelected(false);
                 }
             }
         });

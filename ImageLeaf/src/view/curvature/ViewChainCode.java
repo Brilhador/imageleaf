@@ -38,6 +38,7 @@ public class ViewChainCode extends javax.swing.JFrame {
         ImageView = new JImageView();
         rbCoordinates = new javax.swing.JRadioButton();
         rbChainCode = new javax.swing.JRadioButton();
+        rbHistChain = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,6 +67,8 @@ public class ViewChainCode extends javax.swing.JFrame {
 
         rbChainCode.setText("Chain Code");
 
+        rbHistChain.setText("Histograma Chain");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,13 +80,15 @@ public class ViewChainCode extends javax.swing.JFrame {
                         .addComponent(ImageView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblImageCurvature, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+                            .addComponent(lblImageCurvature, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(rbCoordinates)
-                                .addGap(26, 26, 26)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(rbChainCode)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbHistChain)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pgBar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -101,7 +106,8 @@ public class ViewChainCode extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGenerate)
                             .addComponent(rbCoordinates)
-                            .addComponent(rbChainCode))
+                            .addComponent(rbChainCode)
+                            .addComponent(rbHistChain))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblImageCurvature, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
                     .addComponent(pgBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -120,6 +126,7 @@ public class ViewChainCode extends javax.swing.JFrame {
     private javax.swing.JProgressBar pgBar;
     private javax.swing.JRadioButton rbChainCode;
     private javax.swing.JRadioButton rbCoordinates;
+    private javax.swing.JRadioButton rbHistChain;
     // End of variables declaration//GEN-END:variables
 
     public javax.swing.JButton getBtnGenerate() {
@@ -170,5 +177,12 @@ public class ViewChainCode extends javax.swing.JFrame {
     public void setRbCoordinates(JRadioButton rbCoordinates) {
         this.rbCoordinates = rbCoordinates;
     }
-    
+
+    public JRadioButton getRbHistChain() {
+        return rbHistChain;
+    }
+
+    public void setRbHistChain(JRadioButton rbHistChain) {
+        this.rbHistChain = rbHistChain;
+    }
 }
