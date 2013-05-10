@@ -122,9 +122,9 @@ public class ChainCode {
         System.out.println("Inicial: \n" + x + "," + y);
         do {
             d = getNextDirection(x, y);
-            if(d == null){
+            if (d == null) {
                 System.out.println("Erro, dimensao igual a nulo");
-                return lista;
+                return null;
             }
             //se nao for nulo continua 
             lista.add(d);
@@ -137,7 +137,7 @@ public class ChainCode {
         System.out.println("finalizado");
         return lista;
     }
-    
+
     public ArrayList<Integer> getChainCode() {
         //gera chain code
         ArrayList<Integer> lista = new ArrayList<>();
@@ -148,9 +148,9 @@ public class ChainCode {
         System.out.println("Inicial: \n" + x + "," + y);
         do {
             d = getNextDirection(x, y);
-            if(d == null){
+            if (d == null) {
                 System.out.println("Erro, dimensao igual a nulo");
-                return lista;
+                return null;
             }
             //se nao for nulo continua 
             lista.add(lastDirection);
@@ -162,5 +162,26 @@ public class ChainCode {
         } while ((startx != x || starty != y));//sai quando encontra o ponto inicial
         System.out.println("finalizado");
         return lista;
+    }
+
+    public int[] getHistograma() {
+        //gerando o chain code
+        ArrayList<Integer> chaincode = getChainCode();
+
+        if (chaincode != null) {
+            //histograma de frenquencia de direçao do chain code
+            int[] histChain = new int[8];
+
+            //gerando o histograma
+            for (int i : chaincode) {
+                histChain[i]++;
+            }
+
+            //retornando o histograma
+            return histChain;
+        }else{
+            return null;
+        }
+
     }
 }

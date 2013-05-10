@@ -82,6 +82,31 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="mRecognition">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Recognition"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="mRecognitionGroup">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Species Group"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mRecognitionPattern">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Pattern Generation"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mRecognitionClassification">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Species Classification"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mRecognitionClassificationActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
       </SubComponents>
     </Menu>
   </NonVisualComponents>

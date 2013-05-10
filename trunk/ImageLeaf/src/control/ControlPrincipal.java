@@ -8,6 +8,9 @@ import control.blur.ControlBlurLow;
 import control.blur.ControlBlurMedian;
 import control.curvature.ControlCurvatureChainCode;
 import control.edge.ControlEdgeSobel;
+import control.recognition.ControlPatternGeneration;
+import control.recognition.ControlSpeciesGroup;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -43,7 +46,6 @@ public class ControlPrincipal {
 
         //Menu FILE
         view.getMenuOpen().addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
 //                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -62,7 +64,6 @@ public class ControlPrincipal {
 
         //menu filtes
         view.getmFilterBlurLow().addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
@@ -74,7 +75,6 @@ public class ControlPrincipal {
         });
 
         view.getmFilterBlurMedian().addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
@@ -87,7 +87,6 @@ public class ControlPrincipal {
 
         //filtes edge-detect
         view.getmFilterEdgeSobel().addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
@@ -98,23 +97,43 @@ public class ControlPrincipal {
             }
         });
 
-        //curvature chain code
+        //menu curvature chain code
         view.getmCurvatureChainCode().addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
-                    if(getFrameSelected().getImageBorder() != null){
-                         new ControlCurvatureChainCode(getFrameSelected().getImage(), getFrameSelected().getImageBorder());
-                    }else{
+                    if (getFrameSelected().getImageBorder() != null) {
+                        new ControlCurvatureChainCode(getFrameSelected().getImage(), getFrameSelected().getImageBorder());
+                    } else {
                         int response = JOptionPane.showConfirmDialog(view, "As bordas da imagem nao foram identificadas, deseja identifica-las agora?", null, JOptionPane.YES_NO_OPTION);
-                        if(response == JOptionPane.YES_OPTION){
+                        if (response == JOptionPane.YES_OPTION) {
                             new ControlEdgeSobel(getFrameSelected().getImage(), view);
                         }
                     }
                 } else {
                     JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
                 }
+            }
+        });
+
+        //menu recognition
+        view.getmRecognitionGroup().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                  new ControlSpeciesGroup();
+            }
+        });
+
+        view.getmRecognitionPattern().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ControlPatternGeneration();
+            }
+        });
+
+        view.getmRecognitionClassification().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
             }
         });
 

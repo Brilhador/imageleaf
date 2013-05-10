@@ -46,6 +46,10 @@ public class viewPrincipal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         mCurvature = new javax.swing.JMenu();
         mCurvatureChainCode = new javax.swing.JMenuItem();
+        mRecognition = new javax.swing.JMenu();
+        mRecognitionGroup = new javax.swing.JMenuItem();
+        mRecognitionPattern = new javax.swing.JMenuItem();
+        mRecognitionClassification = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,6 +102,24 @@ public class viewPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(mCurvature);
 
+        mRecognition.setText("Recognition");
+
+        mRecognitionGroup.setText("Species Group");
+        mRecognition.add(mRecognitionGroup);
+
+        mRecognitionPattern.setText("Pattern Generation");
+        mRecognition.add(mRecognitionPattern);
+
+        mRecognitionClassification.setText("Species Classification");
+        mRecognitionClassification.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mRecognitionClassificationActionPerformed(evt);
+            }
+        });
+        mRecognition.add(mRecognitionClassification);
+
+        jMenuBar1.add(mRecognition);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -120,6 +142,10 @@ public class viewPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mFilterBlurLowActionPerformed
 
+    private void mRecognitionClassificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mRecognitionClassificationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mRecognitionClassificationActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -135,6 +161,10 @@ public class viewPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mFilterBlurMedian;
     private javax.swing.JMenuItem mFilterEdgeSobel;
     private javax.swing.JMenu mFilters;
+    private javax.swing.JMenu mRecognition;
+    private javax.swing.JMenuItem mRecognitionClassification;
+    private javax.swing.JMenuItem mRecognitionGroup;
+    private javax.swing.JMenuItem mRecognitionPattern;
     private javax.swing.JMenuItem menuOpen;
     // End of variables declaration//GEN-END:variables
     
@@ -220,5 +250,28 @@ public class viewPrincipal extends javax.swing.JFrame {
         this.mCurvatureChainCode = mCurvatureChainCode;
     }
 
-    
+    public JMenuItem getmRecognitionClassification() {
+        return mRecognitionClassification;
+    }
+
+    public void setmRecognitionClassification(JMenuItem mRecognitionClassification) {
+        this.mRecognitionClassification = mRecognitionClassification;
+    }
+
+    public JMenuItem getmRecognitionGroup() {
+        return mRecognitionGroup;
+    }
+
+    public void setmRecognitionGroup(JMenuItem mRecognitionGroup) {
+        this.mRecognitionGroup = mRecognitionGroup;
+    }
+
+    public JMenuItem getmRecognitionPattern() {
+        return mRecognitionPattern;
+    }
+
+    public void setmRecognitionPattern(JMenuItem mRecognitionPattern) {
+        this.mRecognitionPattern = mRecognitionPattern;
+    }
+
 }
