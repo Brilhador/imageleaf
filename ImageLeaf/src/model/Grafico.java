@@ -20,7 +20,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author Anderson
  */
 public class Grafico {
-    
+
     public static BufferedImage curvatureDimension(ArrayList<Dimension> lista, int sizeWidth, int sizeHeight, String title) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
@@ -52,7 +52,7 @@ public class Grafico {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         for (int i = 0; i < lista.size(); i++) {
-                dataset.addValue(lista.get(i), "chain code", "" + i);
+            dataset.addValue(lista.get(i), "chain code", "" + i);
         }
 
         JFreeChart chart = ChartFactory.createLineChart(
@@ -148,8 +148,37 @@ public class Grafico {
             return null;
         }
     }
-    
+
     public static BufferedImage histograma(int[] histograma, int width, int height, String title, String labelx, String labely) {
+
+        try {
+
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+            //carregar dataset com os histogramas
+            for (int i = 0; i < histograma.length; i++) {
+                dataset.addValue(histograma[i], "histograma", "" + i);
+            }
+
+            JFreeChart chart = ChartFactory.createLineChart(
+                    title,
+                    labelx,
+                    labely,
+                    dataset,
+                    PlotOrientation.VERTICAL,
+                    true,
+                    false,
+                    false);
+
+            return chart.createBufferedImage(width, height);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static BufferedImage histograma(double[] histograma, int width, int height, String title, String labelx, String labely) {
 
         try {
 
