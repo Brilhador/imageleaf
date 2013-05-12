@@ -371,7 +371,6 @@ public class Histograma {
     }
     //normalização de histograma por scala
     //normalization by scaling between 0 and 1
-
     public static double[] normalizacao(int[] histograma, int RANGE) {
         //intensidade
         if (RANGE >= 256) {

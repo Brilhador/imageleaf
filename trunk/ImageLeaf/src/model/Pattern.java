@@ -49,7 +49,7 @@ public class Pattern {
     private static void createChainPattern(BufferedImage[] imagens, String caminho) {
         int[] outHist = new int[8];
         for (BufferedImage image : imagens) {
-            image = Filtro.passaBaixas(image, 5);
+            image = Filtro.passaBaixas(image, 7);
             int total = image.getWidth() * image.getHeight();
             int limiar = Limiar.otsuTreshold(Histograma.histogramaGray(image), total);
             int[][] borderDetect = Filtro.bordaSobel(image);

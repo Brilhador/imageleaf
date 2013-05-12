@@ -20,6 +20,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import model.ChainCode;
 import model.Grafico;
+import model.Histograma;
 import model.Signature;
 import view.curvature.ViewChainCode;
 
@@ -64,7 +65,7 @@ public class ControlCurvatureChainCode {
                             if (lista != null) {
                                 drawPathChainCode(lista);
                                 grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");
-                                view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
+                                view.getLblImageCurvature().setImage(grafico);
                             } else {
                                 JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
                             }
@@ -76,7 +77,7 @@ public class ControlCurvatureChainCode {
                                 sig.createSignalBorders(10, listaCode);
                                 drawPathChainCode(lista);
                                 grafico = Grafico.curvatureChainCode(listaCode, width, heigth, "Curvature");
-                                view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
+                                view.getLblImageCurvature().setImage(grafico);
                             } else {
                                 JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
                             }
@@ -84,9 +85,10 @@ public class ControlCurvatureChainCode {
                             ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                             if (lista != null) {
                                 int[] histChain = new ChainCode(imageBorder).getHistograma();
+                                double[] normHistChain = Histograma.normalizacao(histChain, histChain.length);
                                 drawPathChainCode(lista);
-                                grafico = Grafico.histograma(histChain, width, heigth, "Histogram Chain Code", "Direction", "Frequency");
-                                view.getLblImageCurvature().setIcon(new ImageIcon(grafico));
+                                grafico = Grafico.histograma(normHistChain, width, heigth, "Histogram Chain Code", "Direction", "Frequency");
+                                view.getLblImageCurvature().setImage(grafico);
                             } else {
                                 JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
                             }
