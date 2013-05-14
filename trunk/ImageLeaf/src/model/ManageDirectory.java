@@ -25,7 +25,7 @@ public class ManageDirectory {
 
     //funcao que cria os diretorios do progrma
     public void criarDiretorio(String caminho) {
-        System.out.println(diretorioPadrao);
+//        System.out.println(diretorioPadrao);
         new File(caminho).mkdirs();
     }
 

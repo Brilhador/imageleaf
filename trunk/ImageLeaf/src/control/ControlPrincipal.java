@@ -9,6 +9,7 @@ import control.blur.ControlBlurMedian;
 import control.curvature.ControlCurvatureChainCode;
 import control.edge.ControlEdgeSobel;
 import control.recognition.ControlPatternGeneration;
+import control.recognition.ControlSpeciesClassificationMultiple;
 import control.recognition.ControlSpeciesGroup;
 
 import java.awt.event.ActionEvent;
@@ -131,7 +132,14 @@ public class ControlPrincipal {
             }
         });
 
-        view.getmRecognitionClassification().addActionListener(new ActionListener() {
+        view.getmClassificationMultiple().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ControlSpeciesClassificationMultiple();
+            }
+        });
+        
+        view.getmClassificationSingle().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             }

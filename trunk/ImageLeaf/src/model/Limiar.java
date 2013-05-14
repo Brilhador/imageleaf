@@ -19,8 +19,9 @@ public class Limiar {
     /*
      * lIMIARIAZACAO BASICA com LIMIAR passado por parametro
      */
+    //limiariazaçao utilizadas no threshold
     public static BufferedImage limiarizacao(BufferedImage img, int limiar) {
-        //imagem de saida
+        //image de saida
         BufferedImage imgOut = new BufferedImage(
                 img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
         int cor;
@@ -29,10 +30,10 @@ public class Limiar {
             for (int y = 0; y < img.getHeight(); y++) {
                 cor = (Color.getColor("red", img.getRGB(x, y)).getRed() + Color.getColor("green", img.getRGB(x, y)).getGreen() + Color.getColor("blue", img.getRGB(x, y)).getBlue()) / 3;
                 if (cor >= limiar) {
+                    //maior que o limiar fundo
                     imgOut.setRGB(x, y, Color.WHITE.getRGB());
                 } else {
                     imgOut.setRGB(x, y, Color.BLACK.getRGB());
-
                 }
             }
         }
@@ -51,9 +52,9 @@ public class Limiar {
             for (int y = 0; y < img.getHeight(); y++) {
                 cor = (Color.getColor("red", img.getRGB(x, y)).getRed() + Color.getColor("green", img.getRGB(x, y)).getGreen() + Color.getColor("blue", img.getRGB(x, y)).getBlue()) / 3;
                 if (cor >= limiar) {
-                    boolImg[x][y] = true;
-                } else {
                     boolImg[x][y] = false;
+                } else {
+                    boolImg[x][y] = true;
 
                 }
             }
@@ -77,7 +78,8 @@ public class Limiar {
             // colunas
             for (int y = 0; y < img[0].length; y++) {
                 if (img[x][y] >= liminar) {
-                    borda[x][y] = true;
+                    //o valor gerado pelo dtector de bordas for maior que o limiar eh considerado uma borda
+                    borda[x][y] = true;//BLACK
                 } else {
                     borda[x][y] = false;
                 }
@@ -98,6 +100,7 @@ public class Limiar {
         for (int x = 0; x < img.getWidth(); x++) {
             for (int y = 0; y < img.getHeight(); y++) {
                 if (g[x][y] >= limiar) {
+                    //TRUE
                     imgOut.setRGB(x, y, Color.BLACK.getRGB());
                 } else {
                     imgOut.setRGB(x, y, Color.WHITE.getRGB());

@@ -97,14 +97,23 @@
                 <Property name="text" type="java.lang.String" value="Pattern Generation"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mRecognitionClassification">
+            <Menu class="javax.swing.JMenu" name="jMenu1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Species Classification"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mRecognitionClassificationActionPerformed"/>
-              </Events>
-            </MenuItem>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="mClassificationSingle">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Single Image"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mClassificationMultiple">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Multiple Image"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
           </SubComponents>
         </Menu>
       </SubComponents>
