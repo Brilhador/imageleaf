@@ -47,23 +47,30 @@ public class Pattern {
     }
 
     private static void createChainPattern(BufferedImage[] imagens, String caminho) {
-        int[] outHist = new int[8];
+        //histograma de saida do padrão da classe
+        double[] outHist = new double[8];
+        //contar a quantidade de imagens usadas para gerar o padrão
+        int[] dados = new int[2];
+        dados[1] = imagens.length;
         for (BufferedImage image : imagens) {
-            image = Filtro.passaBaixas(image, 7);
+            image = Filtro.passaBaixas(image, 5);
             int total = image.getWidth() * image.getHeight();
             int limiar = Limiar.otsuTreshold(Histograma.histogramaGray(image), total);
             int[][] borderDetect = Filtro.bordaSobel(image);
             boolean[][] imageBorder = Limiar.limiarizacao(borderDetect, limiar);
             int[] histChain = new ChainCode(imageBorder).getHistograma();
             if (histChain != null) {
+                double[] normHistChain = Histograma.normalizacao(histChain, histChain.length);
+                dados[0]++;
                 for (int i = 0; i < 8; i++) {
-                    outHist[i] += histChain[i];
+                    outHist[i] += normHistChain[i];
                 }
             }
         }
         for (int i = 0; i < 8; i++) {
             outHist[i] /= imagens.length;
         }
+        writingPattern(caminho + "/" + "dados", dados);
         writingPattern(caminho + "/" + "chainPattern", outHist);
     }
     
@@ -73,6 +80,21 @@ public class Pattern {
             FileWriter arquivo = new FileWriter(caminhoNome + ".txt");
             BufferedWriter buffer = new BufferedWriter(arquivo);
             for (int i : histograma) {
+                buffer.write(i + "");
+                buffer.newLine();
+            }
+            buffer.flush();
+            buffer.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ManageDirectory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private static void writingPattern(String caminhoNome, double[] histograma) {
+        try {
+            FileWriter arquivo = new FileWriter(caminhoNome + ".txt");
+            BufferedWriter buffer = new BufferedWriter(arquivo);
+            for (double i : histograma) {
                 buffer.write(i + "");
                 buffer.newLine();
             }
