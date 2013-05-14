@@ -54,7 +54,7 @@ public class ChainCode {
             d = getNextCoordinates(x, y, direction);
             if (d != null) {
                 if ((d.width != lastx || d.height != lasty)) {
-                    System.out.println(direction);
+//                    System.out.println(direction);
                     lastDirection = direction;
                     return d;
                 }
@@ -66,7 +66,7 @@ public class ChainCode {
             d = getNextCoordinates(x, y, direction);
             if (d != null) {
                 if ((d.width != lastx || d.height != lasty)) {
-                    System.out.println(direction);
+//                    System.out.println(direction);
                     lastDirection = direction;
                     return d;
                 }
@@ -119,7 +119,7 @@ public class ChainCode {
         int x = startx;
         int y = starty;
         Dimension d = null;
-        System.out.println("Inicial: \n" + x + "," + y);
+//        System.out.println("Inicial: \n" + x + "," + y);
         do {
             d = getNextDirection(x, y);
             if (d == null) {
@@ -132,9 +132,9 @@ public class ChainCode {
             lasty = y;
             x = d.width;
             y = d.height;
-            System.out.println(x + "," + y);
+//            System.out.println(x + "," + y);
         } while ((startx != x || starty != y));//sai quando encontra o ponto inicial
-        System.out.println("finalizado");
+//        System.out.println("finalizado");
         return lista;
     }
 
@@ -145,7 +145,7 @@ public class ChainCode {
         int x = startx;
         int y = starty;
         Dimension d = null;
-        System.out.println("Inicial: \n" + x + "," + y);
+//        System.out.println("Inicial: \n" + x + "," + y);
         do {
             d = getNextDirection(x, y);
             if (d == null) {
@@ -158,9 +158,9 @@ public class ChainCode {
             lasty = y;
             x = d.width;
             y = d.height;
-            System.out.println(x + "," + y);
+//            System.out.println(x + "," + y);
         } while ((startx != x || starty != y));//sai quando encontra o ponto inicial
-        System.out.println("finalizado");
+//        System.out.println("finalizado");
         return lista;
     }
 

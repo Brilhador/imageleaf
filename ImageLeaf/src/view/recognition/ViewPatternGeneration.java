@@ -37,7 +37,7 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
         btnStart = new javax.swing.JButton();
         pgBar = new javax.swing.JProgressBar();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblPattern.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblPattern.setText("Pattern Generation:");

@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,6 +62,19 @@ public class MyImage {
             }
         }
         return imagens;
+    }
+
+    public static BufferedImage FileToImage(File arquivo) {
+        try {
+            ImageInputStream stream = new FileImageInputStream(arquivo);
+            BufferedImage outImage = ImageIO.read(stream);
+            return outImage;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MyImage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MyImage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public static BufferedImage convertToGray(BufferedImage img) {
@@ -131,7 +145,7 @@ public class MyImage {
                 }
             }
         }
-        
+
         return imagem.getSubimage(xmin, ymin, xmax, ymax);
     }
 }

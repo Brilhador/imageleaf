@@ -49,7 +49,9 @@ public class viewPrincipal extends javax.swing.JFrame {
         mRecognition = new javax.swing.JMenu();
         mRecognitionGroup = new javax.swing.JMenuItem();
         mRecognitionPattern = new javax.swing.JMenuItem();
-        mRecognitionClassification = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        mClassificationSingle = new javax.swing.JMenuItem();
+        mClassificationMultiple = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,13 +112,15 @@ public class viewPrincipal extends javax.swing.JFrame {
         mRecognitionPattern.setText("Pattern Generation");
         mRecognition.add(mRecognitionPattern);
 
-        mRecognitionClassification.setText("Species Classification");
-        mRecognitionClassification.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mRecognitionClassificationActionPerformed(evt);
-            }
-        });
-        mRecognition.add(mRecognitionClassification);
+        jMenu1.setText("Species Classification");
+
+        mClassificationSingle.setText("Single Image");
+        jMenu1.add(mClassificationSingle);
+
+        mClassificationMultiple.setText("Multiple Image");
+        jMenu1.add(mClassificationMultiple);
+
+        mRecognition.add(jMenu1);
 
         jMenuBar1.add(mRecognition);
 
@@ -142,16 +146,15 @@ public class viewPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mFilterBlurLowActionPerformed
 
-    private void mRecognitionClassificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mRecognitionClassificationActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mRecognitionClassificationActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JDesktopPane jPanelPrincipal;
+    private javax.swing.JMenuItem mClassificationMultiple;
+    private javax.swing.JMenuItem mClassificationSingle;
     private javax.swing.JMenu mCurvature;
     private javax.swing.JMenuItem mCurvatureChainCode;
     private javax.swing.JMenu mEdit;
@@ -162,7 +165,6 @@ public class viewPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mFilterEdgeSobel;
     private javax.swing.JMenu mFilters;
     private javax.swing.JMenu mRecognition;
-    private javax.swing.JMenuItem mRecognitionClassification;
     private javax.swing.JMenuItem mRecognitionGroup;
     private javax.swing.JMenuItem mRecognitionPattern;
     private javax.swing.JMenuItem menuOpen;
@@ -250,14 +252,6 @@ public class viewPrincipal extends javax.swing.JFrame {
         this.mCurvatureChainCode = mCurvatureChainCode;
     }
 
-    public JMenuItem getmRecognitionClassification() {
-        return mRecognitionClassification;
-    }
-
-    public void setmRecognitionClassification(JMenuItem mRecognitionClassification) {
-        this.mRecognitionClassification = mRecognitionClassification;
-    }
-
     public JMenuItem getmRecognitionGroup() {
         return mRecognitionGroup;
     }
@@ -274,4 +268,20 @@ public class viewPrincipal extends javax.swing.JFrame {
         this.mRecognitionPattern = mRecognitionPattern;
     }
 
+    public javax.swing.JMenuItem getmClassificationMultiple() {
+        return mClassificationMultiple;
+    }
+
+    public void setmClassificationMultiple(javax.swing.JMenuItem mClassificationMultiple) {
+        this.mClassificationMultiple = mClassificationMultiple;
+    }
+
+    public javax.swing.JMenuItem getmClassificationSingle() {
+        return mClassificationSingle;
+    }
+
+    public void setmClassificationSingle(javax.swing.JMenuItem mClassificationSingle) {
+        this.mClassificationSingle = mClassificationSingle;
+    }
+    
 }

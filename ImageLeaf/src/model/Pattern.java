@@ -4,14 +4,20 @@
  */
 package model;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import static model.Classificador.FOUR_SURFACE;
 import static model.Classificador.NO_THRESHOLD;
 import static model.Classificador.THRESHOLD;
@@ -39,62 +45,88 @@ public class Pattern {
             System.out.println(diretorio.getAbsolutePath());
             if (subFiles != null) {
                 //converte file em imagens
-                BufferedImage[] imagens = MyImage.FileToImage(subFiles);
-                createChainPattern(imagens, diretorio.getAbsolutePath());
+                createChainPattern(subFiles, diretorio.getAbsolutePath());
             }
         }
-        System.out.println("P-finalizado");
     }
 
-    private static void createChainPattern(BufferedImage[] imagens, String caminho) {
-        //histograma de saida do padrão da classe
-        double[] outHist = new double[8];
-        //contar a quantidade de imagens usadas para gerar o padrão
-        int[] dados = new int[2];
-        dados[1] = imagens.length;
-        for (BufferedImage image : imagens) {
-            image = Filtro.passaBaixas(image, 5);
-            int total = image.getWidth() * image.getHeight();
-            int limiar = Limiar.otsuTreshold(Histograma.histogramaGray(image), total);
-            int[][] borderDetect = Filtro.bordaSobel(image);
-            boolean[][] imageBorder = Limiar.limiarizacao(borderDetect, limiar);
-            int[] histChain = new ChainCode(imageBorder).getHistograma();
-            if (histChain != null) {
-                double[] normHistChain = Histograma.normalizacao(histChain, histChain.length);
-                dados[0]++;
-                for (int i = 0; i < 8; i++) {
-                    outHist[i] += normHistChain[i];
-                }
-            }
-        }
-        for (int i = 0; i < 8; i++) {
-            outHist[i] /= imagens.length;
-        }
-        writingPattern(caminho + "/" + "dados", dados);
-        writingPattern(caminho + "/" + "chainPattern", outHist);
-    }
-    
-    //funcao que cria um txt com os dados de um histograma
-    private static void writingPattern(String caminhoNome, int[] histograma) {
+    private static void createChainPattern(File[] files, String caminho) {
         try {
-            FileWriter arquivo = new FileWriter(caminhoNome + ".txt");
-            BufferedWriter buffer = new BufferedWriter(arquivo);
-            for (int i : histograma) {
-                buffer.write(i + "");
-                buffer.newLine();
+            //histograma de saida do padrão da classe
+            double[] outHist = new double[8];
+            List<String> folha = new ArrayList<>();
+            //contar a quantidade de imagens usadas para gerar o padrão
+            int count = 0;
+            int indice = 0;
+            for (File file : files) {
+                System.out.println(file.getName() + "--> iniciada...");
+                //converter file para image
+                BufferedImage image = MyImage.FileToImage(file);
+                if (image != null) {
+                    //aplicar o filtro para suavizar a imagem
+                    image = Filtro.passaBaixas(image, 5);
+                    //pega o total imagem
+                    int total = image.getWidth() * image.getHeight();
+                    //gera o histograma de tons de cinzas da imagem e depois calcula o limiar da imagem
+                    int limiar = Limiar.otsuTreshold(Histograma.histogramaGray(image), total);
+                    //realiza a limiarizaçao
+                    boolean[][] imageBorder = Limiar.limiarizacaoBool(image, limiar);
+                    //calcula o codigo da cadeia e pega o histograma de direçoes
+                    int[] histChain = new ChainCode(imageBorder).getHistograma();
+                    if (histChain != null) {
+                        try {
+                            //limiariza a image e desenha o contorno do chain code
+                            image = drawPathChainCode(new ChainCode(imageBorder).getDimesionChainCode(), Limiar.limiarizacao(image, limiar));
+                            //salvar a imagem da folha segmentada na pasta
+                            saveImage(caminho + "/segmentacao", file.getName(), image);
+                            //normaliza o histograma de direçoes colocando em uma escala de 0 a 1
+                            double[] normHistChain = Histograma.normalizacao(histChain, histChain.length);
+                            for (int i = 0; i < 8; i++) {
+                                outHist[i] += normHistChain[i];
+                            }
+                            //adiciono no relatorio se a folha foi segmenteda
+                            folha.add(file.getName() + " : " + "YES");
+                            //incrementa o contador
+                            count++;
+                        } catch (Exception e) {
+                            folha.add(file.getName() + " : " + "NO");
+                            //salvar a imagem da folha segmentada na pasta
+                            image = Limiar.limiarizacao(image, limiar);
+                            saveImage(caminho + "/segmentacao", file.getName(), image);
+                        }
+                    }
+                } else {
+                    folha.add(file.getName() + " : " + "ERRO READ");
+                }
+                System.out.println(file.getName() + "--> finalizada!\n");
+                indice++;
             }
-            buffer.flush();
-            buffer.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ManageDirectory.class.getName()).log(Level.SEVERE, null, ex);
+            for (int i = 0; i < 8; i++) {
+                outHist[i] /= files.length;
+            }
+            System.out.println("-----------------------\n");
+            System.out.println("gerando relatorios...\n");
+            folha.add("folhas segmentadas: " + count);
+            indice++;
+            folha.add("total de folhas: " + files.length);
+            indice++;
+            folha.add("Porcentagem de segmentacao: " + ((((float) count) / files.length) * 100) + "%");
+            System.out.println(indice);
+            writingPattern(caminho + "/" + "relatorio", folha);
+            writingPattern(caminho + "/" + "chainPattern", outHist);
+            System.out.println("relatorios... finalizados!");
+            System.out.println("-----------------------\n\n");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-    
+
+    //funcao que cria um txt com os dados de um histograma
     private static void writingPattern(String caminhoNome, double[] histograma) {
         try {
             FileWriter arquivo = new FileWriter(caminhoNome + ".txt");
             BufferedWriter buffer = new BufferedWriter(arquivo);
-            for (double i : histograma) {
+            for (Object i : histograma) {
                 buffer.write(i + "");
                 buffer.newLine();
             }
@@ -103,5 +135,44 @@ public class Pattern {
         } catch (IOException ex) {
             Logger.getLogger(ManageDirectory.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private static void writingPattern(String caminhoNome, List<String> dados) {
+        try {
+            FileWriter arquivo = new FileWriter(caminhoNome + ".txt");
+            BufferedWriter buffer = new BufferedWriter(arquivo);
+            int c = 0;
+            for (String i : dados) {
+                buffer.write(i);
+                buffer.newLine();
+            }
+            buffer.flush();
+            buffer.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ManageDirectory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private static void saveImage(String caminho, String nome, BufferedImage image) {
+        new ManageDirectory().criarDiretorio(caminho);
+        try {
+            ImageIO.write(image, "JPG", new File(caminho + "/" + nome));
+        } catch (IOException ex) {
+            Logger.getLogger(Pattern.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //desenhar o chain code
+    private static BufferedImage drawPathChainCode(ArrayList<Dimension> lista, BufferedImage segImage) {
+        for (Dimension dimension : lista) {
+            segImage.setRGB(dimension.width, dimension.height, Color.RED.getRGB());
+        }
+        Dimension dimension = lista.get(0);
+        segImage.setRGB(dimension.width, dimension.height, Color.GREEN.getRGB());
+        segImage.setRGB(dimension.width + 1, dimension.height, Color.GREEN.getRGB());//0
+        segImage.setRGB(dimension.width, dimension.height - 1, Color.GREEN.getRGB());//2
+        segImage.setRGB(dimension.width - 1, dimension.height, Color.GREEN.getRGB());//4
+        segImage.setRGB(dimension.width, dimension.height + 1, Color.GREEN.getRGB());//6
+        return segImage;
     }
 }
