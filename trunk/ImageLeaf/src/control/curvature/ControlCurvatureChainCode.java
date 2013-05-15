@@ -62,8 +62,9 @@ public class ControlCurvatureChainCode {
                         startProgressBar();
                         if (view.getRbCoordinates().isSelected()) {
                             ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
+                            Dimension centroide = new Signature().getCentroide(lista);
                             if (lista != null) {
-                                drawPathChainCode(lista);
+                                drawPathChainCode(lista, centroide);
                                 grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");
                                 view.getLblImageCurvature().setImage(grafico);
                             } else {
@@ -72,22 +73,22 @@ public class ControlCurvatureChainCode {
                         } else if (view.getRbChainCode().isSelected()) {
                             ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                             if (lista != null) {
-                                ArrayList<Integer> listaCode = new ChainCode(imageBorder).getChainCode();
-                                Signature sig = new Signature();
-                                sig.createSignalBorders(10, listaCode);
-                                drawPathChainCode(lista);
-                                grafico = Grafico.curvatureChainCode(listaCode, width, heigth, "Curvature");
-                                view.getLblImageCurvature().setImage(grafico);
+//                                ArrayList<Integer> listaCode = new ChainCode(imageBorder).getChainCode();
+//                                Signature sig = new Signature();
+//                                sig.createSignalBorders(10, listaCode);
+//                                drawPathChainCode(lista);
+//                                grafico = Grafico.curvatureChainCode(listaCode, width, heigth, "Curvature");
+//                                view.getLblImageCurvature().setImage(grafico);
                             } else {
                                 JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
                             }
                         } else if (view.getRbHistChain().isSelected()) {
                             ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                             if (lista != null) {
-                                int[] histChain = new ChainCode(imageBorder).getHistograma();
-                                double[] normHistChain = Histograma.normalizacao(histChain, histChain.length);
-                                drawPathChainCode(lista);
-                                grafico = Grafico.histograma(normHistChain, width, heigth, "Histogram Chain Code", "Direction", "Frequency");
+                                int[] vectorFeature = new ChainCode(imageBorder).getAngleHistograma();
+                                double[] normFeature = Histograma.normalizacao(vectorFeature, vectorFeature.length);
+//                                drawPathChainCode(lista);
+                                grafico = Grafico.histograma(normFeature, width, heigth, "Histogram Chain Code", "Direction", "Frequency");
                                 view.getLblImageCurvature().setImage(grafico);
                             } else {
                                 JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
@@ -151,7 +152,7 @@ public class ControlCurvatureChainCode {
         view.getPgBar().setIndeterminate(false);
     }
 
-    public void drawPathChainCode(ArrayList<Dimension> lista) {
+    public void drawPathChainCode(ArrayList<Dimension> lista, Dimension centroide) {
         BufferedImage drawImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
         Graphics2D g2d = drawImage.createGraphics();
         g2d.drawImage(image, null, 0, 0);
@@ -160,6 +161,12 @@ public class ControlCurvatureChainCode {
             drawImage.setRGB(dimension.width, dimension.height, Color.RED.getRGB());
         }
         Dimension dimension = lista.get(0);
+        drawImage.setRGB(centroide.width, centroide.height, Color.GREEN.getRGB());
+        drawImage.setRGB(centroide.width + 1, centroide.height, Color.GREEN.getRGB());//0
+        drawImage.setRGB(centroide.width, centroide.height - 1, Color.GREEN.getRGB());//2
+        drawImage.setRGB(centroide.width - 1, centroide.height, Color.GREEN.getRGB());//4
+        drawImage.setRGB(centroide.width, centroide.height + 1, Color.GREEN.getRGB());//6
+        
         drawImage.setRGB(dimension.width, dimension.height, Color.GREEN.getRGB());
         drawImage.setRGB(dimension.width + 1, dimension.height, Color.GREEN.getRGB());//0
         drawImage.setRGB(dimension.width, dimension.height - 1, Color.GREEN.getRGB());//2
