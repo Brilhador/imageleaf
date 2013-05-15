@@ -83,16 +83,16 @@ public class Sorter {
 
         try {
             //histograma do chain codigo da imagem
-            double[] imageHistChain = createNormHistChain(img);
+            double[] normFeature = createNormHistChain(img);
 
-            if (imageHistChain != null) {
+            if (normFeature != null) {
                 //local aonde os padroes estao armazenado
                 File[] especies = new File(pathPattern).listFiles();
 
                 for (File especie : especies) {
 
                     //carrega o histogrma médio no vetores
-                    double[] patternHistChain = lerTxtHistPattern(especie.getAbsolutePath() + "/chainPattern.txt");
+                    double[] patternFeature = lerTxtFeaturePattern(especie.getAbsolutePath() + "/chainPattern.txt");
 
                     //variavel auxiliar para armazenar a diferencas
                     double aux = 0;
@@ -100,10 +100,10 @@ public class Sorter {
                     //calcula a distancia entre a imagem e o padrao
                     switch (distancia) {
                         case EUCLIDIANA:
-                            aux = Distancia.Euclidiana(imageHistChain, patternHistChain);
+                            aux = Distancia.Euclidiana(normFeature, patternFeature);
                             break;
                         case MANHATTAN:
-                            aux = Distancia.Manhattan(imageHistChain, patternHistChain);
+                            aux = Distancia.Manhattan(normFeature, patternFeature);
                             break;
                         default:
                             return null;
@@ -137,22 +137,22 @@ public class Sorter {
         //realiza a limiarizaçao
         boolean[][] imageBorder = Limiar.limiarizacaoBool(image, limiar);
         //calcula o codigo da cadeia e pega o histograma de direçoes
-        int[] histChain = new ChainCode(imageBorder).getHistograma();
-        if (histChain != null) {
+        int[] vectorFeature = new ChainCode(imageBorder).getHistograma();
+        if (vectorFeature != null) {
             //normaliza o histograma de direçoes colocando em uma escala de 0 a 1
-            return Histograma.normalizacao(histChain, histChain.length);
+            return Histograma.normalizacao(vectorFeature, vectorFeature.length);
         } else {
             return null;
         }
     }
 
     //funcao que pega um txt de inteiros e converte em histograma
-    public static double[] lerTxtHistPattern(String caminhoNome) {
+    public static double[] lerTxtFeaturePattern(String caminhoNome) {
         double[] histograma = new double[8];
         try {
             FileReader reader = new FileReader(caminhoNome);
             BufferedReader buffer = new BufferedReader(reader);
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < histograma.length; i++) {
                 histograma[i] = Double.parseDouble(buffer.readLine());
             }
             buffer.close();

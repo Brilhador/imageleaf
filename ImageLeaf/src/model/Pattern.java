@@ -53,7 +53,7 @@ public class Pattern {
     private static void createChainPattern(File[] files, String caminho) {
         try {
             //histograma de saida do padrão da classe
-            double[] outHist = new double[8];
+            double[] outFeature = new double[8];
             List<String> folha = new ArrayList<>();
             //contar a quantidade de imagens usadas para gerar o padrão
             int count = 0;
@@ -72,17 +72,17 @@ public class Pattern {
                     //realiza a limiarizaçao
                     boolean[][] imageBorder = Limiar.limiarizacaoBool(image, limiar);
                     //calcula o codigo da cadeia e pega o histograma de direçoes
-                    int[] histChain = new ChainCode(imageBorder).getHistograma();
-                    if (histChain != null) {
+                    int[] vectorFeature = new ChainCode(imageBorder).getHistograma();
+                    if (vectorFeature != null) {
                         try {
                             //limiariza a image e desenha o contorno do chain code
                             image = drawPathChainCode(new ChainCode(imageBorder).getDimesionChainCode(), Limiar.limiarizacao(image, limiar));
                             //salvar a imagem da folha segmentada na pasta
                             saveImage(caminho + "/segmentacao", file.getName(), image);
                             //normaliza o histograma de direçoes colocando em uma escala de 0 a 1
-                            double[] normHistChain = Histograma.normalizacao(histChain, histChain.length);
+                            double[] normFeature = Histograma.normalizacao(vectorFeature, vectorFeature.length);
                             for (int i = 0; i < 8; i++) {
-                                outHist[i] += normHistChain[i];
+                                outFeature[i] += normFeature[i];
                             }
                             //adiciono no relatorio se a folha foi segmenteda
                             folha.add(file.getName() + " : " + "YES");
@@ -101,8 +101,8 @@ public class Pattern {
                 System.out.println(file.getName() + "--> finalizada!\n");
                 indice++;
             }
-            for (int i = 0; i < 8; i++) {
-                outHist[i] /= files.length;
+            for (int i = 0; i < outFeature.length; i++) {
+                outFeature[i] /= files.length;
             }
             System.out.println("-----------------------\n");
             System.out.println("gerando relatorios...\n");
@@ -113,7 +113,7 @@ public class Pattern {
             folha.add("Porcentagem de segmentacao: " + ((((float) count) / files.length) * 100) + "%");
             System.out.println(indice);
             writingPattern(caminho + "/" + "relatorio", folha);
-            writingPattern(caminho + "/" + "chainPattern", outHist);
+            writingPattern(caminho + "/" + "chainPattern", outFeature);
             System.out.println("relatorios... finalizados!");
             System.out.println("-----------------------\n\n");
         } catch (Exception e) {

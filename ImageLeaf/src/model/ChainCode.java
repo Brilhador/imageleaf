@@ -184,4 +184,48 @@ public class ChainCode {
         }
 
     }
+    
+    public int[] getAngleHistograma(){
+        //tabela de angulos
+        AngleTable table = new AngleTable();
+        
+        //vetor de caracteristicas
+        //0 = 0, 1 = 45, 2 = 90, 3 = 135, 4 = 180, 5 = 225, 6 = 270, 7 = 315
+        //0 = 0, 1 = 45, 2 = 90, 3 = 135, 4 = 180, 5 = -135, 6 = -90, 7 = -45
+        int[] vetor = {0,0,0,0,0,0,0,0};
+        
+        //gerando o chain code
+        ArrayList<Integer> chaincode = getChainCode();
+        
+        for (int i = 0; i < chaincode.size()-1; i++) {
+            int angle = table.getAngle(chaincode.get(i), chaincode.get(i+1));
+            switch(angle){
+                case 0:
+                    vetor[0]++;
+                    break;
+                case 45:
+                    vetor[1]++;
+                    break;
+                case 90:
+                    vetor[2]++;
+                    break;
+                case 135:
+                    vetor[3]++;
+                    break;
+                case 180:
+                    vetor[4]++;
+                    break;
+                case -135:
+                    vetor[5]++;
+                    break;
+                case -90:
+                    vetor[6]++;
+                    break;
+                case -45:
+                    vetor[7]++;
+                    break;
+            }
+        }
+        return vetor;
+    }
 }
