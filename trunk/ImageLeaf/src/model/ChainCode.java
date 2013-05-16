@@ -182,7 +182,6 @@ public class ChainCode {
         }else{
             return null;
         }
-
     }
     
     public int[] getAngleHistograma(){
