@@ -52,7 +52,7 @@ public class ControlPatternGeneration {
                     protected Object doInBackground() throws Exception {
                         if (!view.getTxtPath().getText().equals("...")) {
                             startProgressBar();
-                            new Pattern().startHistChain(caminho);
+                            new Pattern().startAnglePattern(caminho);
                             stopProgressBar();
                             JOptionPane.showMessageDialog(view, "Finished", "", JOptionPane.INFORMATION_MESSAGE);
                         } else {

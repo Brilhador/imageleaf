@@ -13,9 +13,14 @@ import java.util.ArrayList;
  */
 public class Signature {
 
-    public double[] createSignal(ArrayList<Dimension> listaDimension) {
+    public int[] createSignal(ArrayList<Dimension> listaDimension, int angle) {
         Dimension centroide = getCentroideMedian(listaDimension);
-        return null;
+        Dimension[] point = getDimensionPoint(listaDimension, centroide, angle);
+        int[] distance = new int[360/angle];
+        for (int i = 0; i < point.length; i++) {
+            distance[i] = getDistance(centroide, point[i]);
+        }
+        return distance;
     }
 
     private double[] reorganizeDistance(double[] vector) {
@@ -50,7 +55,7 @@ public class Signature {
         return new Dimension(x / lista.size(), y / lista.size());
     }
 
-    public Dimension getInitAngle(ArrayList<Dimension> lista, Dimension centroide) {
+    private Dimension getInitAngle(ArrayList<Dimension> lista, Dimension centroide) {
         //pega o pixel no angulo zero
         Dimension point = centroide;
         //identificar os pontos 
@@ -63,7 +68,7 @@ public class Signature {
         return point;
     }
 
-    public Dimension getInitAngleByDistance(ArrayList<Dimension> lista, Dimension centroide){
+    private Dimension getInitAngleByDistance(ArrayList<Dimension> lista, Dimension centroide){
         //pega o pixel no angulo zero
         Dimension point = centroide;
         //distancia

@@ -64,7 +64,10 @@ public class ControlCurvatureChainCode {
                                 ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                                 Dimension centroide = new Signature().getCentroideMedian(lista);
                                 Dimension[] point = new Signature().getDimensionPoint(lista, centroide, 10);
-                               //new Signature().createSignal(lista);
+                                int[] distance = new Signature().createSignal(lista, 10);
+                                for (int i : distance) {
+                                    System.out.println(i);
+                                }
                                 if (lista != null) {
                                     drawPathChainCode(lista, centroide, point);
                                     grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");

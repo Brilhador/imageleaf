@@ -4,12 +4,14 @@
  */
 package model;
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -83,16 +85,16 @@ public class Sorter {
 
         try {
             //histograma do chain codigo da imagem
-            double[] normFeature = createNormHistChain(img);
+            int[] feature = createSignatureAngle(img, 10);
 
-            if (normFeature != null) {
+            if (feature != null) {
                 //local aonde os padroes estao armazenado
                 File[] especies = new File(pathPattern).listFiles();
 
                 for (File especie : especies) {
 
                     //carrega o histogrma médio no vetores
-                    double[] patternFeature = lerTxtFeaturePattern(especie.getAbsolutePath() + "/chainPattern.txt");
+                    double[] patternFeature = lerTxtFeaturePattern(especie.getAbsolutePath() + "/signatureAngle.txt");
 
                     //variavel auxiliar para armazenar a diferencas
                     double aux = 0;
@@ -100,10 +102,10 @@ public class Sorter {
                     //calcula a distancia entre a imagem e o padrao
                     switch (distancia) {
                         case EUCLIDIANA:
-                            aux = Distancia.Euclidiana(normFeature, patternFeature);
+                            aux = Distancia.Euclidiana(feature, patternFeature);
                             break;
                         case MANHATTAN:
-                            aux = Distancia.Manhattan(normFeature, patternFeature);
+                            aux = Distancia.Manhattan(feature, patternFeature);
                             break;
                         default:
                             return null;
@@ -144,6 +146,21 @@ public class Sorter {
         } else {
             return null;
         }
+    }
+
+    private static int[] createSignatureAngle(BufferedImage image, int angle) {
+        //aplicar o filtro para suavizar a imagem
+        image = Filtro.passaBaixas(image, 5);
+        //pega o total imagem
+        int total = image.getWidth() * image.getHeight();
+        //gera o histograma de tons de cinzas da imagem e depois calcula o limiar da imagem
+        int limiar = Limiar.otsuTreshold(Histograma.histogramaGray(image), total);
+        //realiza a limiarizaçao
+        boolean[][] imageBorder = Limiar.limiarizacaoBool(image, limiar);
+        //calcula o codigo da cadeia 
+        ArrayList<Dimension> listaDimension = new ChainCode(imageBorder).getDimesionChainCode();
+        int[] vectorFeature = new Signature().createSignal(listaDimension, angle);
+        return vectorFeature;
     }
 
     //funcao que pega um txt de inteiros e converte em histograma
