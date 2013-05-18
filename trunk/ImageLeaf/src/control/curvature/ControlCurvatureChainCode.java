@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
@@ -64,7 +63,7 @@ public class ControlCurvatureChainCode {
                             try {
                                 ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                                 Dimension centroide = new Signature().getCentroideMedian(lista);
-                                Dimension[] point = new Signature().getDimensionPoint(lista, centroide, 90);
+                                Dimension[] point = new Signature().getDimensionPoint(lista, centroide, 10);
                                //new Signature().createSignal(lista);
                                 if (lista != null) {
                                     drawPathChainCode(lista, centroide, point);
@@ -91,10 +90,14 @@ public class ControlCurvatureChainCode {
                         } else if (view.getRbHistChain().isSelected()) {
                             ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                             if (lista != null) {
-                                int[] vectorFeature = new ChainCode(imageBorder).getAngleHistograma();
-                                double[] normFeature = Histograma.normalizacao(vectorFeature, vectorFeature.length);
+//                                int[] vectorFeature = new ChainCode(imageBorder).getAngleHistograma();
+//                                double[] normFeature = Histograma.normalizacao(vectorFeature, vectorFeature.length);
+//                                ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
+                                Dimension centroide = new Signature().getCentroideMedian(lista);
+                                Dimension[] point = new Signature().getDimensionPoint(lista, centroide, 10);
 //                                drawPathChainCode(lista);
-                                grafico = Grafico.histograma(normFeature, width, heigth, "Histogram Chain Code", "Direction", "Frequency");
+//                                grafico = Grafico.histograma(normFeature, width, heigth, "Histogram Chain Code", "Direction", "Frequency");
+//                                grafico = Grafico.curvatureDimension(point, width, heigth, "teste");
                                 view.getLblImageCurvature().setImage(grafico);
                             } else {
                                 JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);

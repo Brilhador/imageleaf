@@ -6,7 +6,6 @@ package model;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,10 +17,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import static model.Classificador.FOUR_SURFACE;
-import static model.Classificador.NO_THRESHOLD;
-import static model.Classificador.THRESHOLD;
-import static model.Classificador.TWO_SURFACE;
 
 /**
  *
