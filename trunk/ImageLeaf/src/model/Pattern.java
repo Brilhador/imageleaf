@@ -116,6 +116,99 @@ public class Pattern {
         }
     }
 
+    public static void startAnglePattern(String caminho) {
+        //A partir do caminho, aonde esta localizado o banco de folha lista se todos os diretorios
+        File[] diretorios = new File(caminho).listFiles();
+        for (File diretorio : diretorios) {
+            //filtro para pegar somente os arquivos JPG
+            FilenameFilter filter = new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.endsWith(".jpg");
+                }
+            };
+            File[] subFiles = diretorio.listFiles(filter);
+            //print a especie que esta sendo criado o padrao
+            System.out.println(diretorio.getAbsolutePath());
+            if (subFiles != null) {
+                //converte file em imagens
+                createAnglePattern(subFiles, diretorio.getAbsolutePath(), 10);
+            }
+        }
+    }
+
+    private static void createAnglePattern(File[] files, String caminho, int angle) {
+        try {
+            //histograma de saida do padrão da classe
+            double[] outFeature = new double[360 / angle];
+            List<String> folha = new ArrayList<>();
+            //contar a quantidade de imagens usadas para gerar o padrão
+            int count = 0;
+            int indice = 0;
+            for (File file : files) {
+                System.out.println(file.getName() + "--> iniciada...");
+                //converter file para image
+                BufferedImage image = MyImage.FileToImage(file);
+                if (image != null) {
+                    //aplicar o filtro para suavizar a imagem
+                    image = Filtro.passaBaixas(image, 5);
+                    //pega o total imagem
+                    int total = image.getWidth() * image.getHeight();
+                    //gera o histograma de tons de cinzas da imagem e depois calcula o limiar da imagem
+                    int limiar = Limiar.otsuTreshold(Histograma.histogramaGray(image), total);
+                    //realiza a limiarizaçao
+                    boolean[][] imageBorder = Limiar.limiarizacaoBool(image, limiar);
+                    try {
+                        //calcula o codigo da cadeia 
+                        ArrayList<Dimension> listaDimension = new ChainCode(imageBorder).getDimesionChainCode();
+                        int[] vectorFeature = new Signature().createSignal(listaDimension, angle);
+                        if (vectorFeature != null) {
+                            try {
+                                //limiariza a image e desenha o contorno do chain code
+                                image = drawPathChainCode(listaDimension, Limiar.limiarizacao(image, limiar));
+                                //salvar a imagem da folha segmentada na pasta
+                                saveImage(caminho + "/segmentacao", file.getName(), image);
+                                //normaliza o histograma de direçoes colocando em uma escala de 0 a 1
+                                //adiciono no relatorio se a folha foi segmenteda
+                                folha.add(file.getName() + " : " + "YES");
+                                //incrementa o contador
+                                count++;
+                            } catch (Exception e) {
+                                folha.add(file.getName() + " : " + "NO");
+                                //salvar a imagem da folha segmentada na pasta
+                                image = Limiar.limiarizacao(image, limiar);
+                                saveImage(caminho + "/segmentacao", file.getName(), image);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    folha.add(file.getName() + " : " + "ERRO READ");
+                }
+                System.out.println(file.getName() + "--> finalizada!\n");
+                indice++;
+            }
+            for (int i = 0; i < outFeature.length; i++) {
+                outFeature[i] /= files.length;
+            }
+            System.out.println("-----------------------\n");
+            System.out.println("gerando relatorios...\n");
+            folha.add("folhas segmentadas: " + count);
+            indice++;
+            folha.add("total de folhas: " + files.length);
+            indice++;
+            folha.add("Porcentagem de segmentacao: " + ((((float) count) / files.length) * 100) + "%");
+            System.out.println(indice);
+            writingPattern(caminho + "/" + "relatorio", folha);
+            writingPattern(caminho + "/" + "signatureAngle", outFeature);
+            System.out.println("relatorios... finalizados!");
+            System.out.println("-----------------------\n\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     //funcao que cria um txt com os dados de um histograma
     private static void writingPattern(String caminhoNome, double[] histograma) {
         try {
