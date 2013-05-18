@@ -61,14 +61,20 @@ public class ControlCurvatureChainCode {
                         int heigth = view.getLblImageCurvature().getHeight();
                         startProgressBar();
                         if (view.getRbCoordinates().isSelected()) {
-                            ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
-                            Dimension centroide = new Signature().getCentroide(lista);
-                            if (lista != null) {
-                                drawPathChainCode(lista, centroide);
-                                grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");
-                                view.getLblImageCurvature().setImage(grafico);
-                            } else {
-                                JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
+                            try {
+                                ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
+                                Dimension centroide = new Signature().getCentroideMedian(lista);
+                                Dimension[] point = new Signature().getDimensionPoint(lista, centroide, 90);
+                               //new Signature().createSignal(lista);
+                                if (lista != null) {
+                                    drawPathChainCode(lista, centroide, point);
+                                    grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");
+                                    view.getLblImageCurvature().setImage(grafico);
+                                } else {
+                                    JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         } else if (view.getRbChainCode().isSelected()) {
                             ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
@@ -152,26 +158,28 @@ public class ControlCurvatureChainCode {
         view.getPgBar().setIndeterminate(false);
     }
 
-    public void drawPathChainCode(ArrayList<Dimension> lista, Dimension centroide) {
+    public void drawPathChainCode(ArrayList<Dimension> lista, Dimension centroide, Dimension[] point) {
         BufferedImage drawImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
         Graphics2D g2d = drawImage.createGraphics();
         g2d.drawImage(image, null, 0, 0);
         g2d.dispose();
         for (Dimension dimension : lista) {
-            drawImage.setRGB(dimension.width, dimension.height, Color.RED.getRGB());
+            drawPoint(drawImage, dimension, Color.GREEN);
         }
-        Dimension dimension = lista.get(0);
-        drawImage.setRGB(centroide.width, centroide.height, Color.GREEN.getRGB());
-        drawImage.setRGB(centroide.width + 1, centroide.height, Color.GREEN.getRGB());//0
-        drawImage.setRGB(centroide.width, centroide.height - 1, Color.GREEN.getRGB());//2
-        drawImage.setRGB(centroide.width - 1, centroide.height, Color.GREEN.getRGB());//4
-        drawImage.setRGB(centroide.width, centroide.height + 1, Color.GREEN.getRGB());//6
-        
-        drawImage.setRGB(dimension.width, dimension.height, Color.GREEN.getRGB());
-        drawImage.setRGB(dimension.width + 1, dimension.height, Color.GREEN.getRGB());//0
-        drawImage.setRGB(dimension.width, dimension.height - 1, Color.GREEN.getRGB());//2
-        drawImage.setRGB(dimension.width - 1, dimension.height, Color.GREEN.getRGB());//4
-        drawImage.setRGB(dimension.width, dimension.height + 1, Color.GREEN.getRGB());//6
+
+        for (int i = 0; i < point.length; i++) {
+            drawPoint(drawImage, point[i], Color.RED);
+        }
+
+        drawPoint(drawImage, centroide, Color.RED);
         carregaImagePreview(drawImage);
+    }
+
+    private void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {
+        drawImage.setRGB(point.width, point.height, cor.getRGB());
+        drawImage.setRGB(point.width + 1, point.height, cor.getRGB());//0
+        drawImage.setRGB(point.width, point.height - 1, cor.getRGB());//2
+        drawImage.setRGB(point.width - 1, point.height, cor.getRGB());//4
+        drawImage.setRGB(point.width, point.height + 1, cor.getRGB());//6
     }
 }
