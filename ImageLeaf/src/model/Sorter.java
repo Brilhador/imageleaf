@@ -15,12 +15,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import static model.Classificador.EUCLIDIANA;
-import static model.Classificador.MANHATTAN;
-import static model.Classificador.classificaFolha;
-import static model.Histograma.histogramaBlue;
-import static model.Histograma.histogramaGreen;
-import static model.Histograma.histogramaRed;
 
 /**
  *
@@ -94,7 +88,7 @@ public class Sorter {
                 for (File especie : especies) {
 
                     //carrega o histogrma médio no vetores
-                    double[] patternFeature = lerTxtFeaturePattern(especie.getAbsolutePath() + "/signatureAngle.txt");
+                    int[] patternFeature = lerTxtFeaturePattern(especie + "/signatureAngle.txt", 10);
 
                     //variavel auxiliar para armazenar a diferencas
                     double aux = 0;
@@ -129,26 +123,8 @@ public class Sorter {
         return null;
     }
 
-    private static double[] createNormHistChain(BufferedImage image) {
-        //aplicar o filtro para suavizar a imagem
-        image = Filtro.passaBaixas(image, 5);
-        //pega o total imagem
-        int total = image.getWidth() * image.getHeight();
-        //gera o histograma de tons de cinzas da imagem e depois calcula o limiar da imagem
-        int limiar = Limiar.otsuTreshold(Histograma.histogramaGray(image), total);
-        //realiza a limiarizaçao
-        boolean[][] imageBorder = Limiar.limiarizacaoBool(image, limiar);
-        //calcula o codigo da cadeia e pega o histograma de direçoes
-        int[] vectorFeature = new ChainCode(imageBorder).getHistograma();
-        if (vectorFeature != null) {
-            //normaliza o histograma de direçoes colocando em uma escala de 0 a 1
-            return Histograma.normalizacao(vectorFeature, vectorFeature.length);
-        } else {
-            return null;
-        }
-    }
-
     private static int[] createSignatureAngle(BufferedImage image, int angle) {
+        double[] outFeature = new double[360/angle];
         //aplicar o filtro para suavizar a imagem
         image = Filtro.passaBaixas(image, 5);
         //pega o total imagem
@@ -164,13 +140,13 @@ public class Sorter {
     }
 
     //funcao que pega um txt de inteiros e converte em histograma
-    public static double[] lerTxtFeaturePattern(String caminhoNome) {
-        double[] histograma = new double[8];
+    public static int[] lerTxtFeaturePattern(String caminhoNome, int angle) {
+        int[] histograma = new int[360/angle];
         try {
             FileReader reader = new FileReader(caminhoNome);
             BufferedReader buffer = new BufferedReader(reader);
             for (int i = 0; i < histograma.length; i++) {
-                histograma[i] = Double.parseDouble(buffer.readLine());
+                histograma[i] = Integer.parseInt(buffer.readLine());
             }
             buffer.close();
         } catch (Exception e) {
@@ -182,8 +158,9 @@ public class Sorter {
     private static void calculaTabConfusao(CSV tabela, String nomeInf, String especie) {
         //print
         tabela.readCSV();
+        int tam = tabela.getLineSize();
         if (especie.equalsIgnoreCase(nomeInf)) {
-            for (int line = 0; line < tabela.getLineSize(); line++) {
+            for (int line = 0; line < tam; line++) {
                 try {
                     if (tabela.getCell(line, 0).equals(nomeInf)) {
                         int valor = Integer.parseInt(tabela.getCell(line, line));
