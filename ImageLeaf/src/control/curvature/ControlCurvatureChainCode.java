@@ -63,11 +63,12 @@ public class ControlCurvatureChainCode {
                             try {
                                 ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                                 Dimension centroide = new Signature().getCentroideMedian(lista);
-                                Dimension[] point = new Signature().getDimensionPoint(lista, centroide, 10);
-                                int[] distance = new Signature().createSignal(lista, 10);
-                                for (int i : distance) {
-                                    System.out.println(i);
-                                }
+                                Dimension initPoint = new Signature().getInitAngleByDistance(lista, centroide);
+                                Dimension[] point = new Signature().getDimensionPoint(lista, centroide, 20);
+//                                double[] distance = new Signature().createNormSignal(lista, 10);
+//                                for (double i : distance) {
+//                                    System.out.println(i);
+//                                }
                                 if (lista != null) {
                                     drawPathChainCode(lista, centroide, point);
                                     grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");
@@ -97,7 +98,8 @@ public class ControlCurvatureChainCode {
 //                                double[] normFeature = Histograma.normalizacao(vectorFeature, vectorFeature.length);
 //                                ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                                 Dimension centroide = new Signature().getCentroideMedian(lista);
-                                Dimension[] point = new Signature().getDimensionPoint(lista, centroide, 10);
+                                Dimension[] point = new Signature().getDimensionPoint(lista, centroide, 90);
+                                
 //                                drawPathChainCode(lista);
 //                                grafico = Grafico.histograma(normFeature, width, heigth, "Histogram Chain Code", "Direction", "Frequency");
 //                                grafico = Grafico.curvatureDimension(point, width, heigth, "teste");
@@ -168,13 +170,18 @@ public class ControlCurvatureChainCode {
         BufferedImage drawImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
         Graphics2D g2d = drawImage.createGraphics();
         g2d.drawImage(image, null, 0, 0);
+        //desenha a linha do primeiro elemento da lista
+        g2d.setColor(Color.BLUE);
+        g2d.drawLine(centroide.width, centroide.height, point[0].width, point[0].height);
+        for (int i = 1; i < point.length; i++) {
+//            drawPoint(drawImage, point[i], Color.RED);
+            g2d.setColor(Color.RED);
+            g2d.drawLine(centroide.width, centroide.height, point[i].width, point[i].height);
+        }
         g2d.dispose();
+        
         for (Dimension dimension : lista) {
             drawPoint(drawImage, dimension, Color.GREEN);
-        }
-
-        for (int i = 0; i < point.length; i++) {
-            drawPoint(drawImage, point[i], Color.RED);
         }
 
         drawPoint(drawImage, centroide, Color.RED);

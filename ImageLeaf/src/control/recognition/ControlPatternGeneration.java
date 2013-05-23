@@ -52,7 +52,8 @@ public class ControlPatternGeneration {
                     protected Object doInBackground() throws Exception {
                         if (!view.getTxtPath().getText().equals("...")) {
                             startProgressBar();
-                            new Pattern().startAnglePattern(caminho);
+                            //especificar o angulo pelo codigo
+                            new Pattern().startAnglePattern(caminho, 5);
                             stopProgressBar();
                             JOptionPane.showMessageDialog(view, "Finished", "", JOptionPane.INFORMATION_MESSAGE);
                         } else {

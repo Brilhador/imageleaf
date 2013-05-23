@@ -24,28 +24,42 @@ import javax.imageio.ImageIO;
  */
 public class Pattern {
 
-    public static void startAnglePattern(String caminho) {
+    private String relation = "imageClef2012";
+    private ArrayList<String> attribute = new ArrayList<>();
+    private ArrayList<String> classe = new ArrayList<>();
+    private ArrayList<String> data = new ArrayList<>();
+
+    public void startAnglePattern(String caminho, int angle) {
+        relation += angle;
+        for (int i = 0; i < 360 / angle; i++) {
+            attribute.add("distance" + i + " NUMERIC ");
+        }
         //A partir do caminho, aonde esta localizado o banco de folha lista se todos os diretorios
         File[] diretorios = new File(caminho).listFiles();
         for (File diretorio : diretorios) {
-            //filtro para pegar somente os arquivos JPG
-            FilenameFilter filter = new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String name) {
-                    return name.endsWith(".jpg");
+            if (diretorio.isDirectory()) {
+                classe.add(diretorio.getName().trim().replaceAll(" ", ""));
+                //filtro para pegar somente os arquivos JPG
+                FilenameFilter filter = new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String name) {
+                        return name.endsWith(".jpg");
+                    }
+                };
+                File[] subFiles = diretorio.listFiles(filter);
+                //print a especie que esta sendo criado o padrao
+                System.out.println(diretorio.getAbsolutePath());
+                if (subFiles != null) {
+                    //converte file em imagens
+                    createAnglePattern(subFiles, diretorio.getAbsolutePath(), diretorio.getName().trim().replaceAll(" ", ""), angle);
                 }
-            };
-            File[] subFiles = diretorio.listFiles(filter);
-            //print a especie que esta sendo criado o padrao
-            System.out.println(diretorio.getAbsolutePath());
-            if (subFiles != null) {
-                //converte file em imagens
-                createAnglePattern(subFiles, diretorio.getAbsolutePath(), 10);
+                ARFF arff = new ARFF();
+                arff.create(caminho, relation, attribute, classe, data);
             }
         }
     }
 
-    private static void createAnglePattern(File[] files, String caminho, int angle) {
+    private void createAnglePattern(File[] files, String caminho, String classe, int angle) {
         try {
             //histograma de saida do padrão da classe
             int[] outFeature = new int[360 / angle];
@@ -69,7 +83,18 @@ public class Pattern {
                     try {
                         //calcula o codigo da cadeia 
                         ArrayList<Dimension> listaDimension = new ChainCode(imageBorder).getDimesionChainCode();
-                        int[] vectorFeature = new Signature().createSignal(listaDimension, angle);
+                        /*
+                         * vetor normalizado
+                         */
+                        double[] vectorFeature = new Signature().createNormSignal(listaDimension, angle);
+                        String textData = "";
+                        /*
+                         * mudar tipo do vetor
+                         */
+                        for (double i : vectorFeature) {
+                            textData += i + ",";
+                        }
+                        data.add(textData += classe);
                         if (vectorFeature != null) {
                             try {
                                 //limiariza a image e desenha o contorno do chain code
@@ -121,7 +146,7 @@ public class Pattern {
     }
 
     //funcao que cria um txt com os dados de um histograma
-    private static void writingPattern(String caminhoNome, int[] histograma) {
+    private void writingPattern(String caminhoNome, int[] histograma) {
         try {
             FileWriter arquivo = new FileWriter(caminhoNome + ".txt");
             BufferedWriter buffer = new BufferedWriter(arquivo);
@@ -136,7 +161,7 @@ public class Pattern {
         }
     }
 
-    private static void writingPattern(String caminhoNome, List<String> dados) {
+    private void writingPattern(String caminhoNome, List<String> dados) {
         try {
             FileWriter arquivo = new FileWriter(caminhoNome + ".txt");
             BufferedWriter buffer = new BufferedWriter(arquivo);
@@ -152,7 +177,7 @@ public class Pattern {
         }
     }
 
-    private static void saveImage(String caminho, String nome, BufferedImage image) {
+    private void saveImage(String caminho, String nome, BufferedImage image) {
         new ManageDirectory().criarDiretorio(caminho);
         try {
             ImageIO.write(image, "JPG", new File(caminho + "/" + nome));
@@ -162,7 +187,7 @@ public class Pattern {
     }
 
     //desenhar o chain code
-    private static BufferedImage drawPathChainCode(ArrayList<Dimension> lista, BufferedImage segImage) {
+    private BufferedImage drawPathChainCode(ArrayList<Dimension> lista, BufferedImage segImage) {
         for (Dimension dimension : lista) {
             segImage.setRGB(dimension.width, dimension.height, Color.RED.getRGB());
         }
