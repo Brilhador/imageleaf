@@ -11,6 +11,7 @@ import control.edge.ControlEdgeSobel;
 import control.recognition.ControlPatternGeneration;
 import control.recognition.ControlSpeciesClassificationMultiple;
 import control.recognition.ControlSpeciesGroup;
+import control.recognition.ControlSimileImage;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -117,11 +118,18 @@ public class ControlPrincipal {
             }
         });
 
+        view.getmSimileImage().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ControlSimileImage();
+            }
+        });
+
         //menu recognition
         view.getmRecognitionGroup().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                  new ControlSpeciesGroup();
+                new ControlSpeciesGroup();
             }
         });
 
@@ -138,7 +146,7 @@ public class ControlPrincipal {
                 new ControlSpeciesClassificationMultiple();
             }
         });
-        
+
         view.getmClassificationSingle().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

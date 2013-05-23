@@ -92,7 +92,7 @@
                 <Property name="text" type="java.lang.String" value="Species Group"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mRecognitionPattern">
+            <MenuItem class="javax.swing.JMenuItem" name="mPatternGeneration">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Pattern Generation"/>
               </Properties>
@@ -114,6 +114,11 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <MenuItem class="javax.swing.JMenuItem" name="mComparisionImage">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Comparision image"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
       </SubComponents>

@@ -48,10 +48,11 @@ public class viewPrincipal extends javax.swing.JFrame {
         mCurvatureChainCode = new javax.swing.JMenuItem();
         mRecognition = new javax.swing.JMenu();
         mRecognitionGroup = new javax.swing.JMenuItem();
-        mRecognitionPattern = new javax.swing.JMenuItem();
+        mPatternGeneration = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         mClassificationSingle = new javax.swing.JMenuItem();
         mClassificationMultiple = new javax.swing.JMenuItem();
+        mComparisionImage = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,8 +110,8 @@ public class viewPrincipal extends javax.swing.JFrame {
         mRecognitionGroup.setText("Species Group");
         mRecognition.add(mRecognitionGroup);
 
-        mRecognitionPattern.setText("Pattern Generation");
-        mRecognition.add(mRecognitionPattern);
+        mPatternGeneration.setText("Pattern Generation");
+        mRecognition.add(mPatternGeneration);
 
         jMenu1.setText("Species Classification");
 
@@ -121,6 +122,9 @@ public class viewPrincipal extends javax.swing.JFrame {
         jMenu1.add(mClassificationMultiple);
 
         mRecognition.add(jMenu1);
+
+        mComparisionImage.setText("Comparision image");
+        mRecognition.add(mComparisionImage);
 
         jMenuBar1.add(mRecognition);
 
@@ -155,6 +159,7 @@ public class viewPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jPanelPrincipal;
     private javax.swing.JMenuItem mClassificationMultiple;
     private javax.swing.JMenuItem mClassificationSingle;
+    private javax.swing.JMenuItem mComparisionImage;
     private javax.swing.JMenu mCurvature;
     private javax.swing.JMenuItem mCurvatureChainCode;
     private javax.swing.JMenu mEdit;
@@ -164,9 +169,9 @@ public class viewPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mFilterBlurMedian;
     private javax.swing.JMenuItem mFilterEdgeSobel;
     private javax.swing.JMenu mFilters;
+    private javax.swing.JMenuItem mPatternGeneration;
     private javax.swing.JMenu mRecognition;
     private javax.swing.JMenuItem mRecognitionGroup;
-    private javax.swing.JMenuItem mRecognitionPattern;
     private javax.swing.JMenuItem menuOpen;
     // End of variables declaration//GEN-END:variables
     
@@ -261,11 +266,11 @@ public class viewPrincipal extends javax.swing.JFrame {
     }
 
     public JMenuItem getmRecognitionPattern() {
-        return mRecognitionPattern;
+        return mPatternGeneration;
     }
 
     public void setmRecognitionPattern(JMenuItem mRecognitionPattern) {
-        this.mRecognitionPattern = mRecognitionPattern;
+        this.mPatternGeneration = mRecognitionPattern;
     }
 
     public javax.swing.JMenuItem getmClassificationMultiple() {
@@ -282,6 +287,14 @@ public class viewPrincipal extends javax.swing.JFrame {
 
     public void setmClassificationSingle(javax.swing.JMenuItem mClassificationSingle) {
         this.mClassificationSingle = mClassificationSingle;
+    }
+
+    public JMenuItem getmSimileImage() {
+        return mComparisionImage;
+    }
+
+    public void setmSimileImage(JMenuItem mSimileImage) {
+        this.mComparisionImage = mSimileImage;
     }
     
 }

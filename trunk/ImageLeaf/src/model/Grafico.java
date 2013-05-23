@@ -20,6 +20,37 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author Anderson
  */
 public class Grafico {
+    
+    public static BufferedImage Signature(int[] signature1, int[] signature2, int width, int height, String title) {
+
+        try {
+
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+            //carregar dataset com os histogramas
+            for (int i = 0; i < signature2.length; i++) {
+                dataset.addValue(signature1[i], "1", "" + i);
+                dataset.addValue(signature2[i], "2", "" + i);
+            }
+
+            JFreeChart chart = ChartFactory.createLineChart(
+                    title,
+                    "Angle",
+                    "Distance",
+                    dataset,
+                    PlotOrientation.VERTICAL,
+                    true,
+                    false,
+                    false);
+
+            return chart.createBufferedImage(width, height);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     public static BufferedImage curvatureDimension(ArrayList<Dimension> lista, int sizeWidth, int sizeHeight, String title) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
