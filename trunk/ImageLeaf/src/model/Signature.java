@@ -111,9 +111,9 @@ public class Signature {
             int aux = getDistanceManhattan(lista.get(i), lista.get(j));
             if (aux > dst) {
                 dst = aux;
-                if(getDistanceManhattan(centroide, lista.get(i)) >= getDistanceManhattan(centroide, lista.get(j))){
+                if (getDistanceManhattan(centroide, lista.get(i)) >= getDistanceManhattan(centroide, lista.get(j))) {
                     point = lista.get(i);
-                }else{
+                } else {
                     point = lista.get(j);
                 }
             }
@@ -126,7 +126,7 @@ public class Signature {
         int mod = angle % 360;
         int dif = 360;
         Dimension[] vector = new Dimension[quant];
-        vector[0] = getInitAngleByDstTwoPoint(lista, centroide);
+        vector[0] = getInitAngle(lista, centroide);
         Dimension initAngle = vector[0];
         for (int i = 1; i < quant; i++) {
             for (Dimension dimension : lista) {
@@ -166,7 +166,7 @@ public class Signature {
         }
     }
 
-    private int getDistanceManhattan(Dimension centroide, Dimension point) {
-        return Distancia.Manhattan(centroide, point);
+    private int getDistanceManhattan(Dimension point1, Dimension point2) {
+        return Distancia.Manhattan(point1, point2);
     }
 }

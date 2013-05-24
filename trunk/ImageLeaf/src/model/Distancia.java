@@ -72,4 +72,10 @@ public class Distancia {
         //distancia de manhattan entre dois pontos fixos
         return Math.abs(cod1.width - cod2.width) + Math.abs(cod1.height - cod2.height);
     }
+    
+    public static int Euclidean(Dimension cod1, Dimension cod2) {
+        //distancia de euclidiana entre dois pontos fixos
+        double soma = (Math.pow(Math.abs(cod1.width - cod2.width), 2) + Math.pow(Math.abs(cod1.height - cod2.height), 2));
+        return (int) Math.sqrt(soma);
+    }
 }
