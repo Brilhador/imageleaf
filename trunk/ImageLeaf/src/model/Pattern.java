@@ -73,7 +73,7 @@ public class Pattern {
                 BufferedImage image = MyImage.FileToImage(file);
                 if (image != null) {
                     //aplicar o filtro para suavizar a imagem
-                    image = Filtro.passaBaixas(image, 5);
+                    image = Filtro.mediana(image, 5);
                     //pega o total imagem
                     int total = image.getWidth() * image.getHeight();
                     //gera o histograma de tons de cinzas da imagem e depois calcula o limiar da imagem
@@ -86,7 +86,10 @@ public class Pattern {
                         /*
                          * vetor normalizado
                          */
-                        double[] vectorFeature = new Signature().createNormSignal(listaDimension, angle);
+                        double[] signature = new Signature().createSignal(listaDimension, angle);
+                        DFT dft = new DFT(1, signature, new double[signature.length], signature.length);
+                        double[] vectorFeature = dft.getX1();
+                        
                         String textData = "";
                         /*
                          * mudar tipo do vetor
