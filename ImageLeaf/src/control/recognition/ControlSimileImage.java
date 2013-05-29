@@ -20,6 +20,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import model.ChainCode;
+import model.DFT;
 import model.Distancia;
 import model.Filtro;
 import model.Grafico;
@@ -95,11 +96,13 @@ public class ControlSimileImage {
                         if (listaImage1 == null ||  listaImage2 == null) {
                             JOptionPane.showMessageDialog(view, "Erro", null, JOptionPane.ERROR_MESSAGE);
                         } else {
-                            int[] vectorImage1 = createSignal(listaImage1, angle);
-                            int[] vectorImage2 = createSignal(listaImage2, angle);
-                            int dst = Distancia.Euclidiana(vectorImage1, vectorImage2);
+                            double[] vectorImage1 = createSignal(listaImage1, angle);
+                            double[] vectorImage2 = createSignal(listaImage2, angle);
+                            DFT dft1 = new DFT(1, vectorImage1, new double[vectorImage1.length], vectorImage1.length);
+                            DFT dft2 = new DFT(1, vectorImage2, new double[vectorImage2.length], vectorImage2.length);
+                            double dst = Distancia.Euclidiana(dft1.getX1(), dft2.getX1());
                             view.getTxtDstResult().setText(dst + "");
-                            BufferedImage grafico = Grafico.Signature(vectorImage1, vectorImage2, view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature");
+                            BufferedImage grafico = Grafico.DFT2IMG(dft1.getX1(),dft2.getX1(), view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature");
                             //desenhar assinatura nas imagens da tela
                             Dimension centroide = new Signature().getCentroideMedian(listaImage1);
                             Dimension[] point = new Signature().getDimensionPoint(listaImage1, centroide, angle);
@@ -125,7 +128,7 @@ public class ControlSimileImage {
 
     private ArrayList<Dimension> createChainCode(BufferedImage image) {
         //aplicar o filtro para suavizar a imagem
-        image = Filtro.passaBaixas(image, 5);
+        image = Filtro.mediana(image, 5);
         //pega o total imagem
         int total = image.getWidth() * image.getHeight();
         //gera o histograma de tons de cinzas da imagem e depois calcula o limiar da imagem
@@ -136,8 +139,13 @@ public class ControlSimileImage {
         return new ChainCode(imageBorder).getDimesionChainCode();
     }
 
-    private int[] createSignal(ArrayList<Dimension> listaDimension, int angle) {
-        int[] vectorFeature = new Signature().createSignal(listaDimension, angle);
+    private double[] createSignal(ArrayList<Dimension> listaDimension, int angle) {
+        double[] vectorFeature = new Signature().createSignal(listaDimension, angle);
+        return vectorFeature;
+    }
+    
+    private double[] createNormSignal(ArrayList<Dimension> listaDimension, int angle) {
+        double[] vectorFeature = new Signature().createNormSignal(listaDimension, angle);
         return vectorFeature;
     }
 

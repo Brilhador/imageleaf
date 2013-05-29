@@ -21,6 +21,68 @@ import org.jfree.data.category.DefaultCategoryDataset;
  */
 public class Grafico {
     
+    public static BufferedImage DFT2IMG(double[] value1, double[] value2, int width, int height, String title) {
+
+        try {
+
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+            //carregar dataset com os histogramas
+            for (int i = 0; i < value1.length; i++) {
+                dataset.addValue(value1[i], "real", "" + i);
+                dataset.addValue(value2[i], "indice", "" + i);
+            }
+
+            JFreeChart chart = ChartFactory.createLineChart(
+                    title,
+                    "REAL",
+                    "FREQUENCIA",
+                    dataset,
+                    PlotOrientation.VERTICAL,
+                    true,
+                    false,
+                    false);
+
+            return chart.createBufferedImage(width, height);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static BufferedImage DFT2IMG(double[] x1, double[] y1, double[] x2, double[] y2, int width, int height, String title) {
+
+        try {
+
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+            //carregar dataset com os histogramas
+            for (int i = 0; i < x1.length; i++) {
+                dataset.addValue(x1[i], "real - 1", "" + i);
+                dataset.addValue(y1[i], "imaginario - 1", "" + i);
+                dataset.addValue(x2[i], "real - 2", "" + i);
+                dataset.addValue(y2[i], "imaginario - 2", "" + i);
+            }
+
+            JFreeChart chart = ChartFactory.createLineChart(
+                    title,
+                    "REAL",
+                    "IMAGINARIO",
+                    dataset,
+                    PlotOrientation.VERTICAL,
+                    true,
+                    false,
+                    false);
+
+            return chart.createBufferedImage(width, height);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     public static BufferedImage Signature(int[] signature1, int[] signature2, int width, int height, String title) {
 
         try {

@@ -13,10 +13,10 @@ import java.util.ArrayList;
  */
 public class Signature {
 
-    public int[] createSignal(ArrayList<Dimension> listaDimension, int angle) {
+    public double[] createSignal(ArrayList<Dimension> listaDimension, int angle) {
         Dimension centroide = getCentroideMedian(listaDimension);
         Dimension[] point = getDimensionPoint(listaDimension, centroide, angle);
-        int[] distance = new int[360 / angle];
+        double[] distance = new double[360 / angle];
         for (int i = 0; i < point.length; i++) {
             distance[i] = getDistanceManhattan(centroide, point[i]);
         }
@@ -63,14 +63,6 @@ public class Signature {
             y += dimension.height;
         }
         return new Dimension(x / lista.size(), y / lista.size());
-    }
-
-    public Dimension getCentrideBySides(ArrayList<Dimension> lista) {
-        int x = 0;
-        int y = 0;
-        for (Dimension dimension : lista) {
-        }
-        return null;
     }
 
     private Dimension getInitAngle(ArrayList<Dimension> lista, Dimension centroide) {

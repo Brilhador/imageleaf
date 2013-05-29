@@ -79,7 +79,7 @@ public class Sorter {
 
         try {
             //histograma do chain codigo da imagem
-            int[] feature = createSignatureAngle(img, 10);
+            double[] feature = createSignatureAngle(img, 10);
 
             if (feature != null) {
                 //local aonde os padroes estao armazenado
@@ -88,7 +88,7 @@ public class Sorter {
                 for (File especie : especies) {
 
                     //carrega o histogrma médio no vetores
-                    int[] patternFeature = lerTxtFeaturePattern(especie + "/signatureAngle.txt", 10);
+                    double[] patternFeature = lerTxtFeaturePattern(especie + "/signatureAngle.txt", 10);
 
                     //variavel auxiliar para armazenar a diferencas
                     double aux = 0;
@@ -123,10 +123,10 @@ public class Sorter {
         return null;
     }
 
-    private static int[] createSignatureAngle(BufferedImage image, int angle) {
+    private static double[] createSignatureAngle(BufferedImage image, int angle) {
         double[] outFeature = new double[360/angle];
         //aplicar o filtro para suavizar a imagem
-        image = Filtro.passaBaixas(image, 5);
+        image = Filtro.mediana(image, 5);
         //pega o total imagem
         int total = image.getWidth() * image.getHeight();
         //gera o histograma de tons de cinzas da imagem e depois calcula o limiar da imagem
@@ -135,13 +135,13 @@ public class Sorter {
         boolean[][] imageBorder = Limiar.limiarizacaoBool(image, limiar);
         //calcula o codigo da cadeia 
         ArrayList<Dimension> listaDimension = new ChainCode(imageBorder).getDimesionChainCode();
-        int[] vectorFeature = new Signature().createSignal(listaDimension, angle);
+        double[] vectorFeature = new Signature().createSignal(listaDimension, angle);
         return vectorFeature;
     }
 
     //funcao que pega um txt de inteiros e converte em histograma
-    public static int[] lerTxtFeaturePattern(String caminhoNome, int angle) {
-        int[] histograma = new int[360/angle];
+    public static double[] lerTxtFeaturePattern(String caminhoNome, int angle) {
+        double[] histograma = new double[360/angle];
         try {
             FileReader reader = new FileReader(caminhoNome);
             BufferedReader buffer = new BufferedReader(reader);
