@@ -118,7 +118,7 @@ public class Signature {
         int mod = angle % 360;
         int dif = 360;
         Dimension[] vector = new Dimension[quant];
-        vector[0] = getInitAngle(lista, centroide);
+        vector[0] = getInitAngleByDistance(lista, centroide);
         Dimension initAngle = vector[0];
         for (int i = 1; i < quant; i++) {
             for (Dimension dimension : lista) {
