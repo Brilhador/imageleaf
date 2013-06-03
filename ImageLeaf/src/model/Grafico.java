@@ -28,7 +28,7 @@ public class Grafico {
             DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
             //carregar dataset com os histogramas
-            for (int i = 0; i < value1.length; i++) {
+            for (int i = 1; i < value1.length; i++) {
                 dataset.addValue(value1[i], "real", "" + i);
                 dataset.addValue(value2[i], "indice", "" + i);
             }

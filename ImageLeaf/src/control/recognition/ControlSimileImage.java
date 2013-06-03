@@ -96,8 +96,8 @@ public class ControlSimileImage {
                         if (listaImage1 == null ||  listaImage2 == null) {
                             JOptionPane.showMessageDialog(view, "Erro", null, JOptionPane.ERROR_MESSAGE);
                         } else {
-                            double[] vectorImage1 = createSignal(listaImage1, angle);
-                            double[] vectorImage2 = createSignal(listaImage2, angle);
+                            double[] vectorImage1 = createNormSignal(listaImage1, angle);
+                            double[] vectorImage2 = createNormSignal(listaImage2, angle);
                             DFT dft1 = new DFT(1, vectorImage1, new double[vectorImage1.length], vectorImage1.length);
                             DFT dft2 = new DFT(1, vectorImage2, new double[vectorImage2.length], vectorImage2.length);
                             double dst = Distancia.Euclidiana(dft1.getX1(), dft2.getX1());
