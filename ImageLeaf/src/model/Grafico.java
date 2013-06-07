@@ -20,7 +20,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author Anderson
  */
 public class Grafico {
-    
+
     public static BufferedImage DFT2IMG(double[] value1, double[] value2, int width, int height, String title) {
 
         try {
@@ -50,7 +50,40 @@ public class Grafico {
             return null;
         }
     }
-    
+
+    public static BufferedImage DFT2IMG(double[] value1, double[] value2, int width, int height, String title, int indice) {
+
+        try {
+
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            if (value1.length >= indice) {
+                //carregar dataset com os histogramas
+                for (int i = 1; i < indice; i++) {
+                    dataset.addValue(value1[i], "real", "" + i);
+                    dataset.addValue(value2[i], "indice", "" + i);
+                }
+
+                JFreeChart chart = ChartFactory.createLineChart(
+                        title,
+                        "REAL",
+                        "FREQUENCIA",
+                        dataset,
+                        PlotOrientation.VERTICAL,
+                        true,
+                        false,
+                        false);
+
+                return chart.createBufferedImage(width, height);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+
+    }
+
     public static BufferedImage DFT2IMG(double[] x1, double[] y1, double[] x2, double[] y2, int width, int height, String title) {
 
         try {
@@ -82,7 +115,7 @@ public class Grafico {
             return null;
         }
     }
-    
+
     public static BufferedImage Signature(int[] signature1, int[] signature2, int width, int height, String title) {
 
         try {
@@ -112,7 +145,6 @@ public class Grafico {
             return null;
         }
     }
-
 
     public static BufferedImage curvatureDimension(ArrayList<Dimension> lista, int sizeWidth, int sizeHeight, String title) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();

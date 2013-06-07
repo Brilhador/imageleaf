@@ -25,6 +25,19 @@ public class Distancia {
             return null;
         }
     }
+    
+    public static Double Euclidiana(double[] histgrama1, double[] histograma2, int indice) {
+
+        if (histgrama1.length >= indice) {
+            Double soma = 0.0;
+            for (int i = 1; i < indice; i++) {
+                soma += Math.pow(Math.abs(histgrama1[i] - histograma2[i]), 2);
+            }
+            return Math.sqrt(soma);
+        } else {
+            return null;
+        }
+    }
 
     //calcula a distancia Manhattan entre dois vetores
     public static Double Manhattan(double[] histgrama1, double[] histograma2) {
