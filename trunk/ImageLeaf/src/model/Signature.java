@@ -32,27 +32,24 @@ public class Signature {
         }
         return Histograma.normalizacao(distance, distance.length);
     }
-
-    private double[] reorganizeDistance(double[] vector) {
-        try {
-            double[] outVector = new double[vector.length];
-            int indice = 0;
-            for (int i = 1; i < vector.length; i++) {
-                if (vector[i] > vector[indice]) {
-                    indice = i;
-                }
-            }
-            for (int i = indice, j = 0; j < vector.length - indice; i++, j++) {
-                outVector[j] = vector[i];
-            }
-            for (int i = 0, j = vector.length - indice; i < indice; i++, j++) {
-                outVector[j] = vector[i];
-            }
-            return outVector;
-        } catch (Exception e) {
-            e.printStackTrace();
+    
+    public double[] createNormVarianceSignal(ArrayList<Dimension> listaDimension, int angle) {
+        Dimension centroide = getCentroideMedian(listaDimension);
+        Dimension[] point = getDimensionPoint(listaDimension, centroide, angle);
+        int[] distance = new int[360 / angle];
+        for (int i = 0; i < point.length; i++) {
+            distance[i] = getDistanceManhattan(centroide, point[i]);
         }
-        return null;
+        //apos gerar a assinatura
+        //cria vetor auxiliar
+        double[] normDst = new double[distance.length];
+        //calcula a variancia
+        double variance = calcVariance(distance);
+        for (int i = 0; i < distance.length; i++) {
+            normDst[i] = distance[i] / variance;
+            System.out.println(normDst[i]);
+        }
+        return  normDst;
     }
 
     public Dimension getCentroideMedian(ArrayList<Dimension> lista) {
@@ -160,5 +157,22 @@ public class Signature {
 
     private int getDistanceManhattan(Dimension point1, Dimension point2) {
         return Distancia.Manhattan(point1, point2);
+    }
+    
+    private double calcMedian(int[] distance){
+        double soma = 0;
+        for (int i = 0; i < distance.length; i++) {
+            soma += distance[i];
+        }
+        return soma/distance.length;
+    } 
+    
+    private double calcVariance(int[] distance){
+        double median = calcMedian(distance);
+        double variance = 0;
+        for (int i = 0; i < distance.length; i++) {
+            variance += Math.pow((distance[i] - median), 2);
+        }
+        return variance / (distance.length - 1);
     }
 }

@@ -89,7 +89,8 @@ public class ControlSimileImage {
                     @Override
                     protected Object doInBackground() throws Exception {
                         startProgressBar();
-                        int angle = 5;
+                        int angle = 1;
+                        int indice = 6;
                         //calculando a imagem 1
                         ArrayList<Dimension> listaImage1 = createChainCode(image1);
                         ArrayList<Dimension> listaImage2 = createChainCode(image2);
@@ -100,9 +101,9 @@ public class ControlSimileImage {
                             double[] vectorImage2 = createNormSignal(listaImage2, angle);
                             DFT dft1 = new DFT(1, vectorImage1, new double[vectorImage1.length], vectorImage1.length);
                             DFT dft2 = new DFT(1, vectorImage2, new double[vectorImage2.length], vectorImage2.length);
-                            double dst = Distancia.Euclidiana(dft1.getX1(), dft2.getX1());
+                            double dst = Distancia.Euclidiana(dft1.getX1(), dft2.getX1(), indice);
                             view.getTxtDstResult().setText(dst + "");
-                            BufferedImage grafico = Grafico.DFT2IMG(dft1.getX1(),dft2.getX1(), view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature");
+                            BufferedImage grafico = Grafico.DFT2IMG(dft1.getX1(),dft2.getX1(), view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature", indice);
                             //desenhar assinatura nas imagens da tela
                             Dimension centroide = new Signature().getCentroideMedian(listaImage1);
                             Dimension[] point = new Signature().getDimensionPoint(listaImage1, centroide, angle);
@@ -146,6 +147,11 @@ public class ControlSimileImage {
     
     private double[] createNormSignal(ArrayList<Dimension> listaDimension, int angle) {
         double[] vectorFeature = new Signature().createNormSignal(listaDimension, angle);
+        return vectorFeature;
+    }
+    
+    private double[] createNormVarianceSignal(ArrayList<Dimension> listaDimension, int angle) {
+        double[] vectorFeature = new Signature().createNormVarianceSignal(listaDimension, angle);
         return vectorFeature;
     }
 
