@@ -6,12 +6,10 @@ package model;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Paint;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 

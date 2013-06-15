@@ -32,25 +32,6 @@ public class Signature {
         }
         return Histograma.normalizacao(distance, distance.length);
     }
-    
-    public double[] createNormVarianceSignal(ArrayList<Dimension> listaDimension, int angle) {
-        Dimension centroide = getCentroideMedian(listaDimension);
-        Dimension[] point = getDimensionPoint(listaDimension, centroide, angle);
-        int[] distance = new int[360 / angle];
-        for (int i = 0; i < point.length; i++) {
-            distance[i] = getDistanceManhattan(centroide, point[i]);
-        }
-        //apos gerar a assinatura
-        //cria vetor auxiliar
-        double[] normDst = new double[distance.length];
-        //calcula a variancia
-        double variance = calcVariance(distance);
-        for (int i = 0; i < distance.length; i++) {
-            normDst[i] = distance[i] / variance;
-            System.out.println(normDst[i]);
-        }
-        return  normDst;
-    }
 
     public Dimension getCentroideMedian(ArrayList<Dimension> lista) {
         int x = 0;
@@ -75,7 +56,7 @@ public class Signature {
         return point;
     }
 
-    public Dimension getInitAngleByDistance(ArrayList<Dimension> lista, Dimension centroide) {
+    public Dimension getInitAngleByMoreRadius(ArrayList<Dimension> lista, Dimension centroide) {
         //pega o pixel no angulo zero
         Dimension point = centroide;
         //distancia
@@ -92,22 +73,78 @@ public class Signature {
         return point;
     }
 
-    public Dimension getInitAngleByDstTwoPoint(ArrayList<Dimension> lista, Dimension centroide) {
-        int meio = lista.size() / 2;
+    public Dimension getInitAngleByMoreDiameter(ArrayList<Dimension> lista, Dimension centroide) {
         int dst = 0;
         Dimension point = null;
-        for (int i = 0, j = meio; i < meio; i++, j--) {
-            int aux = getDistanceManhattan(lista.get(i), lista.get(j));
-            if (aux > dst) {
-                dst = aux;
-                if (getDistanceManhattan(centroide, lista.get(i)) >= getDistanceManhattan(centroide, lista.get(j))) {
-                    point = lista.get(i);
-                } else {
-                    point = lista.get(j);
+        for (int i = 0; i < lista.size(); i++) {
+            for (int j = 0; j < lista.size(); j++) {
+                //verifica se a reta eh um diametro
+                boolean result = isDiameter(lista.get(i), lista.get(j), centroide);
+//                System.out.println(result);
+                if (result) {
+                    System.out.println("diametro encontrado");
+                    //caso sim calcula a distancia entre os dois pontos
+                    int aux = getDistanceManhattan(lista.get(i), lista.get(j));
+                    if (aux > dst) {
+                        dst = aux;
+                        //se for maior que a distancia do ultimo diametro
+                        //calcula a distancia dos dois pontos o maior raio
+                        int dst1 = getDistanceManhattan(lista.get(i), centroide);
+                        int dst2 = getDistanceManhattan(lista.get(j), centroide);
+                        //qual ponto tiver o maior raio se torna o ponto inicial
+                        if (dst1 > dst2) {
+                            point = lista.get(i);
+                        } else {
+                            point = lista.get(j);
+                        }
+                    }
+                }
+            }
+
+        }
+//        System.out.println("encontrou");
+        return point;
+    }
+
+    public Dimension getInitAngleByDiameterMoreDiferenceRadius(ArrayList<Dimension> lista, Dimension centroide) {
+        Dimension point = null;
+        for (int i = 0; i < lista.size(); i++) {
+            for (int j = 0; j < lista.size(); j++) {
+                //verifica se a reta eh um diametro
+                boolean result = isDiameter(lista.get(i), lista.get(j), centroide);
+//                System.out.println(result);
+                if (result) {
+                    
                 }
             }
         }
+//        System.out.println("encontrou");
         return point;
+    }
+
+    private boolean isDiameter(Dimension d1, Dimension d2, Dimension centroide) {
+        /*
+         * Funçao da reta para verificar se uma corda eh um diametro
+         * y = mx+b;
+         */
+        try {
+            double m = 0;
+            if ((d2.width - d1.width) == 0) {
+                m = (d2.height - d1.height) / 1;
+            } else {
+                m = (d2.height - d1.height) / (d2.width - d1.width);
+            }
+            double b = d2.height - (m * d2.width);
+            double result = (((m * centroide.width) + b) / centroide.height);
+            if (result == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public Dimension[] getDimensionPoint(ArrayList<Dimension> lista, Dimension centroide, int angle) {
@@ -115,7 +152,7 @@ public class Signature {
         int mod = angle % 360;
         int dif = 360;
         Dimension[] vector = new Dimension[quant];
-        vector[0] = getInitAngleByDistance(lista, centroide);
+        vector[0] = getInitAngle(lista, centroide);
         Dimension initAngle = vector[0];
         for (int i = 1; i < quant; i++) {
             for (Dimension dimension : lista) {
@@ -158,16 +195,16 @@ public class Signature {
     private int getDistanceManhattan(Dimension point1, Dimension point2) {
         return Distancia.Manhattan(point1, point2);
     }
-    
-    private double calcMedian(int[] distance){
+
+    private double calcMedian(double[] distance) {
         double soma = 0;
         for (int i = 0; i < distance.length; i++) {
             soma += distance[i];
         }
-        return soma/distance.length;
-    } 
-    
-    private double calcVariance(int[] distance){
+        return soma / distance.length;
+    }
+
+    private double calcVariance(double[] distance) {
         double median = calcMedian(distance);
         double variance = 0;
         for (int i = 0; i < distance.length; i++) {
