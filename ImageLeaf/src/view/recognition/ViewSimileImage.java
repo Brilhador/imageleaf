@@ -5,6 +5,7 @@
 package view.recognition;
 
 import javax.swing.JProgressBar;
+import javax.swing.JTextField;
 
 /**
  *
@@ -39,6 +40,10 @@ public class ViewSimileImage extends javax.swing.JFrame {
         txtDstResult = new javax.swing.JLabel();
         jxGrafico = new model.components.JImageView();
         pgBar = new javax.swing.JProgressBar();
+        lblFourier = new javax.swing.JLabel();
+        txtSeries = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        txtAngle = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -88,12 +93,20 @@ public class ViewSimileImage extends javax.swing.JFrame {
         jxGrafico.setLayout(jxGraficoLayout);
         jxGraficoLayout.setHorizontalGroup(
             jxGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 554, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jxGraficoLayout.setVerticalGroup(
             jxGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        lblFourier.setText("Fourier Series");
+
+        txtSeries.setText("6");
+
+        jLabel1.setText("Angle");
+
+        txtAngle.setText("1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,20 +123,30 @@ public class ViewSimileImage extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnOpen1, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                                    .addComponent(btnOpen1, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
                                     .addComponent(lblCompImage))
                                 .addGap(15, 15, 15)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnOpen2, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                            .addComponent(btnOpen2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                             .addComponent(jxImage2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblResult)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblDstEuclidean)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDstResult, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jxGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jxGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblResult)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblDstEuclidean)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtDstResult, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtAngle))
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFourier)
+                            .addComponent(txtSeries, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pgBar, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -139,7 +162,9 @@ public class ViewSimileImage extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnOpen1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnOpen2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblResult))
+                            .addComponent(lblResult)
+                            .addComponent(lblFourier)
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -152,8 +177,10 @@ public class ViewSimileImage extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblDstEuclidean)
-                                    .addComponent(txtDstResult))
-                                .addGap(14, 14, 14)
+                                    .addComponent(txtDstResult)
+                                    .addComponent(txtAngle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSeries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(12, 12, 12)
                                 .addComponent(jxGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(pgBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(16, 16, 16))
@@ -166,14 +193,18 @@ public class ViewSimileImage extends javax.swing.JFrame {
     private javax.swing.JButton btnOpen1;
     private javax.swing.JButton btnOpen2;
     private javax.swing.JButton btnStart;
+    private javax.swing.JLabel jLabel1;
     private org.jdesktop.swingx.JXImageView jxGrafico;
     private org.jdesktop.swingx.JXImageView jxImage1;
     private org.jdesktop.swingx.JXImageView jxImage2;
     private javax.swing.JLabel lblCompImage;
     private javax.swing.JLabel lblDstEuclidean;
+    private javax.swing.JLabel lblFourier;
     private javax.swing.JLabel lblResult;
     private javax.swing.JProgressBar pgBar;
+    private javax.swing.JTextField txtAngle;
     private javax.swing.JLabel txtDstResult;
+    private javax.swing.JTextField txtSeries;
     // End of variables declaration//GEN-END:variables
 
     public javax.swing.JButton getBtnOpen1() {
@@ -238,6 +269,22 @@ public class ViewSimileImage extends javax.swing.JFrame {
 
     public void setPgBar(JProgressBar pgBar) {
         this.pgBar = pgBar;
+    }
+
+    public JTextField getTxtSeries() {
+        return txtSeries;
+    }
+
+    public void setTxtSeries(JTextField txtSeries) {
+        this.txtSeries = txtSeries;
+    }
+
+    public JTextField getTxtAngle() {
+        return txtAngle;
+    }
+
+    public void setTxtAngle(JTextField txtAngle) {
+        this.txtAngle = txtAngle;
     }
     
 }

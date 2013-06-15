@@ -63,7 +63,7 @@ public class ControlCurvatureChainCode {
                             try {
                                 ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
                                 Dimension centroide = new Signature().getCentroideMedian(lista);
-                                Dimension initPoint = new Signature().getInitAngleByDistance(lista, centroide);
+                                Dimension initPoint = new Signature().getInitAngleByMoreRadius(lista, centroide);
                                 Dimension[] point = new Signature().getDimensionPoint(lista, centroide, 20);
 //                                double[] distance = new Signature().createNormSignal(lista, 10);
 //                                for (double i : distance) {

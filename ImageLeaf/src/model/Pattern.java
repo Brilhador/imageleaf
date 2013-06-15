@@ -86,6 +86,7 @@ public class Pattern {
                         /*
                          * vetor normalizado
                          */
+                        //assinatura normalizada
                         double[] signature = new Signature().createSignal(listaDimension, angle);
                         DFT dft = new DFT(1, signature, new double[signature.length], signature.length);
                         double[] vectorFeature = dft.getX1();

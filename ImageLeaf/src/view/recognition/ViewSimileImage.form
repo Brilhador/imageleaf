@@ -35,27 +35,41 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnOpen1" alignment="0" pref="167" max="32767" attributes="0"/>
+                                  <Component id="btnOpen1" alignment="0" pref="142" max="32767" attributes="0"/>
                                   <Component id="lblCompImage" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnOpen2" pref="170" max="32767" attributes="0"/>
+                          <Component id="btnOpen2" pref="139" max="32767" attributes="0"/>
                           <Component id="jxImage2" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblResult" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="lblDstEuclidean" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="txtDstResult" min="-2" pref="201" max="-2" attributes="0"/>
+                  <Component id="jxGrafico" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblResult" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblDstEuclidean" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="txtDstResult" min="-2" pref="201" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="27" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabel1" max="32767" attributes="0"/>
+                          <Component id="txtAngle" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblFourier" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtSeries" min="-2" pref="155" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Component id="jxGrafico" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Component id="pgBar" min="-2" pref="8" max="-2" attributes="0"/>
@@ -75,6 +89,8 @@
                           <Component id="btnOpen1" alignment="3" max="32767" attributes="0"/>
                           <Component id="btnOpen2" alignment="3" max="32767" attributes="0"/>
                           <Component id="lblResult" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFourier" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -91,8 +107,10 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblDstEuclidean" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtDstResult" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtAngle" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtSeries" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Component id="jxGrafico" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -205,7 +223,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="554" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -216,6 +234,26 @@
       </Layout>
     </Container>
     <Component class="javax.swing.JProgressBar" name="pgBar">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFourier">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fourier Series"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtSeries">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="6"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Angle"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtAngle">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
