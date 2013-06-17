@@ -53,7 +53,7 @@ public class ControlPatternGeneration {
                         if (!view.getTxtPath().getText().equals("...")) {
                             startProgressBar();
                             //especificar o angulo pelo codigo
-                            int angle = 1;
+                            int angle = 10;
                             new Pattern().startAnglePattern(caminho, angle);
                             stopProgressBar();
                             JOptionPane.showMessageDialog(view, "Finished", "", JOptionPane.INFORMATION_MESSAGE);
