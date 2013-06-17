@@ -63,4 +63,19 @@ public class DFT {
             }
         }
     }
+    
+    public void invRotation(){
+        for (int i = 0; i < x1.length; i++) {
+            x1[i] = Math.abs(x1[i]);
+            y1[i] = Math.abs(y1[i]);
+        }
+    }
+    
+    public void invScala(){
+        double valor = x1[0];
+        for (int i = 0; i < x1.length; i++) {
+            x1[i] = x1[i] / valor;
+            y1[i] = y1[i] / valor;
+        }
+    }
 }

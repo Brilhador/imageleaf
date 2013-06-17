@@ -113,10 +113,14 @@ public class ControlSimileImage {
         if (listaImage1 == null || listaImage2 == null) {
             JOptionPane.showMessageDialog(view, "Erro", null, JOptionPane.ERROR_MESSAGE);
         } else {
-            double[] vectorImage1 = createNormSignal(listaImage1, angle);
-            double[] vectorImage2 = createNormSignal(listaImage2, angle);
+            double[] vectorImage1 = createSignal(listaImage1, angle);
+            double[] vectorImage2 = createSignal(listaImage2, angle);
             DFT dft1 = new DFT(1, vectorImage1, new double[vectorImage1.length], vectorImage1.length);
             DFT dft2 = new DFT(1, vectorImage2, new double[vectorImage2.length], vectorImage2.length);
+            dft1.invRotation();
+            dft2.invRotation();
+            dft1.invScala();
+            dft2.invScala();
             double dst = Distancia.Euclidiana(dft1.getX1(), dft2.getX1(), indice);
             view.getTxtDstResult().setText(dst + "");
             BufferedImage grafico = Grafico.DFT2IMG(dft1.getX1(), dft2.getX1(), view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature", indice);

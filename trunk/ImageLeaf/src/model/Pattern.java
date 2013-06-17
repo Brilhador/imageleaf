@@ -6,6 +6,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,7 +31,7 @@ public class Pattern {
     private ArrayList<String> data = new ArrayList<>();
 
     public void startAnglePattern(String caminho, int angle) {
-        relation += angle;
+        relation += angle + System.currentTimeMillis();
         for (int i = 0; i < 360 / angle; i++) {
             attribute.add("distance" + i + " NUMERIC ");
         }
@@ -89,20 +90,24 @@ public class Pattern {
                         //assinatura normalizada
                         double[] signature = new Signature().createSignal(listaDimension, angle);
                         DFT dft = new DFT(1, signature, new double[signature.length], signature.length);
+                        dft.invRotation();
+                        dft.invScala();
                         double[] vectorFeature = dft.getX1();
-                        
+
                         String textData = "";
                         /*
                          * mudar tipo do vetor
                          */
-                        for (double i : vectorFeature) {
-                            textData += i + ",";
+                        for (double d : vectorFeature) {
+                            textData += d + ",";
                         }
                         data.add(textData += classe);
                         if (vectorFeature != null) {
                             try {
                                 //limiariza a image e desenha o contorno do chain code
-                                image = drawPathChainCode(listaDimension, Limiar.limiarizacao(image, limiar));
+                                Dimension centroide = new Signature().getCentroideMedian(listaDimension);
+                                Dimension[] point = new Signature().getDimensionPoint(listaDimension, centroide, angle);
+                                image = drawPathChainCode(Limiar.limiarizacao(image, limiar), listaDimension, centroide,point);
                                 //salvar a imagem da folha segmentada na pasta
                                 saveImage(caminho + "/segmentacao", file.getName(), image);
                                 //normaliza o histograma de direçoes colocando em uma escala de 0 a 1
@@ -190,17 +195,34 @@ public class Pattern {
         }
     }
 
-    //desenhar o chain code
-    private BufferedImage drawPathChainCode(ArrayList<Dimension> lista, BufferedImage segImage) {
-        for (Dimension dimension : lista) {
-            segImage.setRGB(dimension.width, dimension.height, Color.RED.getRGB());
+    //desenhar o chain code 
+    public BufferedImage drawPathChainCode(BufferedImage image, ArrayList<Dimension> lista, Dimension centroide, Dimension[] point) {
+        BufferedImage drawImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+        Graphics2D g2d = drawImage.createGraphics();
+        g2d.drawImage(image, null, 0, 0);
+        //desenha a linha do primeiro elemento da lista
+        g2d.setColor(Color.BLUE);
+        g2d.drawLine(centroide.width, centroide.height, point[0].width, point[0].height);
+        for (int i = 1; i < point.length; i++) {
+//            drawPoint(drawImage, point[i], Color.RED);
+            g2d.setColor(Color.RED);
+            g2d.drawLine(centroide.width, centroide.height, point[i].width, point[i].height);
         }
-        Dimension dimension = lista.get(0);
-        segImage.setRGB(dimension.width, dimension.height, Color.GREEN.getRGB());
-        segImage.setRGB(dimension.width + 1, dimension.height, Color.GREEN.getRGB());//0
-        segImage.setRGB(dimension.width, dimension.height - 1, Color.GREEN.getRGB());//2
-        segImage.setRGB(dimension.width - 1, dimension.height, Color.GREEN.getRGB());//4
-        segImage.setRGB(dimension.width, dimension.height + 1, Color.GREEN.getRGB());//6
-        return segImage;
+        g2d.dispose();
+
+        for (Dimension dimension : lista) {
+            drawPoint(drawImage, dimension, Color.GREEN);
+        }
+
+        drawPoint(drawImage, centroide, Color.RED);
+        return drawImage;
+    }
+
+    private void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {
+        drawImage.setRGB(point.width, point.height, cor.getRGB());
+        drawImage.setRGB(point.width + 1, point.height, cor.getRGB());//0
+        drawImage.setRGB(point.width, point.height - 1, cor.getRGB());//2
+        drawImage.setRGB(point.width - 1, point.height, cor.getRGB());//4
+        drawImage.setRGB(point.width, point.height + 1, cor.getRGB());//6
     }
 }

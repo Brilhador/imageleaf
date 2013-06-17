@@ -30,7 +30,7 @@ public class Distancia {
 
         if (histgrama1.length >= indice) {
             Double soma = 0.0;
-            for (int i = 1; i < indice; i++) {
+            for (int i = 0; i < indice; i++) {
                 soma += Math.pow(Math.abs(histgrama1[i] - histograma2[i]), 2);
             }
             return Math.sqrt(soma);
