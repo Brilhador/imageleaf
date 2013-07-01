@@ -35,23 +35,25 @@ public class viewPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         mFile = new javax.swing.JMenu();
         menuOpen = new javax.swing.JMenuItem();
-        mEdit = new javax.swing.JMenu();
         mFilters = new javax.swing.JMenu();
         mFilterBlur = new javax.swing.JMenu();
         mFilterBlurLow = new javax.swing.JMenuItem();
         mFilterBlurMedian = new javax.swing.JMenuItem();
+        mSegmenting = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         mFilterEdgeSobel = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        mCurvature = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        mDescriptors = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         mCurvatureChainCode = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         mRecognition = new javax.swing.JMenu();
         mRecognitionGroup = new javax.swing.JMenuItem();
         mPatternGeneration = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
-        mClassificationSingle = new javax.swing.JMenuItem();
-        mClassificationMultiple = new javax.swing.JMenuItem();
         mComparisionImage = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,9 +64,6 @@ public class viewPrincipal extends javax.swing.JFrame {
         mFile.add(menuOpen);
 
         jMenuBar1.add(mFile);
-
-        mEdit.setText("Edit");
-        jMenuBar1.add(mEdit);
 
         mFilters.setText("Filters");
 
@@ -83,6 +82,10 @@ public class viewPrincipal extends javax.swing.JFrame {
 
         mFilters.add(mFilterBlur);
 
+        jMenuBar1.add(mFilters);
+
+        mSegmenting.setText("Segmenting");
+
         jMenu2.setText("Edge - Detect");
 
         mFilterEdgeSobel.setText("Sobel");
@@ -94,16 +97,32 @@ public class viewPrincipal extends javax.swing.JFrame {
         jMenuItem6.setText("Roberts");
         jMenu2.add(jMenuItem6);
 
-        mFilters.add(jMenu2);
+        mSegmenting.add(jMenu2);
 
-        jMenuBar1.add(mFilters);
+        jMenu1.setText("Thresholding");
 
-        mCurvature.setText("Curvature");
+        jMenuItem3.setText("Otsu");
+        jMenu1.add(jMenuItem3);
+
+        jMenuItem4.setText("Max. Entropia");
+        jMenu1.add(jMenuItem4);
+
+        mSegmenting.add(jMenu1);
+
+        jMenuBar1.add(mSegmenting);
+
+        mDescriptors.setText("Descriptors");
+
+        jMenuItem1.setText("Signature");
+        mDescriptors.add(jMenuItem1);
 
         mCurvatureChainCode.setText("Chain Code");
-        mCurvature.add(mCurvatureChainCode);
+        mDescriptors.add(mCurvatureChainCode);
 
-        jMenuBar1.add(mCurvature);
+        jMenuItem2.setText("Fourier");
+        mDescriptors.add(jMenuItem2);
+
+        jMenuBar1.add(mDescriptors);
 
         mRecognition.setText("Recognition");
 
@@ -113,17 +132,12 @@ public class viewPrincipal extends javax.swing.JFrame {
         mPatternGeneration.setText("Pattern Generation");
         mRecognition.add(mPatternGeneration);
 
-        jMenu1.setText("Species Classification");
-
-        mClassificationSingle.setText("Single Image");
-        jMenu1.add(mClassificationSingle);
-
-        mClassificationMultiple.setText("Multiple Image");
-        jMenu1.add(mClassificationMultiple);
-
-        mRecognition.add(jMenu1);
-
-        mComparisionImage.setText("Comparision image");
+        mComparisionImage.setText("Comparison of two images");
+        mComparisionImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mComparisionImageActionPerformed(evt);
+            }
+        });
         mRecognition.add(mComparisionImage);
 
         jMenuBar1.add(mRecognition);
@@ -140,7 +154,7 @@ public class viewPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jPanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
+                .addComponent(jPanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE))
         );
 
         pack();
@@ -150,19 +164,24 @@ public class viewPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mFilterBlurLowActionPerformed
 
+    private void mComparisionImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mComparisionImageActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mComparisionImageActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JDesktopPane jPanelPrincipal;
-    private javax.swing.JMenuItem mClassificationMultiple;
-    private javax.swing.JMenuItem mClassificationSingle;
     private javax.swing.JMenuItem mComparisionImage;
-    private javax.swing.JMenu mCurvature;
     private javax.swing.JMenuItem mCurvatureChainCode;
-    private javax.swing.JMenu mEdit;
+    private javax.swing.JMenu mDescriptors;
     private javax.swing.JMenu mFile;
     private javax.swing.JMenu mFilterBlur;
     private javax.swing.JMenuItem mFilterBlurLow;
@@ -172,6 +191,7 @@ public class viewPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mPatternGeneration;
     private javax.swing.JMenu mRecognition;
     private javax.swing.JMenuItem mRecognitionGroup;
+    private javax.swing.JMenu mSegmenting;
     private javax.swing.JMenuItem menuOpen;
     // End of variables declaration//GEN-END:variables
     
@@ -188,25 +208,17 @@ public class viewPrincipal extends javax.swing.JFrame {
     public javax.swing.JMenuItem getMenuOpen() {
         return menuOpen;
     }
-
+    
     public void setMenuOpen(javax.swing.JMenuItem menuOpen) {
         this.menuOpen = menuOpen;
     }
 
     public JMenu getmCurvature() {
-        return mCurvature;
+        return mDescriptors;
     }
 
     public void setmCurvature(JMenu mCurvature) {
-        this.mCurvature = mCurvature;
-    }
-
-    public JMenu getmEdit() {
-        return mEdit;
-    }
-
-    public void setmEdit(JMenu mEdit) {
-        this.mEdit = mEdit;
+        this.mDescriptors = mCurvature;
     }
 
     public JMenu getmFile() {
@@ -271,22 +283,6 @@ public class viewPrincipal extends javax.swing.JFrame {
 
     public void setmRecognitionPattern(JMenuItem mRecognitionPattern) {
         this.mPatternGeneration = mRecognitionPattern;
-    }
-
-    public javax.swing.JMenuItem getmClassificationMultiple() {
-        return mClassificationMultiple;
-    }
-
-    public void setmClassificationMultiple(javax.swing.JMenuItem mClassificationMultiple) {
-        this.mClassificationMultiple = mClassificationMultiple;
-    }
-
-    public javax.swing.JMenuItem getmClassificationSingle() {
-        return mClassificationSingle;
-    }
-
-    public void setmClassificationSingle(javax.swing.JMenuItem mClassificationSingle) {
-        this.mClassificationSingle = mClassificationSingle;
     }
 
     public JMenuItem getmSimileImage() {

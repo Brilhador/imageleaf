@@ -83,7 +83,7 @@ public class Pattern {
                     boolean[][] imageBorder = Limiar.limiarizacaoBool(image, limiar);
                     try {
                         //calcula o codigo da cadeia 
-                        ArrayList<Dimension> listaDimension = new ChainCode(imageBorder).getDimesionChainCode();
+                        ArrayList<Dimension> listaDimension = new ChainCode(image, true, 10, 10, true, true).getBorder();
                         /*
                          * vetor normalizado
                          */

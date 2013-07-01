@@ -4,7 +4,10 @@
  */
 package model;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -22,13 +25,54 @@ public class ChainCode {
     private int lastx = 0;
     private int lasty = 0;
     private int lastDirection = 0;
+    //variaveis de informações
+    private ArrayList<Integer> chainCode = null;
+    private ArrayList<Dimension> border = null;
+    private BufferedImage chainImage = null;
 
     //construtor
-    public ChainCode(boolean[][] imageBorder) {
-        this.imageBorder = imageBorder;
-        this.width = imageBorder.length;
-        this.heigth = imageBorder[0].length;
-        getInicialPixel();
+    public ChainCode(BufferedImage originalImage, boolean invScala, int newWidth, int newHeigth, boolean invInicialPoint, boolean invRotation) {
+        try {
+            this.imageBorder = limiarizacaoBoolean(originalImage);
+            this.width = imageBorder.length;
+            this.heigth = imageBorder[0].length;
+            getInicialPixel();
+            border = createBorder();
+            if (invScala) {
+                chainImage = invScala(originalImage, border, newWidth, newHeigth);
+                this.imageBorder = limiarizacaoBoolean(chainImage);
+                this.width = imageBorder.length;
+                this.heigth = imageBorder[0].length;
+                getInicialPixel();
+                border = createBorder();
+                chainCode = createChainCode();
+            } else {
+                chainImage = originalImage;
+                chainCode = createChainCode();
+            }
+            if (invRotation) {
+                chainCode = invRotation(chainCode);
+            }
+            if (invInicialPoint) {
+                int tam = (int) ((newHeigth + newWidth) * 0.25);
+                chainCode = invInitialPoint(chainCode, tam);
+                border = createBorder();
+                chainCode = createChainCode();
+            }
+            if (invRotation) {
+                chainCode = invRotation(chainCode);
+            }
+            drawPoint(chainImage, new Dimension(startx, starty), Color.red);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean[][] limiarizacaoBoolean(BufferedImage image) {
+        int total = image.getWidth() * image.getHeight();
+        image = Filtro.mediana(image, 5);
+        int limiar = Limiar.otsuTreshold(Histograma.histogramaGray(image), total);
+        return Limiar.limiarizacaoBool(image, limiar);
     }
 
     private void getInicialPixel() {
@@ -112,7 +156,7 @@ public class ChainCode {
         return imageBorder[x][y];
     }
 
-    public ArrayList<Dimension> getDimesionChainCode() {
+    private ArrayList<Dimension> createBorder() {
         //gera chain code
         ArrayList<Dimension> lista = new ArrayList<>();
         //coordenada auxiliares
@@ -138,7 +182,7 @@ public class ChainCode {
         return lista;
     }
 
-    public ArrayList<Integer> getChainCode() {
+    private ArrayList<Integer> createChainCode() {
         //gera chain code
         ArrayList<Integer> lista = new ArrayList<>();
         //coordenada auxiliares
@@ -164,67 +208,119 @@ public class ChainCode {
         return lista;
     }
 
-    public int[] getHistograma() {
-        //gerando o chain code
-        ArrayList<Integer> chaincode = getChainCode();
-
-        if (chaincode != null) {
-            //histograma de frenquencia de direçao do chain code
-            int[] histChain = new int[8];
-
-            //gerando o histograma
-            for (int i : chaincode) {
-                histChain[i]++;
+    private BufferedImage invScala(BufferedImage originalImage, ArrayList<Dimension> lista, int newWidth, int newHeigth) {
+        int maxHeigth = lista.get(0).height;
+        int minHeigth = lista.get(0).height;
+        int maxWidth = lista.get(0).width;
+        int minWidth = lista.get(0).width;
+        for (Dimension dimension : lista) {
+            if (dimension.height > maxHeigth) {
+                maxHeigth = dimension.height;
             }
-
-            //retornando o histograma
-            return histChain;
-        }else{
-            return null;
+            if (dimension.height < minHeigth) {
+                minHeigth = dimension.height;
+            }
+            if (dimension.width > maxWidth) {
+                maxWidth = dimension.width;
+            }
+            if (dimension.width < minWidth) {
+                minWidth = dimension.width;
+            }
         }
+        BufferedImage image = originalImage.getSubimage(minWidth - 2, minHeigth - 2, (maxWidth - minWidth) + 2, (maxHeigth - minHeigth) + 2);
+        return MyImage.resizeImage(image, newWidth, newHeigth);
     }
-    
-    public int[] getAngleHistograma(){
-        //tabela de angulos
-        AngleTable table = new AngleTable();
-        
-        //vetor de caracteristicas
-        //0 = 0, 1 = 45, 2 = 90, 3 = 135, 4 = 180, 5 = 225, 6 = 270, 7 = 315
-        //0 = 0, 1 = 45, 2 = 90, 3 = 135, 4 = 180, 5 = -135, 6 = -90, 7 = -45
-        int[] vetor = {0,0,0,0,0,0,0,0};
-        
-        //gerando o chain code
-        ArrayList<Integer> chaincode = getChainCode();
-        
-        for (int i = 0; i < chaincode.size()-1; i++) {
-            int angle = table.getAngle(chaincode.get(i), chaincode.get(i+1));
-            switch(angle){
-                case 0:
-                    vetor[0]++;
-                    break;
-                case 45:
-                    vetor[1]++;
-                    break;
-                case 90:
-                    vetor[2]++;
-                    break;
-                case 135:
-                    vetor[3]++;
-                    break;
-                case 180:
-                    vetor[4]++;
-                    break;
-                case -135:
-                    vetor[5]++;
-                    break;
-                case -90:
-                    vetor[6]++;
-                    break;
-                case -45:
-                    vetor[7]++;
-                    break;
+
+    private ArrayList<Integer> invInitialPoint(ArrayList<Integer> chaincode, int tam) {
+        int soma = Integer.MAX_VALUE;
+        int indice = 0;
+        for (int i = 0; i < chaincode.size(); i++) {
+            int aux = chaincode.get(i);
+            for (int j = 1; j <= tam; j++) {
+                if ((i + j) >= chaincode.size()) {
+                    aux += chaincode.get((i + j) - chaincode.size());
+                } else {
+                    aux += chaincode.get(i + j);
+                }
+            }
+            if (aux < soma) {
+                System.out.println("aux" + aux);
+                System.out.println("soma:" + soma + "    ---> trocou");
+                soma = aux;
+                indice = i;
             }
         }
-        return vetor;
+        ArrayList<Integer> newCode = new ArrayList<>();
+        for (int i = indice; i < chaincode.size(); i++) {
+            newCode.add(chaincode.get(i));
+        }
+        for (int i = 0; i < indice; i++) {
+            newCode.add(chaincode.get(i));
+        }
+        startx = border.get(indice).width;
+        starty = border.get(indice).height;
+        return newCode;
+
+    }
+
+    private ArrayList<Integer> invRotation(ArrayList<Integer> chaincode) {
+        ArrayList<Integer> newCode = new ArrayList<>();
+        for (int i = 0; i < chaincode.size(); i++) {
+            if (i + 1 < chaincode.size()) {
+                if (chaincode.get(i) > chaincode.get(i + 1)) {
+                    newCode.add(Math.abs(chaincode.get(i) - (chaincode.get(i + 1) + 8)));
+                } else {
+                    newCode.add(Math.abs(chaincode.get(i) - (chaincode.get(i + 1))));
+                }
+            } else {
+                if (chaincode.get(i) > chaincode.get(0)) {
+                    newCode.add(Math.abs(chaincode.get(i) - (chaincode.get(0) + 8)));
+                } else {
+                    newCode.add(Math.abs(chaincode.get(i) - (chaincode.get(0))));
+                }
+            }
+        }
+        return newCode;
+    }
+
+    private void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {
+        drawImage.setRGB(point.width, point.height, cor.getRGB());
+//        drawImage.setRGB(point.width + 1, point.height, cor.getRGB());//0
+//        drawImage.setRGB(point.width, point.height - 1, cor.getRGB());//2
+//        drawImage.setRGB(point.width - 1, point.height, cor.getRGB());//4
+//        drawImage.setRGB(point.width, point.height + 1, cor.getRGB());//6
+    }
+
+    //getters e setters
+    public BufferedImage getChainImage() {
+        return chainImage;
+    }
+
+    public void setChainImage(BufferedImage chainImage) {
+        this.chainImage = chainImage;
+    }
+
+    public ArrayList<Integer> getChainCode() {
+        return chainCode;
+    }
+
+    public String getChaincode() {
+        String code = "";
+        for (Integer c : chainCode) {
+            code += c;
+        }
+        return code;
+    }
+
+    public void setChainCode(ArrayList<Integer> chainCode) {
+        this.chainCode = chainCode;
+    }
+
+    public ArrayList<Dimension> getBorder() {
+        return border;
+    }
+
+    public void setBorder(ArrayList<Dimension> border) {
+        this.border = border;
     }
 }

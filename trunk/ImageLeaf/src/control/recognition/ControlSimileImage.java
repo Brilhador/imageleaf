@@ -177,7 +177,7 @@ public class ControlSimileImage {
         //realiza a limiarizaçao
         boolean[][] imageBorder = Limiar.limiarizacaoBool(image, limiar);
         //calcula o codigo da cadeia 
-        return new ChainCode(imageBorder).getDimesionChainCode();
+        return new ChainCode(image, true, 100, 100, true, true).getBorder();
     }
 
     private double[] createSignal(ArrayList<Dimension> listaDimension, int angle) {
