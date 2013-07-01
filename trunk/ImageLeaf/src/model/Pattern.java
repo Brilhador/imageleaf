@@ -88,7 +88,7 @@ public class Pattern {
                          * vetor normalizado
                          */
                         //assinatura normalizada
-                        double[] signature = new Signature().createSignal(listaDimension, angle);
+                        double[] signature = new Signature(listaDimension,angle, false,0, true).getSignature();
                         DFT dft = new DFT(1, signature, new double[signature.length], signature.length);
                         dft.invRotation();
                         dft.invScala();
@@ -104,12 +104,12 @@ public class Pattern {
                         data.add(textData += classe);
                         if (vectorFeature != null) {
                             try {
-                                //limiariza a image e desenha o contorno do chain code
-                                Dimension centroide = new Signature().getCentroideMedian(listaDimension);
-                                Dimension[] point = new Signature().getDimensionPoint(listaDimension, centroide, angle);
-                                image = drawPathChainCode(Limiar.limiarizacao(image, limiar), listaDimension, centroide,point);
-                                //salvar a imagem da folha segmentada na pasta
-                                saveImage(caminho + "/segmentacao", file.getName(), image);
+//                                //limiariza a image e desenha o contorno do chain code
+//                                Dimension centroide = new Signature().getCentroideMedian(listaDimension);
+//                                Dimension[] point = new Signature().getDimensionPoint(listaDimension, centroide, angle);
+//                                image = drawPathChainCode(Limiar.limiarizacao(image, limiar), listaDimension, centroide,point);
+//                                //salvar a imagem da folha segmentada na pasta
+//                                saveImage(caminho + "/segmentacao", file.getName(), image);
                                 //normaliza o histograma de direçoes colocando em uma escala de 0 a 1
                                 for (int i = 0; i < vectorFeature.length; i++) {
                                     outFeature[i] += vectorFeature[i];
