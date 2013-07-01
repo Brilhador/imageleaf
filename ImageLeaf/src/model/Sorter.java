@@ -135,7 +135,7 @@ public class Sorter {
         boolean[][] imageBorder = Limiar.limiarizacaoBool(image, limiar);
         //calcula o codigo da cadeia 
         ArrayList<Dimension> listaDimension = new ChainCode(image, true, 10, 10, true, true).getBorder();
-        double[] vectorFeature = new Signature(listaDimension,angle, false,0, true).getSignature();
+        double[] vectorFeature = new Signature(image,angle, false,0, true).getSignature();
         return vectorFeature;
     }
 

@@ -88,7 +88,7 @@ public class Pattern {
                          * vetor normalizado
                          */
                         //assinatura normalizada
-                        double[] signature = new Signature(listaDimension,angle, false,0, true).getSignature();
+                        double[] signature = new Signature(image,angle, false,0, true).getSignature();
                         DFT dft = new DFT(1, signature, new double[signature.length], signature.length);
                         dft.invRotation();
                         dft.invScala();
