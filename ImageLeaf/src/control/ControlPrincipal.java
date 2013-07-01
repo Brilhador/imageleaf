@@ -99,7 +99,7 @@ public class ControlPrincipal {
             }
         });
 
-        //menu curvature chain code
+        //menu curvature 
         view.getmCurvatureChainCode().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -117,7 +117,16 @@ public class ControlPrincipal {
                 }
             }
         });
+        
+        view.getmCurvatureSignature().addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //
+            }
+        });
+
+        //menu recognition
         view.getmSimileImage().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

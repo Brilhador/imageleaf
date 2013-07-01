@@ -48,7 +48,7 @@ public class viewPrincipal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         mDescriptors = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mCurvatureSignature = new javax.swing.JMenuItem();
         mCurvatureChainCode = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         mRecognition = new javax.swing.JMenu();
@@ -113,8 +113,8 @@ public class viewPrincipal extends javax.swing.JFrame {
 
         mDescriptors.setText("Descriptors");
 
-        jMenuItem1.setText("Signature");
-        mDescriptors.add(jMenuItem1);
+        mCurvatureSignature.setText("Signature");
+        mDescriptors.add(mCurvatureSignature);
 
         mCurvatureChainCode.setText("Chain Code");
         mDescriptors.add(mCurvatureChainCode);
@@ -172,7 +172,6 @@ public class viewPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -181,6 +180,7 @@ public class viewPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jPanelPrincipal;
     private javax.swing.JMenuItem mComparisionImage;
     private javax.swing.JMenuItem mCurvatureChainCode;
+    private javax.swing.JMenuItem mCurvatureSignature;
     private javax.swing.JMenu mDescriptors;
     private javax.swing.JMenu mFile;
     private javax.swing.JMenu mFilterBlur;
@@ -291,6 +291,14 @@ public class viewPrincipal extends javax.swing.JFrame {
 
     public void setmSimileImage(JMenuItem mSimileImage) {
         this.mComparisionImage = mSimileImage;
+    }
+
+    public JMenuItem getmCurvatureSignature() {
+        return mCurvatureSignature;
+    }
+
+    public void setmCurvatureSignature(JMenuItem mCurvatureSignature) {
+        this.mCurvatureSignature = mCurvatureSignature;
     }
     
 }

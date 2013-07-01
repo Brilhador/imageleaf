@@ -5,6 +5,7 @@
 package model;
 
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -12,10 +13,71 @@ import java.util.ArrayList;
  * @author anderson
  */
 public class Signature {
+    
+    //variaveis
+    private BufferedImage imageSignature = null;
+    private double[] signature = null;
+    
+    //constantes
+    private static final int RADIUS = 0;
+    private static final int DIAMETER = 1;
+    
+    
+    public Signature(BufferedImage originalImage, int angle, boolean invInicialPoint,int type, boolean invScala){
+        ArrayList<Dimension> lista = getBorder(originalImage);
+        Dimension centroid = getCentroideMedian(lista);
+        Dimension initPoint = null;
+        if(invInicialPoint){
+            switch(type){
+                case 0:
+                    initPoint = getInitAngleByMoreRadius(lista, centroid);
+                    break;
+                case 1:
+                    initPoint = getInitAngleByMoreDiameter(lista, centroid);
+                    break;
+            }
+        }else{
+            initPoint = getInitAngle(lista, centroid);
+        }
+        if(invScala){
+            signature = createNormSignal(lista, initPoint, angle);
+        }else{
+            signature = createSignal(lista, initPoint, angle);
+        }
+    }
+    
+    public Signature(ArrayList<Dimension> lista,int angle, boolean invInicialPoint,int type, boolean invScala){
+        Dimension centroid = getCentroideMedian(lista);
+        Dimension initPoint = null;
+        if(invInicialPoint){
+            switch(type){
+                case 0:
+                    initPoint = getInitAngleByMoreRadius(lista, centroid);
+                    break;
+                case 1:
+                    initPoint = getInitAngleByMoreDiameter(lista, centroid);
+                    break;
+            }
+        }else{
+            initPoint = getInitAngle(lista, centroid);
+        }
+        if(invScala){
+            signature = createNormSignal(lista, initPoint, angle);
+        }else{
+            signature = createSignal(lista, initPoint, angle);
+        }
+    }
 
-    public double[] createSignal(ArrayList<Dimension> listaDimension, int angle) {
+    private ArrayList<Dimension> getBorder(BufferedImage image) {
+        int total = image.getWidth() * image.getHeight();
+        image = Filtro.mediana(image, 5);
+        int limiar = Limiar.otsuTreshold(Histograma.histogramaGray(image), total);
+        return new BorderDetector(Limiar.limiarizacaoBool(image, limiar)).getBorder();
+    }
+
+    private double[] createSignal(ArrayList<Dimension> listaDimension, Dimension initPoint, int angle) {
         Dimension centroide = getCentroideMedian(listaDimension);
-        Dimension[] point = getDimensionPoint(listaDimension, centroide, angle);
+        Dimension[] point = getDimensionPoint(listaDimension, centroide, initPoint, angle);
         double[] distance = new double[360 / angle];
         for (int i = 0; i < point.length; i++) {
             distance[i] = getDistanceManhattan(centroide, point[i]);
@@ -23,9 +85,9 @@ public class Signature {
         return distance;
     }
 
-    public double[] createNormSignal(ArrayList<Dimension> listaDimension, int angle) {
+    private double[] createNormSignal(ArrayList<Dimension> listaDimension, Dimension initPoint, int angle) {
         Dimension centroide = getCentroideMedian(listaDimension);
-        Dimension[] point = getDimensionPoint(listaDimension, centroide, angle);
+        Dimension[] point = getDimensionPoint(listaDimension, centroide, initPoint, angle);
         int[] distance = new int[360 / angle];
         for (int i = 0; i < point.length; i++) {
             distance[i] = getDistanceManhattan(centroide, point[i]);
@@ -33,7 +95,7 @@ public class Signature {
         return Histograma.normalizacao(distance, distance.length);
     }
 
-    public Dimension getCentroideMedian(ArrayList<Dimension> lista) {
+    private Dimension getCentroideMedian(ArrayList<Dimension> lista) {
         int x = 0;
         int y = 0;
         for (Dimension dimension : lista) {
@@ -56,7 +118,7 @@ public class Signature {
         return point;
     }
 
-    public Dimension getInitAngleByMoreRadius(ArrayList<Dimension> lista, Dimension centroide) {
+    private Dimension getInitAngleByMoreRadius(ArrayList<Dimension> lista, Dimension centroide) {
         //pega o pixel no angulo zero
         Dimension point = centroide;
         //distancia
@@ -73,7 +135,7 @@ public class Signature {
         return point;
     }
 
-    public Dimension getInitAngleByMoreDiameter(ArrayList<Dimension> lista, Dimension centroide) {
+    private Dimension getInitAngleByMoreDiameter(ArrayList<Dimension> lista, Dimension centroide) {
         int dst = 0;
         Dimension point = null;
         for (int i = 0; i < lista.size(); i++) {
@@ -105,23 +167,7 @@ public class Signature {
 //        System.out.println("encontrou");
         return point;
     }
-
-    public Dimension getInitAngleByDiameterMoreDiferenceRadius(ArrayList<Dimension> lista, Dimension centroide) {
-        Dimension point = null;
-        for (int i = 0; i < lista.size(); i++) {
-            for (int j = 0; j < lista.size(); j++) {
-                //verifica se a reta eh um diametro
-                boolean result = isDiameter(lista.get(i), lista.get(j), centroide);
-//                System.out.println(result);
-                if (result) {
-                    
-                }
-            }
-        }
-//        System.out.println("encontrou");
-        return point;
-    }
-
+    
     private boolean isDiameter(Dimension d1, Dimension d2, Dimension centroide) {
         /*
          * Funçao da reta para verificar se uma corda eh um diametro
@@ -147,12 +193,12 @@ public class Signature {
         return false;
     }
 
-    public Dimension[] getDimensionPoint(ArrayList<Dimension> lista, Dimension centroide, int angle) {
+    private Dimension[] getDimensionPoint(ArrayList<Dimension> lista, Dimension centroide, Dimension initPoint, int angle) {
         int quant = 360 / angle;
         int mod = angle % 360;
         int dif = 360;
         Dimension[] vector = new Dimension[quant];
-        vector[0] = getInitAngle(lista, centroide);
+        vector[0] = initPoint;
         Dimension initAngle = vector[0];
         for (int i = 1; i < quant; i++) {
             for (Dimension dimension : lista) {
@@ -212,4 +258,20 @@ public class Signature {
         }
         return variance / (distance.length - 1);
     }
+
+    public BufferedImage getImageSignature() {
+        return imageSignature;
+    }
+
+    public void setImageSignature(BufferedImage imageSignature) {
+        this.imageSignature = imageSignature;
+    }
+
+    public double[] getSignature() {
+        return signature;
+    }
+
+    public void setSignature(double[] signature) {
+        this.signature = signature;
+    } 
 }
