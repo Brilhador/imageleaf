@@ -16,11 +16,6 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="mEdit">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Edit"/>
-          </Properties>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="mFilters">
           <Properties>
             <Property name="text" type="java.lang.String" value="Filters"/>
@@ -46,6 +41,13 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="mSegmenting">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Segmenting"/>
+          </Properties>
+          <SubComponents>
             <Menu class="javax.swing.JMenu" name="jMenu2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Edge - Detect"/>
@@ -68,16 +70,43 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <Menu class="javax.swing.JMenu" name="jMenu1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Thresholding"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Otsu"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Max. Entropia"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="mCurvature">
+        <Menu class="javax.swing.JMenu" name="mDescriptors">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Curvature"/>
+            <Property name="text" type="java.lang.String" value="Descriptors"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Signature"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mCurvatureChainCode">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Chain Code"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Fourier"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -97,27 +126,13 @@
                 <Property name="text" type="java.lang.String" value="Pattern Generation"/>
               </Properties>
             </MenuItem>
-            <Menu class="javax.swing.JMenu" name="jMenu1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Species Classification"/>
-              </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="mClassificationSingle">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Single Image"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="mClassificationMultiple">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Multiple Image"/>
-                  </Properties>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="mComparisionImage">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Comparision image"/>
+                <Property name="text" type="java.lang.String" value="Comparison of two images"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mComparisionImageActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -130,7 +145,6 @@
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -154,7 +168,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-              <Component id="jPanelPrincipal" pref="279" max="32767" attributes="0"/>
+              <Component id="jPanelPrincipal" pref="281" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

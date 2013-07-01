@@ -12,15 +12,11 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import model.ChainCode;
 import model.Grafico;
-import model.Histograma;
-import model.Signature;
+import model.MyImage;
 import view.curvature.ViewChainCode;
 
 /**
@@ -48,7 +44,8 @@ public class ControlCurvatureChainCode {
 
         stopProgressBar();
         carregaImagePreview(image);
-        view.getRbCoordinates().setSelected(true);
+        view.getCbTranslation().setEnabled(false);
+        view.setResizable(false);
 
         view.getBtnGenerate().addActionListener(new ActionListener() {
             @Override
@@ -56,61 +53,17 @@ public class ControlCurvatureChainCode {
                 SwingWorker work = new SwingWorker() {
                     @Override
                     protected Object doInBackground() throws Exception {
-                        int width = view.getLblImageCurvature().getWidth();
-                        int heigth = view.getLblImageCurvature().getHeight();
                         startProgressBar();
-                        if (view.getRbCoordinates().isSelected()) {
-                            try {
-                                ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
-                                Dimension centroide = new Signature().getCentroideMedian(lista);
-                                Dimension initPoint = new Signature().getInitAngleByMoreRadius(lista, centroide);
-                                Dimension[] point = new Signature().getDimensionPoint(lista, centroide, 20);
-//                                double[] distance = new Signature().createNormSignal(lista, 10);
-//                                for (double i : distance) {
-//                                    System.out.println(i);
-//                                }
-                                if (lista != null) {
-                                    drawPathChainCode(lista, centroide, point);
-                                    grafico = Grafico.curvatureDimension(lista, width, heigth, "Curvature");
-                                    view.getLblImageCurvature().setImage(grafico);
-                                } else {
-                                    JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        } else if (view.getRbChainCode().isSelected()) {
-                            ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
-                            if (lista != null) {
-//                                ArrayList<Integer> listaCode = new ChainCode(imageBorder).getChainCode();
-//                                Signature sig = new Signature();
-//                                sig.createSignalBorders(10, listaCode);
-//                                drawPathChainCode(lista);
-//                                grafico = Grafico.curvatureChainCode(listaCode, width, heigth, "Curvature");
-//                                view.getLblImageCurvature().setImage(grafico);
-                            } else {
-                                JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
-                            }
-                        } else if (view.getRbHistChain().isSelected()) {
-                            ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
-                            if (lista != null) {
-//                                int[] vectorFeature = new ChainCode(imageBorder).getAngleHistograma();
-//                                double[] normFeature = Histograma.normalizacao(vectorFeature, vectorFeature.length);
-//                                ArrayList<Dimension> lista = new ChainCode(imageBorder).getDimesionChainCode();
-                                Dimension centroide = new Signature().getCentroideMedian(lista);
-                                Dimension[] point = new Signature().getDimensionPoint(lista, centroide, 90);
-                                
-//                                drawPathChainCode(lista);
-//                                grafico = Grafico.histograma(normFeature, width, heigth, "Histogram Chain Code", "Direction", "Frequency");
-//                                grafico = Grafico.curvatureDimension(point, width, heigth, "teste");
-                                view.getLblImageCurvature().setImage(grafico);
-                            } else {
-                                JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
-                            }
-
-                        } else {
-                            JOptionPane.showMessageDialog(view, "Selecione um tipo de curvatura", "", JOptionPane.INFORMATION_MESSAGE);
-                        }
+                        boolean invScala = view.getCbScala().isSelected();
+                        boolean invInitialPoint = view.getCbInitialPoint().isSelected();
+                        boolean invRotation = view.getCbRotation().isSelected();
+                        int width = Integer.parseInt(view.getTxtWidth().getText());
+                        int heigth = Integer.parseInt(view.getTxtHeigth().getText());
+                        ChainCode chaincode = new ChainCode(image, invScala, width, heigth, invInitialPoint, invRotation);
+                        view.getImageViewRecorte().setImage(MyImage.resizeImage(chaincode.getChainImage(), view.getImageViewRecorte().getWidth(), view.getImageViewRecorte().getHeight()));
+                        view.getImageViewRecorte().setScale(0.8);
+                        view.getLblValueChainCode().setText(chaincode.getChaincode());
+                        view.getImageViewGrafico().setImage(Grafico.curvatureDimension(chaincode.getBorder(), view.getImageViewGrafico().getWidth(), view.getImageViewGrafico().getHeight(), "Dimension (x,y)"));
                         stopProgressBar();
                         return null;
                     }
@@ -118,41 +71,12 @@ public class ControlCurvatureChainCode {
                 work.execute();
             }
         });
-
-        view.getRbCoordinates().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                if (view.getRbCoordinates().isSelected()) {
-                    view.getRbChainCode().setSelected(false);
-                    view.getRbHistChain().setSelected(false);
-                }
-            }
-        });
-
-        view.getRbChainCode().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                if (view.getRbChainCode().isSelected()) {
-                    view.getRbCoordinates().setSelected(false);
-                    view.getRbHistChain().setSelected(false);
-                }
-            }
-        });
-
-        view.getRbHistChain().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                if (view.getRbHistChain().isSelected()) {
-                    view.getRbCoordinates().setSelected(false);
-                    view.getRbChainCode().setSelected(false);
-                }
-            }
-        });
     }
 
     //carregar image no lblImagePreview
     public void carregaImagePreview(BufferedImage image) {
         view.getImageView().setImageResize(image);
+        view.getImageView().setScale(0.8);
     }
 
     public void startProgressBar() {

@@ -104,14 +104,14 @@ public class ControlPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
-                    if (getFrameSelected().getImageBorder() != null) {
+//                    if (getFrameSelected().getImageBorder() != null) {
                         new ControlCurvatureChainCode(getFrameSelected().getImage(), getFrameSelected().getImageBorder());
-                    } else {
-                        int response = JOptionPane.showConfirmDialog(view, "As bordas da imagem nao foram identificadas, deseja identifica-las agora?", null, JOptionPane.YES_NO_OPTION);
-                        if (response == JOptionPane.YES_OPTION) {
-                            new ControlEdgeSobel(getFrameSelected().getImage(), view);
-                        }
-                    }
+//                    } else {
+//                        int response = JOptionPane.showConfirmDialog(view, "As bordas da imagem nao foram identificadas, deseja identifica-las agora?", null, JOptionPane.YES_NO_OPTION);
+//                        if (response == JOptionPane.YES_OPTION) {
+//                            new ControlEdgeSobel(getFrameSelected().getImage(), view);
+//                        }
+//                    }
                 } else {
                     JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -137,19 +137,6 @@ public class ControlPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new ControlPatternGeneration();
-            }
-        });
-
-        view.getmClassificationMultiple().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ControlSpeciesClassificationMultiple();
-            }
-        });
-
-        view.getmClassificationSingle().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
             }
         });
 
