@@ -61,7 +61,7 @@ public class ControlCurvatureChainCode {
                         int heigth = Integer.parseInt(view.getTxtHeigth().getText());
                         ChainCode chaincode = new ChainCode(image, invScala, width, heigth, invInitialPoint, invRotation);
                         view.getImageViewRecorte().setImage(MyImage.resizeImage(chaincode.getChainImage(), view.getImageViewRecorte().getWidth(), view.getImageViewRecorte().getHeight()));
-                        view.getImageViewRecorte().setScale(0.8);
+                        view.getImageViewRecorte().setScale(0.9);
                         view.getLblValueChainCode().setText(chaincode.getChaincode());
                         view.getImageViewGrafico().setImage(Grafico.curvatureDimension(chaincode.getBorder(), view.getImageViewGrafico().getWidth(), view.getImageViewGrafico().getHeight(), "Dimension (x,y)"));
                         stopProgressBar();
@@ -76,7 +76,7 @@ public class ControlCurvatureChainCode {
     //carregar image no lblImagePreview
     public void carregaImagePreview(BufferedImage image) {
         view.getImageView().setImageResize(image);
-        view.getImageView().setScale(0.8);
+        view.getImageView().setScale(0.9);
     }
 
     public void startProgressBar() {

@@ -20,6 +20,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import model.ChainCode;
+import model.Complex;
 import model.DFT;
 import model.Distancia;
 import model.Filtro;
@@ -113,28 +114,30 @@ public class ControlSimileImage {
         if (listaImage1 == null || listaImage2 == null) {
             JOptionPane.showMessageDialog(view, "Erro", null, JOptionPane.ERROR_MESSAGE);
         } else {
-            double[] vectorImage1 = createSignal(listaImage1, angle);
-            double[] vectorImage2 = createSignal(listaImage2, angle);
+//            double[] vectorImage1 = createSignal(listaImage1, angle);
+//            double[] vectorImage2 = createSignal(listaImage2, angle);
+            double[] vectorImage1 = new Complex(listaImage1).getVector();
+            double[] vectorImage2 = new Complex(listaImage2).getVector();
             DFT dft1 = new DFT(1, vectorImage1, new double[vectorImage1.length], vectorImage1.length);
             DFT dft2 = new DFT(1, vectorImage2, new double[vectorImage2.length], vectorImage2.length);
             dft1.invRotation();
             dft2.invRotation();
             dft1.invScala();
             dft2.invScala();
-            double dst = Distancia.Euclidiana(dft1.getX1(), dft2.getX1(), indice);
+            double dst = Distancia.Euclidiana(dft1.getInvTranslation(indice), dft2.getInvTranslation(indice), indice-1);
             view.getTxtDstResult().setText(dst + "");
-            BufferedImage grafico = Grafico.DFT2IMG(dft1.getX1(), dft2.getX1(), view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature", indice);
+            BufferedImage grafico = Grafico.DFT2IMG(dft1.getInvTranslation(indice), dft2.getInvTranslation(indice), view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature", indice-1);
             //desenhar assinatura nas imagens da tela
-            Dimension centroide = new Signature().getCentroideMedian(listaImage1);
-            Dimension[] point = new Signature().getDimensionPoint(listaImage1, centroide, angle);
-            BufferedImage sigImage1 = drawPathChainCode(image1, listaImage1, centroide, point);
-            //desenhar assinatura nas imagens da tela
-            centroide = new Signature().getCentroideMedian(listaImage2);
-            point = new Signature().getDimensionPoint(listaImage2, centroide, angle);
-            BufferedImage sigImage2 = drawPathChainCode(image2, listaImage2, centroide, point);
-            //mudando as imagens
-            view.getJxImage1().setImage(MyImage.resizeImage(sigImage1, view.getJxImage1().getWidth(), view.getJxImage1().getHeight()));
-            view.getJxImage2().setImage(MyImage.resizeImage(sigImage2, view.getJxImage2().getWidth(), view.getJxImage2().getHeight()));
+//            Dimension centroide = new Signature().getCentroideMedian(listaImage1);
+//            Dimension[] point = new Signature().getDimensionPoint(listaImage1, centroide, angle);
+//            BufferedImage sigImage1 = drawPathChainCode(image1, listaImage1, centroide, point);
+//            //desenhar assinatura nas imagens da tela
+//            centroide = new Signature().getCentroideMedian(listaImage2);
+//            point = new Signature().getDimensionPoint(listaImage2, centroide, angle);
+//            BufferedImage sigImage2 = drawPathChainCode(image2, listaImage2, centroide, point);
+//            //mudando as imagens
+//            view.getJxImage1().setImage(MyImage.resizeImage(sigImage1, view.getJxImage1().getWidth(), view.getJxImage1().getHeight()));
+//            view.getJxImage2().setImage(MyImage.resizeImage(sigImage2, view.getJxImage2().getWidth(), view.getJxImage2().getHeight()));
             view.getJxGrafico().setImage(grafico);
         }
     }
@@ -143,27 +146,27 @@ public class ControlSimileImage {
         if (listaImage1 == null || listaImage2 == null) {
             JOptionPane.showMessageDialog(view, "Erro", null, JOptionPane.ERROR_MESSAGE);
         } else {
-            double[] vectorImage1 = createNormSignal(listaImage1, angle);
-            double[] vectorImage2 = createNormSignal(listaImage2, angle);
-            DFT dft1 = new DFT(1, vectorImage1, new double[vectorImage1.length], vectorImage1.length);
-            DFT dft2 = new DFT(1, vectorImage2, new double[vectorImage2.length], vectorImage2.length);
-            vectorImage1 = createNormDFT(dft1.getX1());
-            vectorImage2 = createNormDFT(dft2.getX1());
-            double dst = Distancia.Euclidiana(vectorImage1, vectorImage2, indice);
-            view.getTxtDstResult().setText(dst + "");
-            BufferedImage grafico = Grafico.DFT2IMG(vectorImage1, vectorImage2, view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature", indice);
+//            double[] vectorImage1 = createNormSignal(listaImage1, angle);
+//            double[] vectorImage2 = createNormSignal(listaImage2, angle);
+//            DFT dft1 = new DFT(1, vectorImage1, new double[vectorImage1.length], vectorImage1.length);
+//            DFT dft2 = new DFT(1, vectorImage2, new double[vectorImage2.length], vectorImage2.length);
+//            vectorImage1 = createNormDFT(dft1.getX1());
+//            vectorImage2 = createNormDFT(dft2.getX1());
+//            double dst = Distancia.Euclidiana(vectorImage1, vectorImage2, indice);
+//            view.getTxtDstResult().setText(dst + "");
+//            BufferedImage grafico = Grafico.DFT2IMG(vectorImage1, vectorImage2, view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature", indice);
             //desenhar assinatura nas imagens da tela
-            Dimension centroide = new Signature().getCentroideMedian(listaImage1);
-            Dimension[] point = new Signature().getDimensionPoint(listaImage1, centroide, angle);
-            BufferedImage sigImage1 = drawPathChainCode(image1, listaImage1, centroide, point);
-            //desenhar assinatura nas imagens da tela
-            centroide = new Signature().getCentroideMedian(listaImage2);
-            point = new Signature().getDimensionPoint(listaImage2, centroide, angle);
-            BufferedImage sigImage2 = drawPathChainCode(image2, listaImage2, centroide, point);
-            //mudando as imagens
-            view.getJxImage1().setImage(MyImage.resizeImage(sigImage1, view.getJxImage1().getWidth(), view.getJxImage1().getHeight()));
-            view.getJxImage2().setImage(MyImage.resizeImage(sigImage2, view.getJxImage2().getWidth(), view.getJxImage2().getHeight()));
-            view.getJxGrafico().setImage(grafico);
+//            Dimension centroide = new Signature().getCentroideMedian(listaImage1);
+//            Dimension[] point = new Signature().getDimensionPoint(listaImage1, centroide, angle);
+//            BufferedImage sigImage1 = drawPathChainCode(image1, listaImage1, centroide, point);
+//            //desenhar assinatura nas imagens da tela
+//            centroide = new Signature().getCentroideMedian(listaImage2);
+//            point = new Signature().getDimensionPoint(listaImage2, centroide, angle);
+//            BufferedImage sigImage2 = drawPathChainCode(image2, listaImage2, centroide, point);
+//            //mudando as imagens
+//            view.getJxImage1().setImage(MyImage.resizeImage(sigImage1, view.getJxImage1().getWidth(), view.getJxImage1().getHeight()));
+//            view.getJxImage2().setImage(MyImage.resizeImage(sigImage2, view.getJxImage2().getWidth(), view.getJxImage2().getHeight()));
+//            view.getJxGrafico().setImage(grafico);
         }
     }
 
@@ -179,16 +182,16 @@ public class ControlSimileImage {
         //calcula o codigo da cadeia 
         return new ChainCode(image, true, 100, 100, true, true).getBorder();
     }
-
-    private double[] createSignal(ArrayList<Dimension> listaDimension, int angle) {
-        double[] vectorFeature = new Signature().createSignal(listaDimension, angle);
-        return vectorFeature;
-    }
-
-    private double[] createNormSignal(ArrayList<Dimension> listaDimension, int angle) {
-        double[] vectorFeature = new Signature().createNormSignal(listaDimension, angle);
-        return vectorFeature;
-    }
+//
+//    private double[] createSignal(ArrayList<Dimension> listaDimension, int angle) {
+//        double[] vectorFeature = new Signature().createSignal(listaDimension, angle);
+//        return vectorFeature;
+//    }
+//
+//    private double[] createNormSignal(ArrayList<Dimension> listaDimension, int angle) {
+//        double[] vectorFeature = new Signature().createNormSignal(listaDimension, angle);
+//        return vectorFeature;
+//    }
     
     private double[] createComplex(double[] vector1, double[] vector2){
         double[] returnVector = new double[vector1.length];

@@ -4,7 +4,9 @@
  */
 package model;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -13,58 +15,43 @@ import java.util.ArrayList;
  * @author anderson
  */
 public class Signature {
-    
+
     //variaveis
+    private BufferedImage imageOriginal = null;
     private BufferedImage imageSignature = null;
     private double[] signature = null;
-    
+    private Dimension centroid = null;
+    private Dimension initPoint = null;
+    private ArrayList<Dimension> border = null;
     //constantes
     private static final int RADIUS = 0;
     private static final int DIAMETER = 1;
-    
-    
-    public Signature(BufferedImage originalImage, int angle, boolean invInicialPoint,int type, boolean invScala){
-        ArrayList<Dimension> lista = getBorder(originalImage);
-        Dimension centroid = getCentroideMedian(lista);
-        Dimension initPoint = null;
-        if(invInicialPoint){
-            switch(type){
-                case 0:
-                    initPoint = getInitAngleByMoreRadius(lista, centroid);
-                    break;
-                case 1:
-                    initPoint = getInitAngleByMoreDiameter(lista, centroid);
-                    break;
+
+    public Signature(BufferedImage originalImage, int angle, boolean invInicialPoint, int type, boolean invScala) {
+        try {
+            imageOriginal = originalImage;
+            border = getBorder(originalImage);
+            centroid = getCentroideMedian(border);
+            if (invInicialPoint) {
+                switch (type) {
+                    case 0:
+                        initPoint = getInitAngleByMoreRadius(border, centroid);
+                        break;
+                    case 1:
+                        initPoint = getInitAngleByMoreDiameter(border, centroid);
+                        break;
+                }
+            } else {
+                initPoint = getInitAngle(border, centroid);
             }
-        }else{
-            initPoint = getInitAngle(lista, centroid);
-        }
-        if(invScala){
-            signature = createNormSignal(lista, initPoint, angle);
-        }else{
-            signature = createSignal(lista, initPoint, angle);
-        }
-    }
-    
-    public Signature(ArrayList<Dimension> lista,int angle, boolean invInicialPoint,int type, boolean invScala){
-        Dimension centroid = getCentroideMedian(lista);
-        Dimension initPoint = null;
-        if(invInicialPoint){
-            switch(type){
-                case 0:
-                    initPoint = getInitAngleByMoreRadius(lista, centroid);
-                    break;
-                case 1:
-                    initPoint = getInitAngleByMoreDiameter(lista, centroid);
-                    break;
+            if (invScala) {
+                signature = createNormSignal(border, initPoint, angle);
+            } else {
+                signature = createSignal(border, initPoint, angle);
             }
-        }else{
-            initPoint = getInitAngle(lista, centroid);
-        }
-        if(invScala){
-            signature = createNormSignal(lista, initPoint, angle);
-        }else{
-            signature = createSignal(lista, initPoint, angle);
+            drawSignature(border, centroid, getDimensionPoint(border, centroid, initPoint, angle));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -167,7 +154,7 @@ public class Signature {
 //        System.out.println("encontrou");
         return point;
     }
-    
+
     private boolean isDiameter(Dimension d1, Dimension d2, Dimension centroide) {
         /*
          * Funçao da reta para verificar se uma corda eh um diametro
@@ -258,6 +245,35 @@ public class Signature {
         }
         return variance / (distance.length - 1);
     }
+    
+     public void drawSignature(ArrayList<Dimension> lista, Dimension centroide, Dimension[] point) {
+        imageSignature = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
+        Graphics2D g2d = imageSignature.createGraphics();
+        g2d.drawImage(imageOriginal, null, 0, 0);
+        //desenha a linha do primeiro elemento da lista
+        g2d.setColor(Color.BLUE);
+        g2d.drawLine(centroide.width, centroide.height, point[0].width, point[0].height);
+        for (int i = 1; i < point.length; i++) {
+//            drawPoint(drawImage, point[i], Color.RED);
+            g2d.setColor(Color.RED);
+            g2d.drawLine(centroide.width, centroide.height, point[i].width, point[i].height);
+        }
+        g2d.dispose();
+        
+        for (Dimension dimension : lista) {
+            drawPoint(imageSignature, dimension, Color.GREEN);
+        }
+
+        drawPoint(imageSignature, centroide, Color.YELLOW);
+    }
+
+    private void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {
+        drawImage.setRGB(point.width, point.height, cor.getRGB());
+        drawImage.setRGB(point.width + 1, point.height, cor.getRGB());//0
+        drawImage.setRGB(point.width, point.height - 1, cor.getRGB());//2
+        drawImage.setRGB(point.width - 1, point.height, cor.getRGB());//4
+        drawImage.setRGB(point.width, point.height + 1, cor.getRGB());//6
+    } 
 
     public BufferedImage getImageSignature() {
         return imageSignature;
@@ -273,5 +289,5 @@ public class Signature {
 
     public void setSignature(double[] signature) {
         this.signature = signature;
-    } 
+    }
 }

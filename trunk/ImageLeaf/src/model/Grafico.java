@@ -143,6 +143,35 @@ public class Grafico {
             return null;
         }
     }
+    
+    public static BufferedImage Signature(double[] signature,  int width, int height, String title) {
+
+        try {
+
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+            //carregar dataset com os histogramas
+            for (int i = 0; i < signature.length; i++) {
+                dataset.addValue(signature[i], "signature", "" + i);
+            }
+
+            JFreeChart chart = ChartFactory.createLineChart(
+                    title,
+                    "Angle",
+                    "Distance",
+                    dataset,
+                    PlotOrientation.VERTICAL,
+                    true,
+                    false,
+                    false);
+
+            return chart.createBufferedImage(width, height);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public static BufferedImage curvatureDimension(ArrayList<Dimension> lista, int sizeWidth, int sizeHeight, String title) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();

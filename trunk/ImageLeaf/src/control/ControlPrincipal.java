@@ -7,6 +7,7 @@ package control;
 import control.blur.ControlBlurLow;
 import control.blur.ControlBlurMedian;
 import control.curvature.ControlCurvatureChainCode;
+import control.curvature.ControlCurvatureSignature;
 import control.edge.ControlEdgeSobel;
 import control.recognition.ControlPatternGeneration;
 import control.recognition.ControlSpeciesClassificationMultiple;
@@ -122,7 +123,11 @@ public class ControlPrincipal {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //
+                if (getFrameSelected() != null) {
+                        new ControlCurvatureSignature(getFrameSelected().getImage());
+                } else {
+                    JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
 
