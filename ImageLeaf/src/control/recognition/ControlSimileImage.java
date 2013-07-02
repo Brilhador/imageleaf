@@ -120,13 +120,13 @@ public class ControlSimileImage {
             double[] vectorImage2 = new Complex(listaImage2).getVector();
             DFT dft1 = new DFT(1, vectorImage1, new double[vectorImage1.length], vectorImage1.length);
             DFT dft2 = new DFT(1, vectorImage2, new double[vectorImage2.length], vectorImage2.length);
-            dft1.invRotation();
-            dft2.invRotation();
-            dft1.invScala();
-            dft2.invScala();
-            double dst = Distancia.Euclidiana(dft1.getInvTranslation(indice), dft2.getInvTranslation(indice), indice-1);
-            view.getTxtDstResult().setText(dst + "");
-            BufferedImage grafico = Grafico.DFT2IMG(dft1.getInvTranslation(indice), dft2.getInvTranslation(indice), view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature", indice-1);
+//            dft1.invRotation();
+//            dft2.invRotation();
+//            dft1.invScala();
+//            dft2.invScala();
+//            double dst = Distancia.Euclidiana(dft1.getInvTranslation(indice), dft2.getInvTranslation(indice), indice-1);
+//            view.getTxtDstResult().setText(dst + "");
+//            BufferedImage grafico = Grafico.DFT2IMG(dft1.getInvTranslation(indice), dft2.getInvTranslation(indice), view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature", indice-1);
             //desenhar assinatura nas imagens da tela
 //            Dimension centroide = new Signature().getCentroideMedian(listaImage1);
 //            Dimension[] point = new Signature().getDimensionPoint(listaImage1, centroide, angle);
@@ -138,7 +138,7 @@ public class ControlSimileImage {
 //            //mudando as imagens
 //            view.getJxImage1().setImage(MyImage.resizeImage(sigImage1, view.getJxImage1().getWidth(), view.getJxImage1().getHeight()));
 //            view.getJxImage2().setImage(MyImage.resizeImage(sigImage2, view.getJxImage2().getWidth(), view.getJxImage2().getHeight()));
-            view.getJxGrafico().setImage(grafico);
+//            view.getJxGrafico().setImage(grafico);
         }
     }
     

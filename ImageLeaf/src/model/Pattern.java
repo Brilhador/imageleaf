@@ -90,9 +90,9 @@ public class Pattern {
                         //assinatura normalizada
                         double[] signature = new Signature(image,angle, false,0, true).getSignature();
                         DFT dft = new DFT(1, signature, new double[signature.length], signature.length);
-                        dft.invRotation();
-                        dft.invScala();
-                        double[] vectorFeature = dft.getX1();
+//                        dft.invRotation();
+//                        dft.invScala();
+                        double[] vectorFeature = dft.getCoefficients();
 
                         String textData = "";
                         /*
