@@ -50,7 +50,7 @@ public class viewPrincipal extends javax.swing.JFrame {
         mDescriptors = new javax.swing.JMenu();
         mCurvatureSignature = new javax.swing.JMenuItem();
         mCurvatureChainCode = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        mCurvatureFourier = new javax.swing.JMenuItem();
         mRecognition = new javax.swing.JMenu();
         mRecognitionGroup = new javax.swing.JMenuItem();
         mPatternGeneration = new javax.swing.JMenuItem();
@@ -114,13 +114,18 @@ public class viewPrincipal extends javax.swing.JFrame {
         mDescriptors.setText("Descriptors");
 
         mCurvatureSignature.setText("Signature");
+        mCurvatureSignature.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mCurvatureSignatureActionPerformed(evt);
+            }
+        });
         mDescriptors.add(mCurvatureSignature);
 
         mCurvatureChainCode.setText("Chain Code");
         mDescriptors.add(mCurvatureChainCode);
 
-        jMenuItem2.setText("Fourier");
-        mDescriptors.add(jMenuItem2);
+        mCurvatureFourier.setText("Fourier");
+        mDescriptors.add(mCurvatureFourier);
 
         jMenuBar1.add(mDescriptors);
 
@@ -168,11 +173,14 @@ public class viewPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mComparisionImageActionPerformed
 
+    private void mCurvatureSignatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mCurvatureSignatureActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mCurvatureSignatureActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -180,6 +188,7 @@ public class viewPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jPanelPrincipal;
     private javax.swing.JMenuItem mComparisionImage;
     private javax.swing.JMenuItem mCurvatureChainCode;
+    private javax.swing.JMenuItem mCurvatureFourier;
     private javax.swing.JMenuItem mCurvatureSignature;
     private javax.swing.JMenu mDescriptors;
     private javax.swing.JMenu mFile;
@@ -299,6 +308,14 @@ public class viewPrincipal extends javax.swing.JFrame {
 
     public void setmCurvatureSignature(JMenuItem mCurvatureSignature) {
         this.mCurvatureSignature = mCurvatureSignature;
+    }
+
+    public JMenuItem getmCurvatureFourier() {
+        return mCurvatureFourier;
+    }
+
+    public void setmCurvatureFourier(JMenuItem mCurvatureFourier) {
+        this.mCurvatureFourier = mCurvatureFourier;
     }
     
 }

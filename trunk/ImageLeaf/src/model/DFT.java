@@ -4,14 +4,46 @@
  */
 package model;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 /**
  *
  * @author anderson
  */
 public class DFT {
 
+    private BufferedImage imageOriginal = null;
+    private BufferedImage imageFourier = null;
+    private ArrayList<Dimension> border = null;
+    //variaveis da transformada de fourier
     private double[] x1 = null;
     private double[] y1 = null;
+
+    public DFT(BufferedImage original, boolean invRotation, boolean invScala, boolean invTranslation) {
+        try {
+            this.imageOriginal = original;
+            border = getBorder(imageOriginal);
+            this.x1 = createComplexBorder(border);
+            this.y1 = new double[this.x1.length];
+            create(1, x1, y1, this.x1.length);
+            if (invRotation) {
+                invRotation();
+            }
+            if (invScala) {
+                invScala();
+            }
+            if (invTranslation) {
+                invTranslation();
+            }
+            drawBorder(border);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public DFT(int dir, double[] x1, double[] y1, int amostragem) {
         this.x1 = x1;
@@ -19,12 +51,32 @@ public class DFT {
         create(dir, x1, y1, amostragem);
     }
 
-    public double[] getX1() {
+    public double[] getCoefficients() {
         return x1;
     }
+    
+    public double[] getCoefficients(int indice) {
+        double[] vector = new double[indice - 1];
+        for (int i = 0; i < indice - 1; i++) {
+            vector[i] = x1[i];
+        }
+        return vector;
+    }
 
-    public double[] getY1() {
-        return y1;
+    private double[] createComplexBorder(ArrayList<Dimension> border) {
+        double[] vector = new double[border.size()];
+        for (int i = 0; i < border.size(); i++) {
+            Dimension d = border.get(i);
+            vector[i] = d.width + d.height;
+        }
+        return vector;
+    }
+
+    private ArrayList<Dimension> getBorder(BufferedImage image) {
+        int total = image.getWidth() * image.getHeight();
+        image = Filtro.mediana(image, 5);
+        int limiar = Limiar.otsuTreshold(Histograma.histogramaGray(image), total);
+        return new BorderDetector(Limiar.limiarizacaoBool(image, limiar)).getBorder();
     }
 
     private void create(int dir, double[] x1, double[] y1, int amostragem) {
@@ -64,26 +116,78 @@ public class DFT {
         }
     }
 
-    public void invRotation() {
+    private void invRotation() {
         for (int i = 0; i < x1.length; i++) {
             x1[i] = Math.abs(x1[i]);
             y1[i] = Math.abs(y1[i]);
         }
     }
 
-    public void invScala() {
-        double valor = x1[0];
-        for (int i = 1; i < x1.length; i++) {
+    private void invScala() {
+        double valor = x1[1];
+        for (int i = 0; i < x1.length; i++) {
             x1[i] = x1[i] / valor;
             y1[i] = y1[i] / valor;
         }
     }
 
-    public double[] getInvTranslation(int indice) {
+    private void invTranslation() {
+        double[] vector = new double[border.size()];
+        for (int i = 1; i < border.size() - 1; i++) {
+            vector[i] = x1[i];
+        }
+        x1 = vector;
+    }
+
+    private double[] getInvTranslation(int indice) {
         double[] vector = new double[indice - 1];
         for (int i = 1; i < indice - 1; i++) {
             vector[i] = x1[i];
         }
         return vector;
+    }
+
+    public BufferedImage getImageOriginal() {
+        return imageOriginal;
+    }
+
+    public void setImageOriginal(BufferedImage imageOriginal) {
+        this.imageOriginal = imageOriginal;
+    }
+
+    public BufferedImage getImageFourier() {
+        return imageFourier;
+    }
+
+    public void setImageFourier(BufferedImage imageFourier) {
+        this.imageFourier = imageFourier;
+    }
+
+    public ArrayList<Dimension> getBorder() {
+        return border;
+    }
+
+    public void setBorder(ArrayList<Dimension> border) {
+        this.border = border;
+    }
+
+    public void drawBorder(ArrayList<Dimension> lista) {
+        imageFourier = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
+        Graphics2D g2d = imageFourier.createGraphics();
+        g2d.drawImage(imageOriginal, null, 0, 0);
+        //desenha a linha do primeiro elemento da lista
+
+        for (Dimension dimension : lista) {
+            drawPoint(imageFourier, dimension, Color.GREEN);
+        }
+        g2d.dispose();
+    }
+
+    private void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {
+        drawImage.setRGB(point.width, point.height, cor.getRGB());
+        drawImage.setRGB(point.width + 1, point.height, cor.getRGB());//0
+        drawImage.setRGB(point.width, point.height - 1, cor.getRGB());//2
+        drawImage.setRGB(point.width - 1, point.height, cor.getRGB());//4
+        drawImage.setRGB(point.width, point.height + 1, cor.getRGB());//6
     }
 }

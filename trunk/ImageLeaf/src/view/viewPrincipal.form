@@ -98,13 +98,16 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Signature"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mCurvatureSignatureActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mCurvatureChainCode">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Chain Code"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+            <MenuItem class="javax.swing.JMenuItem" name="mCurvatureFourier">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Fourier"/>
               </Properties>
