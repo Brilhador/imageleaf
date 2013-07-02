@@ -6,6 +6,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -29,10 +30,12 @@ public class ChainCode {
     private ArrayList<Integer> chainCode = null;
     private ArrayList<Dimension> border = null;
     private BufferedImage chainImage = null;
+    private BufferedImage originalImage = null;
 
     //construtor
     public ChainCode(BufferedImage originalImage, boolean invScala, int newWidth, int newHeigth, boolean invInicialPoint, boolean invRotation) {
         try {
+            this.originalImage = originalImage;
             this.imageBorder = limiarizacaoBoolean(originalImage);
             this.width = imageBorder.length;
             this.heigth = imageBorder[0].length;
@@ -62,7 +65,7 @@ public class ChainCode {
             if (invRotation) {
                 chainCode = invRotation(chainCode);
             }
-            drawPoint(chainImage, new Dimension(startx, starty), Color.red);
+            chainImage = drawBorder(border, new Dimension(startx, starty));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -283,12 +286,23 @@ public class ChainCode {
         return newCode;
     }
 
+    public BufferedImage drawBorder(ArrayList<Dimension> lista, Dimension initPoint) {
+        BufferedImage newChainImage = new BufferedImage(chainImage.getWidth(), chainImage.getHeight(), chainImage.getType());
+        Graphics2D g2d = newChainImage.createGraphics();
+        g2d.drawImage(chainImage, null, 0, 0);
+        //desenha a linha do primeiro elemento da lista
+        
+        drawPoint(newChainImage, initPoint, Color.RED);
+        
+        for (Dimension dimension : lista) {
+            drawPoint(newChainImage, dimension, Color.GREEN);
+        }
+        g2d.dispose();
+        return newChainImage;
+    }
+
     private void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {
         drawImage.setRGB(point.width, point.height, cor.getRGB());
-//        drawImage.setRGB(point.width + 1, point.height, cor.getRGB());//0
-//        drawImage.setRGB(point.width, point.height - 1, cor.getRGB());//2
-//        drawImage.setRGB(point.width - 1, point.height, cor.getRGB());//4
-//        drawImage.setRGB(point.width, point.height + 1, cor.getRGB());//6
     }
 
     //getters e setters

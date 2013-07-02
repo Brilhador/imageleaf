@@ -113,6 +113,35 @@ public class Grafico {
             return null;
         }
     }
+    
+     public static BufferedImage DFT2IMG(double[] coefficients, int width, int height, String title) {
+
+        try {
+
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+            //carregar dataset com os histogramas
+            for (int i = 0; i < coefficients.length; i++) {
+                dataset.addValue(coefficients[i], "coefficients", "" + i);
+            }
+
+            JFreeChart chart = ChartFactory.createLineChart(
+                    title,
+                    "REAL",
+                    "INDICE",
+                    dataset,
+                    PlotOrientation.VERTICAL,
+                    true,
+                    false,
+                    false);
+
+            return chart.createBufferedImage(width, height);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public static BufferedImage Signature(int[] signature1, int[] signature2, int width, int height, String title) {
 

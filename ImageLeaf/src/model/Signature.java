@@ -265,6 +265,7 @@ public class Signature {
         }
 
         drawPoint(imageSignature, centroide, Color.YELLOW);
+        g2d.dispose();
     }
 
     private void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {

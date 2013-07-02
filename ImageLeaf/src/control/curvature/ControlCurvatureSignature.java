@@ -4,17 +4,12 @@
  */
 package control.curvature;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
-import model.ChainCode;
 import model.Grafico;
 import model.MyImage;
 import model.Signature;
@@ -25,7 +20,7 @@ import view.curvature.ViewSignature;
  * @author Anderson
  */
 public class ControlCurvatureSignature {
-    
+
     private ViewSignature view = null;
     private BufferedImage image = null;
     private BufferedImage grafico = null;
@@ -41,10 +36,13 @@ public class ControlCurvatureSignature {
     }
 
     private void initComponents() {
-        
+
         carregaImagePreview(image);
         stopProgressBar();
-       
+
+        view.getRbDiameter().setEnabled(false);
+        view.getRbRadius().setEnabled(false);
+        view.getRbDiameter().setSelected(true);
         view.getCbRotation().setEnabled(false);
         view.getCbTranslation().setEnabled(false);
         view.setResizable(false);
@@ -57,6 +55,9 @@ public class ControlCurvatureSignature {
                     protected Object doInBackground() throws Exception {
                         startProgressBar();
                         boolean invInitPoint = view.getCbInitialPoint().isSelected();
+                        if (view.getRbDiameter().isSelected()) {
+                            typeInitPoint = 1;//diamenter;
+                        }
                         boolean invScala = view.getCbScala().isSelected();
                         int angle = Integer.parseInt(view.getTxtAngle().getText());
                         Signature signature = new Signature(image, angle, invInitPoint, typeInitPoint, invScala);
@@ -71,43 +72,40 @@ public class ControlCurvatureSignature {
                 work.execute();
             }
         });
-        
-        view.getCbInitialPoint().addActionListener(new ActionListener() {
 
+        view.getCbInitialPoint().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(view.getCbInitialPoint().isSelected()){
+                if (view.getCbInitialPoint().isSelected()) {
                     view.getRbDiameter().setEnabled(true);
                     view.getRbRadius().setEnabled(true);
-                }else{
+                } else {
                     view.getRbDiameter().setEnabled(false);
                     view.getRbRadius().setEnabled(false);
                 }
             }
         });
-        
-        view.getRbRadius().addActionListener(new ActionListener() {
 
+        view.getRbRadius().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(view.getRbRadius().isSelected()){
+                if (view.getRbRadius().isSelected()) {
                     view.getRbDiameter().setSelected(false);
                 }
             }
         });
-        
-        view.getRbDiameter().addActionListener(new ActionListener() {
 
+        view.getRbDiameter().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(view.getRbDiameter().isSelected()){
+                if (view.getRbDiameter().isSelected()) {
                     view.getRbRadius().setSelected(false);
                 }
             }
         });
-        
+
     }
-    
+
     //carregar image no lblImagePreview
     public void carregaImagePreview(BufferedImage image) {
         view.getImageView().setImageResize(image);
@@ -123,5 +121,5 @@ public class ControlCurvatureSignature {
     public void stopProgressBar() {
         view.getPgBar().setVisible(false);
         view.getPgBar().setIndeterminate(false);
-    } 
+    }
 }
