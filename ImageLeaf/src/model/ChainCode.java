@@ -61,9 +61,9 @@ public class ChainCode {
                 chainCode = invInitialPoint(chainCode, tam);
                 border = createBorder();
                 chainCode = createChainCode();
-            }
-            if (invRotation) {
-                chainCode = invRotation(chainCode);
+                if (invRotation) {
+                    chainCode = invRotation(chainCode);
+                }
             }
             chainImage = drawBorder(border, new Dimension(startx, starty));
         } catch (Exception e) {
@@ -291,12 +291,12 @@ public class ChainCode {
         Graphics2D g2d = newChainImage.createGraphics();
         g2d.drawImage(chainImage, null, 0, 0);
         //desenha a linha do primeiro elemento da lista
-        
-        drawPoint(newChainImage, initPoint, Color.RED);
-        
         for (Dimension dimension : lista) {
             drawPoint(newChainImage, dimension, Color.GREEN);
         }
+
+        drawPoint(newChainImage, initPoint, Color.RED);
+        
         g2d.dispose();
         return newChainImage;
     }
@@ -324,6 +324,27 @@ public class ChainCode {
             code += c;
         }
         return code;
+    }
+
+    public double[] getDoubleChainCode() {
+        ArrayList<Integer> lista = getChainCode();
+        double[] vector = new double[lista.size()];
+        for (int i = 0; i < lista.size(); i++) {
+            vector[i] = lista.get(i);
+        }
+        return vector;
+    }
+
+    public double[] getHistChainCode() {
+        ArrayList<Integer> lista = getChainCode();
+        double[] hist = new double[8];
+        for (int i = 0; i < 8; i++) {
+            hist[i] = 0;
+        }
+        for (int i = 0; i < lista.size(); i++) {
+            hist[lista.get(i)]++;
+        }
+        return hist;
     }
 
     public void setChainCode(ArrayList<Integer> chainCode) {

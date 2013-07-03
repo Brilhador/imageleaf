@@ -256,7 +256,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtWidth">
       <Properties>
-        <Property name="text" type="java.lang.String" value="10"/>
+        <Property name="text" type="java.lang.String" value="30"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtWidthActionPerformed"/>
@@ -264,7 +264,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtHeigth">
       <Properties>
-        <Property name="text" type="java.lang.String" value="20"/>
+        <Property name="text" type="java.lang.String" value="50"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
