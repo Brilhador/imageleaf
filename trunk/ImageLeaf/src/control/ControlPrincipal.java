@@ -36,7 +36,9 @@ import view.viewPrincipal;
 public class ControlPrincipal {
 
     private viewPrincipal view = null;
-    private JFileChooser chooser = new JFileChooser();;
+    private JFileChooser chooser = new JFileChooser();
+
+    ;
 
     public ControlPrincipal() {
         view = new viewPrincipal();
@@ -63,7 +65,9 @@ public class ControlPrincipal {
                         addFrameImage(path);
                     }
                 }
-                chooser.setCurrentDirectory(chooser.getSelectedFile().getAbsoluteFile());
+                if (chooser != null) {
+                    chooser.setCurrentDirectory(chooser.getSelectedFile().getAbsoluteFile());
+                }
             }
         });
 
@@ -92,7 +96,7 @@ public class ControlPrincipal {
                 }
             }
         });
-        
+
         view.getmSegmentingThresholding().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -110,7 +114,7 @@ public class ControlPrincipal {
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
 //                    if (getFrameSelected().getImageBorder() != null) {
-                        new ControlCurvatureChainCode(getFrameSelected().getImage(), getFrameSelected().getImageBorder());
+                    new ControlCurvatureChainCode(getFrameSelected().getImage(), getFrameSelected().getImageBorder());
 //                    } else {
 //                        int response = JOptionPane.showConfirmDialog(view, "As bordas da imagem nao foram identificadas, deseja identifica-las agora?", null, JOptionPane.YES_NO_OPTION);
 //                        if (response == JOptionPane.YES_OPTION) {
@@ -122,25 +126,23 @@ public class ControlPrincipal {
                 }
             }
         });
-        
-        view.getmCurvatureSignature().addActionListener(new ActionListener() {
 
+        view.getmCurvatureSignature().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
-                        new ControlCurvatureSignature(getFrameSelected().getImage());
+                    new ControlCurvatureSignature(getFrameSelected().getImage());
                 } else {
                     JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
-        
-        view.getmCurvatureFourier().addActionListener(new ActionListener() {
 
+        view.getmCurvatureFourier().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
-                        new ControlCurvatureFourier(getFrameSelected().getImage());
+                    new ControlCurvatureFourier(getFrameSelected().getImage());
                 } else {
                     JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
                 }

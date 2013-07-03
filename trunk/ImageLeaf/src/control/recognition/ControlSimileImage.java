@@ -19,17 +19,19 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import model.ChainCode;
 import model.Complex;
 import model.DFT;
 import model.Distancia;
 import model.Filtro;
+import model.Grafico;
 import model.Histograma;
 import model.Limiar;
 import model.MyImage;
 import model.Signature;
 import view.recognition.ViewSimileImage;
-import model.Grafico;
 
 /**
  *
@@ -55,6 +57,10 @@ public class ControlSimileImage {
     private void initEvents() {
 
         stopProgressBar();
+        view.getTxtAngle().setEnabled(false);
+        view.getTxtWidth().setEnabled(false);
+        view.getTxtHeight().setEnabled(false);
+        view.getTxtSeries().setEnabled(false);
 
         view.getBtnOpen1().addActionListener(new ActionListener() {
             @Override
@@ -65,7 +71,6 @@ public class ControlSimileImage {
                         String pathImage = cFile.getSelectedFile().getAbsolutePath();
                         image1 = ImageIO.read(new File(pathImage));
                         view.getJxImage1().setImage(MyImage.resizeImage(image1, view.getJxImage1().getWidth(), view.getJxImage1().getHeight()));
-                        listaImage1 = createChainCode(image1);
                     } catch (IOException ex) {
                         Logger.getLogger(ControlSimileImage.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -82,7 +87,6 @@ public class ControlSimileImage {
                         String pathImage = cFile.getSelectedFile().getAbsolutePath();
                         image2 = ImageIO.read(new File(pathImage));
                         view.getJxImage2().setImage(MyImage.resizeImage(image2, view.getJxImage2().getWidth(), view.getJxImage2().getHeight()));
-                        listaImage2 = createChainCode(image2);
                     } catch (IOException ex) {
                         Logger.getLogger(ControlSimileImage.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -97,9 +101,44 @@ public class ControlSimileImage {
                     @Override
                     protected Object doInBackground() throws Exception {
                         startProgressBar();
-                        angle = Integer.parseInt(view.getTxtAngle().getText());
-                        indice = Integer.parseInt(view.getTxtSeries().getText());;
-                        startSignature();
+                        try {
+                            if (view.getRbSignature().isSelected()) {
+                                int angle = Integer.parseInt(view.getTxtAngle().getText());
+                                Signature sigImag1 = new Signature(image1, angle, true, 0, true);
+                                Signature sigImag2 = new Signature(image2, angle, true, 0, true);
+                                double distance = Distancia.Euclidiana(sigImag1.getSignature(), sigImag2.getSignature());
+                                view.getTxtDstResult().setText(distance + "");
+                                BufferedImage grafico = Grafico.Signature(sigImag1.getSignature(), sigImag2.getSignature(), view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature comparison");
+                                view.getJxGrafico().setImage(grafico);
+                                view.getJxImage1().setImageResize(sigImag1.getImageSignature());
+                                view.getJxImage2().setImageResize(sigImag2.getImageSignature());
+                            } else if (view.getRbChainCode().isSelected()) {
+                                int width = Integer.parseInt(view.getTxtWidth().getText());
+                                int heigth = Integer.parseInt(view.getTxtWidth().getText());
+                                ChainCode chainImg1 = new ChainCode(image1, true, width, heigth, true, true);
+                                ChainCode chainImg2 = new ChainCode(image2, true, width, heigth, true, true);
+                                double distance = Distancia.Euclidiana(chainImg1.getHistChainCode(), chainImg2.getHistChainCode());
+                                view.getTxtDstResult().setText(distance + "");
+                                BufferedImage grafico = Grafico.histogramaChainCode(chainImg1.getHistChainCode(), chainImg2.getHistChainCode(), view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(),"Histogram of direction", "Direction","Frequency");
+                                view.getJxGrafico().setImage(grafico);
+                                view.getJxImage1().setImageResize(chainImg1.getChainImage());
+                                view.getJxImage2().setImageResize(chainImg2.getChainImage());
+                            }else if(view.getRbFourier().isSelected()){
+                                int series = Integer.parseInt(view.getTxtSeries().getText());
+                                DFT dft1 = new DFT(image1, true, true, true);
+                                DFT dft2 = new DFT(image2, true, true, true);
+                                double distance = Distancia.Euclidiana(dft1.getCoefficients(series), dft2.getCoefficients(series));
+                                view.getTxtDstResult().setText(distance + "");
+                                BufferedImage grafico = Grafico.Signature(dft1.getCoefficients(series), dft2.getCoefficients(series), view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Series comparison");
+                                view.getJxGrafico().setImage(grafico);
+                                view.getJxImage1().setImageResize(dft1.getImageFourier());
+                                view.getJxImage2().setImageResize(dft2.getImageFourier());
+                            } else {
+                                JOptionPane.showMessageDialog(view, "select a shape descriptor!", "Informative", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         stopProgressBar();
                         return null;
                     }
@@ -108,109 +147,48 @@ public class ControlSimileImage {
             }
         });
 
-    }
-    
-    private void startSignature() {
-        if (listaImage1 == null || listaImage2 == null) {
-            JOptionPane.showMessageDialog(view, "Erro", null, JOptionPane.ERROR_MESSAGE);
-        } else {
-//            double[] vectorImage1 = createSignal(listaImage1, angle);
-//            double[] vectorImage2 = createSignal(listaImage2, angle);
-            double[] vectorImage1 = new Complex(listaImage1).getVector();
-            double[] vectorImage2 = new Complex(listaImage2).getVector();
-            DFT dft1 = new DFT(1, vectorImage1, new double[vectorImage1.length], vectorImage1.length);
-            DFT dft2 = new DFT(1, vectorImage2, new double[vectorImage2.length], vectorImage2.length);
-//            dft1.invRotation();
-//            dft2.invRotation();
-//            dft1.invScala();
-//            dft2.invScala();
-//            double dst = Distancia.Euclidiana(dft1.getInvTranslation(indice), dft2.getInvTranslation(indice), indice-1);
-//            view.getTxtDstResult().setText(dst + "");
-//            BufferedImage grafico = Grafico.DFT2IMG(dft1.getInvTranslation(indice), dft2.getInvTranslation(indice), view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature", indice-1);
-            //desenhar assinatura nas imagens da tela
-//            Dimension centroide = new Signature().getCentroideMedian(listaImage1);
-//            Dimension[] point = new Signature().getDimensionPoint(listaImage1, centroide, angle);
-//            BufferedImage sigImage1 = drawPathChainCode(image1, listaImage1, centroide, point);
-//            //desenhar assinatura nas imagens da tela
-//            centroide = new Signature().getCentroideMedian(listaImage2);
-//            point = new Signature().getDimensionPoint(listaImage2, centroide, angle);
-//            BufferedImage sigImage2 = drawPathChainCode(image2, listaImage2, centroide, point);
-//            //mudando as imagens
-//            view.getJxImage1().setImage(MyImage.resizeImage(sigImage1, view.getJxImage1().getWidth(), view.getJxImage1().getHeight()));
-//            view.getJxImage2().setImage(MyImage.resizeImage(sigImage2, view.getJxImage2().getWidth(), view.getJxImage2().getHeight()));
-//            view.getJxGrafico().setImage(grafico);
-        }
-    }
-    
-    private void startDFT() {
-        if (listaImage1 == null || listaImage2 == null) {
-            JOptionPane.showMessageDialog(view, "Erro", null, JOptionPane.ERROR_MESSAGE);
-        } else {
-//            double[] vectorImage1 = createNormSignal(listaImage1, angle);
-//            double[] vectorImage2 = createNormSignal(listaImage2, angle);
-//            DFT dft1 = new DFT(1, vectorImage1, new double[vectorImage1.length], vectorImage1.length);
-//            DFT dft2 = new DFT(1, vectorImage2, new double[vectorImage2.length], vectorImage2.length);
-//            vectorImage1 = createNormDFT(dft1.getX1());
-//            vectorImage2 = createNormDFT(dft2.getX1());
-//            double dst = Distancia.Euclidiana(vectorImage1, vectorImage2, indice);
-//            view.getTxtDstResult().setText(dst + "");
-//            BufferedImage grafico = Grafico.DFT2IMG(vectorImage1, vectorImage2, view.getJxGrafico().getWidth(), view.getJxGrafico().getHeight(), "Signature", indice);
-            //desenhar assinatura nas imagens da tela
-//            Dimension centroide = new Signature().getCentroideMedian(listaImage1);
-//            Dimension[] point = new Signature().getDimensionPoint(listaImage1, centroide, angle);
-//            BufferedImage sigImage1 = drawPathChainCode(image1, listaImage1, centroide, point);
-//            //desenhar assinatura nas imagens da tela
-//            centroide = new Signature().getCentroideMedian(listaImage2);
-//            point = new Signature().getDimensionPoint(listaImage2, centroide, angle);
-//            BufferedImage sigImage2 = drawPathChainCode(image2, listaImage2, centroide, point);
-//            //mudando as imagens
-//            view.getJxImage1().setImage(MyImage.resizeImage(sigImage1, view.getJxImage1().getWidth(), view.getJxImage1().getHeight()));
-//            view.getJxImage2().setImage(MyImage.resizeImage(sigImage2, view.getJxImage2().getWidth(), view.getJxImage2().getHeight()));
-//            view.getJxGrafico().setImage(grafico);
-        }
-    }
+        view.getRbSignature().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (view.getRbSignature().isSelected()) {
+                    view.getRbChainCode().setSelected(false);
+                    view.getRbFourier().setSelected(false);
+                    view.getTxtAngle().setEnabled(true);
+                    view.getTxtWidth().setEnabled(false);
+                    view.getTxtHeight().setEnabled(false);
+                    view.getTxtSeries().setEnabled(false);
+                }
+            }
+        });
 
-    private ArrayList<Dimension> createChainCode(BufferedImage image) {
-        //aplicar o filtro para suavizar a imagem
-        image = Filtro.mediana(image, 5);
-        //pega o total imagem
-        int total = image.getWidth() * image.getHeight();
-        //gera o histograma de tons de cinzas da imagem e depois calcula o limiar da imagem
-        int limiar = Limiar.otsuTreshold(Histograma.histogramaGray(image), total);
-        //realiza a limiarizaçao
-        boolean[][] imageBorder = Limiar.limiarizacaoBool(image, limiar);
-        //calcula o codigo da cadeia 
-        return new ChainCode(image, true, 100, 100, true, true).getBorder();
-    }
-//
-//    private double[] createSignal(ArrayList<Dimension> listaDimension, int angle) {
-//        double[] vectorFeature = new Signature().createSignal(listaDimension, angle);
-//        return vectorFeature;
-//    }
-//
-//    private double[] createNormSignal(ArrayList<Dimension> listaDimension, int angle) {
-//        double[] vectorFeature = new Signature().createNormSignal(listaDimension, angle);
-//        return vectorFeature;
-//    }
-    
-    private double[] createComplex(double[] vector1, double[] vector2){
-        double[] returnVector = new double[vector1.length];
-        for (int i = 0; i < vector1.length; i++) {
-            returnVector[i] = vector1[i] + vector2[i];
-        }
-        return returnVector;
-    }
-    
-    private double[] createNormDFT(double[] vector){
-        double[] returnVector = new double[vector.length];
-        double soma = 0;
-        for (int i = 0; i < vector.length; i++) {
-            soma += vector[i];
-        }
-        for (int i = 0; i < vector.length; i++) {
-            returnVector[i] = vector[i]/soma;
-        }
-        return returnVector;
+        view.getRbChainCode().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (view.getRbChainCode().isSelected()) {
+                    view.getRbSignature().setSelected(false);
+                    view.getRbFourier().setSelected(false);
+                    view.getTxtAngle().setEnabled(false);
+                    view.getTxtWidth().setEnabled(true);
+                    view.getTxtHeight().setEnabled(true);
+                    view.getTxtSeries().setEnabled(false);
+                }
+            }
+        });
+
+        view.getRbFourier().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (view.getRbFourier().isSelected()) {
+                    view.getRbSignature().setSelected(false);
+                    view.getRbChainCode().setSelected(false);
+                    view.getTxtAngle().setEnabled(false);
+                    view.getTxtWidth().setEnabled(false);
+                    view.getTxtHeight().setEnabled(false);
+                    view.getTxtSeries().setEnabled(true);
+                }
+            }
+        });
+
     }
 
     public void startProgressBar() {
@@ -221,35 +199,5 @@ public class ControlSimileImage {
     public void stopProgressBar() {
         view.getPgBar().setVisible(false);
         view.getPgBar().setIndeterminate(false);
-    }
-
-    public BufferedImage drawPathChainCode(BufferedImage image, ArrayList<Dimension> lista, Dimension centroide, Dimension[] point) {
-        BufferedImage drawImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
-        Graphics2D g2d = drawImage.createGraphics();
-        g2d.drawImage(image, null, 0, 0);
-        //desenha a linha do primeiro elemento da lista
-        g2d.setColor(Color.BLUE);
-        g2d.drawLine(centroide.width, centroide.height, point[0].width, point[0].height);
-        for (int i = 1; i < point.length; i++) {
-//            drawPoint(drawImage, point[i], Color.RED);
-            g2d.setColor(Color.RED);
-            g2d.drawLine(centroide.width, centroide.height, point[i].width, point[i].height);
-        }
-        g2d.dispose();
-
-        for (Dimension dimension : lista) {
-            drawPoint(drawImage, dimension, Color.GREEN);
-        }
-
-        drawPoint(drawImage, centroide, Color.RED);
-        return drawImage;
-    }
-
-    private void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {
-        drawImage.setRGB(point.width, point.height, cor.getRGB());
-        drawImage.setRGB(point.width + 1, point.height, cor.getRGB());//0
-        drawImage.setRGB(point.width, point.height - 1, cor.getRGB());//2
-        drawImage.setRGB(point.width - 1, point.height, cor.getRGB());//4
-        drawImage.setRGB(point.width, point.height + 1, cor.getRGB());//6
     }
 }

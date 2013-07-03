@@ -203,6 +203,36 @@ public class Grafico {
             return null;
         }
     }
+    
+    public static BufferedImage Signature(double[] signature1, double[] signature2,  int width, int height, String title) {
+
+        try {
+
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+            //carregar dataset com os histogramas
+            for (int i = 0; i < signature1.length; i++) {
+                dataset.addValue(signature1[i], "signature1", "" + i);
+                dataset.addValue(signature2[i], "signature2", "" + i);
+            }
+
+            JFreeChart chart = ChartFactory.createLineChart(
+                    title,
+                    "Angle",
+                    "Distance",
+                    dataset,
+                    PlotOrientation.VERTICAL,
+                    true,
+                    false,
+                    false);
+
+            return chart.createBufferedImage(width, height);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public static BufferedImage curvatureDimension(ArrayList<Dimension> lista, int sizeWidth, int sizeHeight, String title) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -365,13 +395,15 @@ public class Grafico {
 
         try {
 
-            HistogramDataset dataset = new HistogramDataset();
-            dataset.setType(HistogramType.RELATIVE_FREQUENCY);
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//            dataset.setType(HistogramType.FREQUENCY);
 
             //carregar dataset com os histogramas
-           dataset.addSeries("DIRECTION", histograma, 8);
+            for (int i = 0; i < histograma.length; i++) {
+                dataset.addValue(histograma[i], "histograma", "" + i);
+            }
 
-            JFreeChart chart = ChartFactory.createHistogram(
+            JFreeChart chart = ChartFactory.createBarChart(
                     title,
                     labelx,
                     labely,
@@ -383,6 +415,36 @@ public class Grafico {
             
             return chart.createBufferedImage(width, height);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static BufferedImage histogramaChainCode(double[] histograma1, double[] histograma2, int width, int height, String title, String labelx, String labely) {
+try {
+
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//            dataset.setType(HistogramType.FREQUENCY);
+
+            //carregar dataset com os histogramas
+            for (int i = 0; i < histograma1.length; i++) {
+                dataset.addValue(histograma1[i], "img1", "" + i);
+                dataset.addValue(histograma2[i], "img2", "" + i);
+            }
+
+            JFreeChart chart = ChartFactory.createBarChart(
+                    title,
+                    labelx,
+                    labely,
+                    dataset,
+                    PlotOrientation.VERTICAL,
+                    true,
+                    false,
+                    false);
+            
+            return chart.createBufferedImage(width, height);
+            
         } catch (Exception e) {
             e.printStackTrace();
             return null;
