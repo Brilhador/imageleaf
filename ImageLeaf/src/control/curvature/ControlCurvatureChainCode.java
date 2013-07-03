@@ -63,7 +63,7 @@ public class ControlCurvatureChainCode {
                         view.getImageViewRecorte().setImage(MyImage.resizeImage(chaincode.getChainImage(), view.getImageViewRecorte().getWidth(), view.getImageViewRecorte().getHeight()));
                         view.getImageViewRecorte().setScale(0.9);
                         view.getLblValueChainCode().setText(chaincode.getChaincode());
-                        view.getImageViewGrafico().setImage(Grafico.histogramaChainCode(chaincode.getDoubleChainCode(), view.getImageViewGrafico().getWidth(), view.getImageViewGrafico().getHeight(), "Histogram of direction", "Direction","Frequency"));
+                        view.getImageViewGrafico().setImage(Grafico.histogramaChainCode(chaincode.getHistChainCode(), view.getImageViewGrafico().getWidth(), view.getImageViewGrafico().getHeight(), "Histogram of direction", "Direction","Frequency"));
                         stopProgressBar();
                         return null;
                     }

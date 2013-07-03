@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -230,7 +229,7 @@ public class ChainCode {
                 minWidth = dimension.width;
             }
         }
-        BufferedImage image = originalImage.getSubimage(minWidth - 2, minHeigth - 2, (maxWidth - minWidth) + 2, (maxHeigth - minHeigth) + 2);
+        BufferedImage image = originalImage.getSubimage(minWidth - 5, minHeigth - 5, (maxWidth - minWidth) + 5, (maxHeigth - minHeigth) + 5);
         return MyImage.resizeImage(image, newWidth, newHeigth);
     }
 
@@ -239,7 +238,7 @@ public class ChainCode {
         int indice = 0;
         for (int i = 0; i < chaincode.size(); i++) {
             int aux = chaincode.get(i);
-            for (int j = 1; j <= tam; j++) {
+            for (int j = 1; j < tam; j++) {
                 if ((i + j) >= chaincode.size()) {
                     aux += chaincode.get((i + j) - chaincode.size());
                 } else {
