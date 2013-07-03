@@ -17,12 +17,12 @@ import org.jdesktop.swingx.JXImageView;
  *
  * @author Anderson
  */
-public class ViewBlurMedian extends javax.swing.JFrame {
+public class ViewBlur extends javax.swing.JFrame {
 
     /**
      * Creates new form ViewBlurMedian
      */
-    public ViewBlurMedian() {
+    public ViewBlur() {
         initComponents();
     }
 
@@ -44,6 +44,9 @@ public class ViewBlurMedian extends javax.swing.JFrame {
         lblMedian = new javax.swing.JLabel();
         pgBar = new javax.swing.JProgressBar();
         ImagePreview = new JImageView();
+        jPanel2 = new javax.swing.JPanel();
+        rbLow = new javax.swing.JRadioButton();
+        rbMedian = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,7 +90,7 @@ public class ViewBlurMedian extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        lblMedian.setText("Median");
+        lblMedian.setText("Blur");
 
         ImagePreview.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -95,11 +98,38 @@ public class ViewBlurMedian extends javax.swing.JFrame {
         ImagePreview.setLayout(ImagePreviewLayout);
         ImagePreviewLayout.setHorizontalGroup(
             ImagePreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 178, Short.MAX_VALUE)
+            .addGap(0, 229, Short.MAX_VALUE)
         );
         ImagePreviewLayout.setVerticalGroup(
             ImagePreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        rbLow.setText("Low");
+
+        rbMedian.setText("Median");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rbLow)
+                .addGap(34, 34, 34)
+                .addComponent(rbMedian)
+                .addGap(39, 39, 39))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbLow)
+                    .addComponent(rbMedian))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -114,7 +144,8 @@ public class ViewBlurMedian extends javax.swing.JFrame {
                     .addComponent(btnRestore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnApply, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pgBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pgBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ImagePreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -127,16 +158,17 @@ public class ViewBlurMedian extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                         .addComponent(btnPreview)
                         .addGap(6, 6, 6)
                         .addComponent(btnRestore)
                         .addGap(6, 6, 6)
                         .addComponent(btnApply)
-                        .addGap(43, 43, 43)
-                        .addComponent(pgBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1, Short.MAX_VALUE))
+                        .addGap(62, 62, 62)
+                        .addComponent(pgBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(ImagePreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -151,9 +183,12 @@ public class ViewBlurMedian extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnPreview;
     private javax.swing.JButton btnRestore;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblMaskSize;
     private javax.swing.JLabel lblMedian;
     private javax.swing.JProgressBar pgBar;
+    private javax.swing.JRadioButton rbLow;
+    private javax.swing.JRadioButton rbMedian;
     private javax.swing.JSlider slMaskSize;
     // End of variables declaration//GEN-END:variables
 
@@ -228,4 +263,22 @@ public class ViewBlurMedian extends javax.swing.JFrame {
     public void setPgBar(JProgressBar pgBar) {
         this.pgBar = pgBar;
     }
+
+    public javax.swing.JRadioButton getRbLow() {
+        return rbLow;
+    }
+
+    public void setRbLow(javax.swing.JRadioButton rbLow) {
+        this.rbLow = rbLow;
+    }
+
+    public javax.swing.JRadioButton getRbMedian() {
+        return rbMedian;
+    }
+
+    public void setRbMedian(javax.swing.JRadioButton rbMedian) {
+        this.rbMedian = rbMedian;
+    }
+    
+    
 }

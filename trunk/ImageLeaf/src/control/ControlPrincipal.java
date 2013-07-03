@@ -4,16 +4,15 @@
  */
 package control;
 
-import control.blur.ControlBlurLow;
-import control.blur.ControlBlurMedian;
+import control.blur.ControlBlur;
 import control.curvature.ControlCurvatureChainCode;
 import control.curvature.ControlCurvatureFourier;
 import control.curvature.ControlCurvatureSignature;
-import control.edge.ControlEdgeSobel;
+import control.segmeting.ControlEdge;
 import control.recognition.ControlPatternGeneration;
-import control.recognition.ControlSpeciesClassificationMultiple;
 import control.recognition.ControlSpeciesGroup;
 import control.recognition.ControlSimileImage;
+import control.segmeting.ControlThresholding;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -67,22 +66,11 @@ public class ControlPrincipal {
         //menu Edit
 
         //menu filtes
-        view.getmFilterBlurLow().addActionListener(new ActionListener() {
+        view.getmFiltersBlur().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
-                    new ControlBlurLow(getFrameSelected().getImage(), view);
-                } else {
-                    JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        });
-
-        view.getmFilterBlurMedian().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (getFrameSelected() != null) {
-                    new ControlBlurMedian(getFrameSelected().getImage(), view);
+                    new ControlBlur(getFrameSelected().getImage(), view);
                 } else {
                     JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -90,11 +78,22 @@ public class ControlPrincipal {
         });
 
         //filtes edge-detect
-        view.getmFilterEdgeSobel().addActionListener(new ActionListener() {
+        view.getmSegmentingEdge().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (getFrameSelected() != null) {
-                    new ControlEdgeSobel(getFrameSelected().getImage(), view);
+                    new ControlEdge(getFrameSelected().getImage(), view);
+                } else {
+                    JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        
+        view.getmSegmentingThresholding().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (getFrameSelected() != null) {
+                    new ControlThresholding(getFrameSelected().getImage(), view);
                 } else {
                     JOptionPane.showMessageDialog(view, "Selecione uma imagem", "", JOptionPane.INFORMATION_MESSAGE);
                 }

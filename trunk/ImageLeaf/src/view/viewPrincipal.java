@@ -36,17 +36,10 @@ public class viewPrincipal extends javax.swing.JFrame {
         mFile = new javax.swing.JMenu();
         menuOpen = new javax.swing.JMenuItem();
         mFilters = new javax.swing.JMenu();
-        mFilterBlur = new javax.swing.JMenu();
-        mFilterBlurLow = new javax.swing.JMenuItem();
-        mFilterBlurMedian = new javax.swing.JMenuItem();
+        mFiltersBlur = new javax.swing.JMenuItem();
         mSegmenting = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        mFilterEdgeSobel = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        mSegmentingEdge = new javax.swing.JMenuItem();
+        mSegmentingThresholding = new javax.swing.JMenuItem();
         mDescriptors = new javax.swing.JMenu();
         mCurvatureSignature = new javax.swing.JMenuItem();
         mCurvatureChainCode = new javax.swing.JMenuItem();
@@ -67,47 +60,18 @@ public class viewPrincipal extends javax.swing.JFrame {
 
         mFilters.setText("Filters");
 
-        mFilterBlur.setText("Blur");
-
-        mFilterBlurLow.setText("Low-Pass ");
-        mFilterBlurLow.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mFilterBlurLowActionPerformed(evt);
-            }
-        });
-        mFilterBlur.add(mFilterBlurLow);
-
-        mFilterBlurMedian.setText("Median");
-        mFilterBlur.add(mFilterBlurMedian);
-
-        mFilters.add(mFilterBlur);
+        mFiltersBlur.setText("Blur");
+        mFilters.add(mFiltersBlur);
 
         jMenuBar1.add(mFilters);
 
         mSegmenting.setText("Segmenting");
 
-        jMenu2.setText("Edge - Detect");
+        mSegmentingEdge.setText("Edge - Detector");
+        mSegmenting.add(mSegmentingEdge);
 
-        mFilterEdgeSobel.setText("Sobel");
-        jMenu2.add(mFilterEdgeSobel);
-
-        jMenuItem5.setText("Prewitt");
-        jMenu2.add(jMenuItem5);
-
-        jMenuItem6.setText("Roberts");
-        jMenu2.add(jMenuItem6);
-
-        mSegmenting.add(jMenu2);
-
-        jMenu1.setText("Thresholding");
-
-        jMenuItem3.setText("Otsu");
-        jMenu1.add(jMenuItem3);
-
-        jMenuItem4.setText("Max. Entropia");
-        jMenu1.add(jMenuItem4);
-
-        mSegmenting.add(jMenu1);
+        mSegmentingThresholding.setText("Thresholding");
+        mSegmenting.add(mSegmentingThresholding);
 
         jMenuBar1.add(mSegmenting);
 
@@ -165,10 +129,6 @@ public class viewPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mFilterBlurLowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFilterBlurLowActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mFilterBlurLowActionPerformed
-
     private void mComparisionImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mComparisionImageActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mComparisionImageActionPerformed
@@ -178,13 +138,7 @@ public class viewPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mCurvatureSignatureActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JDesktopPane jPanelPrincipal;
     private javax.swing.JMenuItem mComparisionImage;
     private javax.swing.JMenuItem mCurvatureChainCode;
@@ -192,15 +146,14 @@ public class viewPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mCurvatureSignature;
     private javax.swing.JMenu mDescriptors;
     private javax.swing.JMenu mFile;
-    private javax.swing.JMenu mFilterBlur;
-    private javax.swing.JMenuItem mFilterBlurLow;
-    private javax.swing.JMenuItem mFilterBlurMedian;
-    private javax.swing.JMenuItem mFilterEdgeSobel;
     private javax.swing.JMenu mFilters;
+    private javax.swing.JMenuItem mFiltersBlur;
     private javax.swing.JMenuItem mPatternGeneration;
     private javax.swing.JMenu mRecognition;
     private javax.swing.JMenuItem mRecognitionGroup;
     private javax.swing.JMenu mSegmenting;
+    private javax.swing.JMenuItem mSegmentingEdge;
+    private javax.swing.JMenuItem mSegmentingThresholding;
     private javax.swing.JMenuItem menuOpen;
     // End of variables declaration//GEN-END:variables
     
@@ -246,28 +199,28 @@ public class viewPrincipal extends javax.swing.JFrame {
         this.mFilters = mFilters;
     }
 
-    public JMenuItem getmFilterBlurLow() {
-        return mFilterBlurLow;
+    public JMenuItem getmFiltersBlur() {
+        return mFiltersBlur;
     }
 
-    public void setmFilterBlurLow(JMenuItem mFilterBlurLow) {
-        this.mFilterBlurLow = mFilterBlurLow;
+    public void setmFiltersBlur(JMenuItem mFiltersBlur) {
+        this.mFiltersBlur = mFiltersBlur;
     }
 
-    public JMenuItem getmFilterBlurMedian() {
-        return mFilterBlurMedian;
+    public JMenuItem getmSegmentingEdge() {
+        return mSegmentingEdge;
     }
 
-    public void setmFilterBlurMedian(JMenuItem mFilterBlurMedian) {
-        this.mFilterBlurMedian = mFilterBlurMedian;
+    public void setmSegmentingEdge(JMenuItem mSegmentingEdge) {
+        this.mSegmentingEdge = mSegmentingEdge;
     }
 
-    public JMenuItem getmFilterEdgeSobel() {
-        return mFilterEdgeSobel;
+    public JMenuItem getmSegmentingThresholding() {
+        return mSegmentingThresholding;
     }
 
-    public void setmFilterEdgeSobel(JMenuItem mFilterEdgeSobel) {
-        this.mFilterEdgeSobel = mFilterEdgeSobel;
+    public void setmSegmentingThresholding(JMenuItem mSegmentingThresholding) {
+        this.mSegmentingThresholding = mSegmentingThresholding;
     }
 
     public JMenuItem getmCurvatureChainCode() {
