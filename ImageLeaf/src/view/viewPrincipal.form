@@ -21,26 +21,11 @@
             <Property name="text" type="java.lang.String" value="Filters"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="mFilterBlur">
+            <MenuItem class="javax.swing.JMenuItem" name="mFiltersBlur">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Blur"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="mFilterBlurLow">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Low-Pass "/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mFilterBlurLowActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="mFilterBlurMedian">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Median"/>
-                  </Properties>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mSegmenting">
@@ -48,45 +33,16 @@
             <Property name="text" type="java.lang.String" value="Segmenting"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="jMenu2">
+            <MenuItem class="javax.swing.JMenuItem" name="mSegmentingEdge">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Edge - Detect"/>
+                <Property name="text" type="java.lang.String" value="Edge - Detector"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="mFilterEdgeSobel">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Sobel"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Prewitt"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Roberts"/>
-                  </Properties>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="jMenu1">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mSegmentingThresholding">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Thresholding"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Otsu"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Max. Entropia"/>
-                  </Properties>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mDescriptors">

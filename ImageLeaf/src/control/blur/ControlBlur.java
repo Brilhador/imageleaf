@@ -12,28 +12,30 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingWorker;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import model.Filtro;
 import model.MyImage;
 import model.components.JImageInternalFrame;
-import view.blur.ViewBlurMedian;
+import view.blur.ViewBlur;
 import view.viewPrincipal;
 
 /**
  *
  * @author Anderson
  */
-public class ControlBlurMedian {
+public class ControlBlur {
 
     private viewPrincipal parentFrame = null;
-    private ViewBlurMedian view = null;
+    private ViewBlur view = null;
     private BufferedImage image = null;
     private BufferedImage filterImage = null;
 
     //constructor
-    public ControlBlurMedian(BufferedImage image, viewPrincipal parentFrame) {
+    public ControlBlur(BufferedImage image, viewPrincipal parentFrame) {
         this.image = image;
         this.parentFrame = parentFrame;
-        view = new ViewBlurMedian();
+        view = new ViewBlur();
         view.setLocationRelativeTo(null);
         view.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
@@ -45,6 +47,7 @@ public class ControlBlurMedian {
         //carrega a image na preview
         carregaImagePreview(image);
         stopProgressBar();
+        view.getRbLow().setSelected(false);
 
         view.getBtnPreview().addActionListener(new ActionListener() {
             @Override
@@ -78,7 +81,11 @@ public class ControlBlurMedian {
                     @Override
                     protected Object doInBackground() throws Exception {
                         startProgressBar();
-                        filterImage = Filtro.mediana(image, view.getSlMaskSize().getValue());
+                        if (view.getRbMedian().isSelected()) {
+                            filterImage = Filtro.mediana(image, view.getSlMaskSize().getValue());
+                        } else if (view.getRbLow().isSelected()) {
+                            filterImage = Filtro.passaBaixas(image, view.getSlMaskSize().getValue());
+                        }
                         JImageInternalFrame frame = (JImageInternalFrame) parentFrame.getjPanelPrincipal().getSelectedFrame();
                         frame.setImage(filterImage);
                         parentFrame.repaint();
@@ -99,6 +106,24 @@ public class ControlBlurMedian {
                     carregaImagePreview(image);
                 } else {
                     carregaImagePreview(filterImage);
+                }
+            }
+        });
+
+        view.getRbLow().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (view.getRbLow().isSelected()) {
+                    view.getRbMedian().setSelected(false);
+                }
+            }
+        });
+
+        view.getRbMedian().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (view.getRbMedian().isSelected()) {
+                    view.getRbLow().setSelected(false);
                 }
             }
         });
