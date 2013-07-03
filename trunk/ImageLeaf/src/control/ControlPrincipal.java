@@ -36,6 +36,7 @@ import view.viewPrincipal;
 public class ControlPrincipal {
 
     private viewPrincipal view = null;
+    private JFileChooser chooser = new JFileChooser();;
 
     public ControlPrincipal() {
         view = new viewPrincipal();
@@ -53,13 +54,16 @@ public class ControlPrincipal {
             public void actionPerformed(ActionEvent e) {
 //                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 FileFilter filter = new ExtensionFileFilter("JPG", ".jpg");
-                JFileChooser chooser = new JFileChooser();
                 chooser.setFileFilter(filter);
+                chooser.setMultiSelectionEnabled(true);
                 if (chooser.showOpenDialog(view) == JFileChooser.APPROVE_OPTION) {
                     //get path of image selected
-                    String path = chooser.getSelectedFile().getAbsolutePath();
-                    addFrameImage(path);
+                    for (File file : chooser.getSelectedFiles()) {
+                        String path = file.getAbsolutePath();
+                        addFrameImage(path);
+                    }
                 }
+                chooser.setCurrentDirectory(chooser.getSelectedFile().getAbsoluteFile());
             }
         });
 

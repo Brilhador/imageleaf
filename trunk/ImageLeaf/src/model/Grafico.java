@@ -12,6 +12,8 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.statistics.HistogramType;
 
 /**
  *
@@ -359,27 +361,26 @@ public class Grafico {
         }
     }
 
-    public static BufferedImage histograma(double[] histograma, int width, int height, String title, String labelx, String labely) {
+    public static BufferedImage histogramaChainCode(double[] histograma, int width, int height, String title, String labelx, String labely) {
 
         try {
 
-            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            HistogramDataset dataset = new HistogramDataset();
+            dataset.setType(HistogramType.RELATIVE_FREQUENCY);
 
             //carregar dataset com os histogramas
-            for (int i = 0; i < histograma.length; i++) {
-                dataset.addValue(histograma[i], "histograma", "" + i);
-            }
+           dataset.addSeries("DIRECTION", histograma, 8);
 
-            JFreeChart chart = ChartFactory.createLineChart(
+            JFreeChart chart = ChartFactory.createHistogram(
                     title,
                     labelx,
                     labely,
                     dataset,
                     PlotOrientation.VERTICAL,
-                    true,
+                    false,
                     false,
                     false);
-
+            
             return chart.createBufferedImage(width, height);
 
         } catch (Exception e) {

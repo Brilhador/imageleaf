@@ -119,14 +119,14 @@ public class ViewChainCode extends javax.swing.JFrame {
 
         cbScala.setText("Scala");
 
-        txtWidth.setText("10");
+        txtWidth.setText("30");
         txtWidth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtWidthActionPerformed(evt);
             }
         });
 
-        txtHeigth.setText("20");
+        txtHeigth.setText("50");
 
         jLabel5.setText("width:");
 

@@ -39,7 +39,7 @@ public class RunApp {
                     }
                 }
                 new ManageDirectory().criarDiretorio(new ManageDirectory().getDiretorioPadrao());
-                new ControlMenu();
+                new ControlPrincipal();
             }
         });
     }
