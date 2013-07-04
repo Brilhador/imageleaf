@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.event.ChangeEvent;
@@ -50,6 +51,8 @@ public class ControlSimileImage {
 
     public ControlSimileImage() {
         view = new ViewSimileImage();
+        view.setLocationRelativeTo(null);
+        view.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initEvents();
         view.setVisible(true);
     }

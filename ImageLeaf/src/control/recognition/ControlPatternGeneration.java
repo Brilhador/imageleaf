@@ -7,6 +7,7 @@ package control.recognition;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import model.Group;
@@ -26,6 +27,8 @@ public class ControlPatternGeneration {
 
     public ControlPatternGeneration() {
         view = new ViewPatternGeneration();
+        view.setLocationRelativeTo(null);
+        view.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initEvents();
         view.setVisible(true);
     }
@@ -74,7 +77,7 @@ public class ControlPatternGeneration {
                                 int width = Integer.parseInt(view.getTxtWidth().getText());
                                 int heigth = Integer.parseInt(view.getTxtHeigth().getText());
                                 int series = Integer.parseInt(view.getTxtSeries().getText());
-                            if (signature == chaincode == fourier == false) {
+                            if (signature ==  false && chaincode == false && fourier == false) {
                                     JOptionPane.showMessageDialog(view, "Select a descritor", "", JOptionPane.INFORMATION_MESSAGE);
                                 } else {
                                     Pattern pattern = new Pattern();
