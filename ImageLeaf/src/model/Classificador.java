@@ -310,14 +310,14 @@ public class Classificador {
             //range interfe nesses dois calculos
             switch(distancia){
                 case EUCLIDIANA:
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hRed, 256), Histograma.normalizacao(hmRed, 256));
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hGreen, 256), Histograma.normalizacao(hmGreen, 256));
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hBlue, 256), Histograma.normalizacao(hmBlue, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hRed, 256), Histograma.normalizacao(hmRed, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hGreen, 256), Histograma.normalizacao(hmGreen, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hBlue, 256), Histograma.normalizacao(hmBlue, 256));
                     break;
                 case MANHATTAN:
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hRed, 256), Histograma.normalizacao(hmRed, 256));
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hGreen, 256), Histograma.normalizacao(hmGreen, 256));
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hBlue, 256), Histograma.normalizacao(hmBlue, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hRed, 256), Histograma.normalizacao(hmRed, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hGreen, 256), Histograma.normalizacao(hmGreen, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hBlue, 256), Histograma.normalizacao(hmBlue, 256));
                     break;
                 default:
                     return null;
@@ -366,14 +366,14 @@ public class Classificador {
 
             switch(distancia){
                 case EUCLIDIANA:
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hRed, 256), Histograma.normalizacao(hmRed, 256));
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hGreen, 256), Histograma.normalizacao(hmGreen, 256));
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hBlue, 256), Histograma.normalizacao(hmBlue, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hRed, 256), Histograma.normalizacao(hmRed, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hGreen, 256), Histograma.normalizacao(hmGreen, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hBlue, 256), Histograma.normalizacao(hmBlue, 256));
                     break;
                 case MANHATTAN:
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hRed, 256), Histograma.normalizacao(hmRed, 256));
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hGreen, 256), Histograma.normalizacao(hmGreen, 256));
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hBlue, 256), Histograma.normalizacao(hmBlue, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hRed, 256), Histograma.normalizacao(hmRed, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hGreen, 256), Histograma.normalizacao(hmGreen, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hBlue, 256), Histograma.normalizacao(hmBlue, 256));
                     break;
                 default:
                     return null;
@@ -439,20 +439,20 @@ public class Classificador {
                     switch(superficie){
                         case TOTAL:
                             //Calcular a distancia euclidiana para os 3 canais, da imagem superior
-                            aux += Distancia.Euclidiana(Histograma.normalizacao(hRedSup, 256), Histograma.normalizacao(hmRedSup, 256));
-                            aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenSup, 256), Histograma.normalizacao(hmGreenSup, 256));
-                            aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueSup, 256), Histograma.normalizacao(hmBlueSup, 256));
+//                            aux += Distancia.Euclidiana(Histograma.normalizacao(hRedSup, 256), Histograma.normalizacao(hmRedSup, 256));
+//                            aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenSup, 256), Histograma.normalizacao(hmGreenSup, 256));
+//                            aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueSup, 256), Histograma.normalizacao(hmBlueSup, 256));
                         case INFERIOR:
                             //Calcular a distancia euclidiana para os 3 canais, da imagem inferior
-                            aux += Distancia.Euclidiana(Histograma.normalizacao(hRedInf, 256), Histograma.normalizacao(hmRedInf, 256));
-                            aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenInf, 256), Histograma.normalizacao(hmGreenInf, 256));
-                            aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueInf, 256), Histograma.normalizacao(hmBlueInf, 256));
+//                            aux += Distancia.Euclidiana(Histograma.normalizacao(hRedInf, 256), Histograma.normalizacao(hmRedInf, 256));
+//                            aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenInf, 256), Histograma.normalizacao(hmGreenInf, 256));
+//                            aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueInf, 256), Histograma.normalizacao(hmBlueInf, 256));
                             break;
                         case SUPERIOR:
                             //Calcular a distancia euclidiana para os 3 canais, da imagem superior
-                            aux += Distancia.Euclidiana(Histograma.normalizacao(hRedSup, 256), Histograma.normalizacao(hmRedSup, 256));
-                            aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenSup, 256), Histograma.normalizacao(hmGreenSup, 256));
-                            aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueSup, 256), Histograma.normalizacao(hmBlueSup, 256));
+//                            aux += Distancia.Euclidiana(Histograma.normalizacao(hRedSup, 256), Histograma.normalizacao(hmRedSup, 256));
+//                            aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenSup, 256), Histograma.normalizacao(hmGreenSup, 256));
+//                            aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueSup, 256), Histograma.normalizacao(hmBlueSup, 256));
                             break;
                     }
                     break;
@@ -460,20 +460,20 @@ public class Classificador {
                     switch(superficie){
                         case TOTAL:
                             //Calcular a distancia euclidiana para os 3 canais, da imagem superior
-                            aux += Distancia.Manhattan(Histograma.normalizacao(hRedSup, 256), Histograma.normalizacao(hmRedSup, 256));
-                            aux += Distancia.Manhattan(Histograma.normalizacao(hGreenSup, 256), Histograma.normalizacao(hmGreenSup, 256));
-                            aux += Distancia.Manhattan(Histograma.normalizacao(hBlueSup, 256), Histograma.normalizacao(hmBlueSup, 256));
+//                            aux += Distancia.Manhattan(Histograma.normalizacao(hRedSup, 256), Histograma.normalizacao(hmRedSup, 256));
+//                            aux += Distancia.Manhattan(Histograma.normalizacao(hGreenSup, 256), Histograma.normalizacao(hmGreenSup, 256));
+//                            aux += Distancia.Manhattan(Histograma.normalizacao(hBlueSup, 256), Histograma.normalizacao(hmBlueSup, 256));
                         case INFERIOR:
                             //Calcular a distancia euclidiana para os 3 canais, da imagem inferior
-                            aux += Distancia.Manhattan(Histograma.normalizacao(hRedInf, 256), Histograma.normalizacao(hmRedInf, 256));
-                            aux += Distancia.Manhattan(Histograma.normalizacao(hGreenInf, 256), Histograma.normalizacao(hmGreenInf, 256));
-                            aux += Distancia.Manhattan(Histograma.normalizacao(hBlueInf, 256), Histograma.normalizacao(hmBlueInf, 256));
+//                            aux += Distancia.Manhattan(Histograma.normalizacao(hRedInf, 256), Histograma.normalizacao(hmRedInf, 256));
+//                            aux += Distancia.Manhattan(Histograma.normalizacao(hGreenInf, 256), Histograma.normalizacao(hmGreenInf, 256));
+//                            aux += Distancia.Manhattan(Histograma.normalizacao(hBlueInf, 256), Histograma.normalizacao(hmBlueInf, 256));
                             break;
                         case SUPERIOR:
                               //Calcular a distancia euclidiana para os 3 canais, da imagem superior
-                            aux += Distancia.Manhattan(Histograma.normalizacao(hRedSup, 256), Histograma.normalizacao(hmRedSup, 256));
-                            aux += Distancia.Manhattan(Histograma.normalizacao(hGreenSup, 256), Histograma.normalizacao(hmGreenSup, 256));
-                            aux += Distancia.Manhattan(Histograma.normalizacao(hBlueSup, 256), Histograma.normalizacao(hmBlueSup, 256));                       
+//                            aux += Distancia.Manhattan(Histograma.normalizacao(hRedSup, 256), Histograma.normalizacao(hmRedSup, 256));
+//                            aux += Distancia.Manhattan(Histograma.normalizacao(hGreenSup, 256), Histograma.normalizacao(hmGreenSup, 256));
+//                            aux += Distancia.Manhattan(Histograma.normalizacao(hBlueSup, 256), Histograma.normalizacao(hmBlueSup, 256));                       
                             break;
                     }
                     break;
@@ -562,45 +562,45 @@ public class Classificador {
             switch(distancia){
                 case EUCLIDIANA:
                     //Calcular a distancia euclidiana para os 3 canais, da imagem superior esquerda
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hRedSupEsq, 256), Histograma.normalizacao(hmRedSupEsq, 256));
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenSupEsq, 256), Histograma.normalizacao(hmGreenSupEsq, 256));
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueSupEsq, 256), Histograma.normalizacao(hmBlueSupEsq, 256));
-
-                    //Calcular a distancia euclidiana para os 3 canais, da imagem superior direita
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hRedSupDir, 256), Histograma.normalizacao(hmRedSupDir, 256));
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenSupDir, 256), Histograma.normalizacao(hmGreenSupDir, 256));
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueSupDir, 256), Histograma.normalizacao(hmBlueSupDir, 256));
-
-                    //Calcular a distancia euclidiana para os 3 canais, da imagem inferior esquerda
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hRedInfEsq, 256), Histograma.normalizacao(hmRedInfEsq, 256));
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenInfEsq, 256), Histograma.normalizacao(hmGreenInfEsq, 256));
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueInfEsq, 256), Histograma.normalizacao(hmBlueInfEsq, 256));
-
-                    //Calcular a distancia euclidiana para os 3 canais, da imagem inferior direita
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hRedInfDir, 256), Histograma.normalizacao(hmRedInfDir, 256));
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenInfDir, 256), Histograma.normalizacao(hmGreenInfDir, 256));
-                    aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueInfDir, 256), Histograma.normalizacao(hmBlueInfDir, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hRedSupEsq, 256), Histograma.normalizacao(hmRedSupEsq, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenSupEsq, 256), Histograma.normalizacao(hmGreenSupEsq, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueSupEsq, 256), Histograma.normalizacao(hmBlueSupEsq, 256));
+//
+//                    //Calcular a distancia euclidiana para os 3 canais, da imagem superior direita
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hRedSupDir, 256), Histograma.normalizacao(hmRedSupDir, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenSupDir, 256), Histograma.normalizacao(hmGreenSupDir, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueSupDir, 256), Histograma.normalizacao(hmBlueSupDir, 256));
+//
+//                    //Calcular a distancia euclidiana para os 3 canais, da imagem inferior esquerda
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hRedInfEsq, 256), Histograma.normalizacao(hmRedInfEsq, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenInfEsq, 256), Histograma.normalizacao(hmGreenInfEsq, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueInfEsq, 256), Histograma.normalizacao(hmBlueInfEsq, 256));
+//
+//                    //Calcular a distancia euclidiana para os 3 canais, da imagem inferior direita
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hRedInfDir, 256), Histograma.normalizacao(hmRedInfDir, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hGreenInfDir, 256), Histograma.normalizacao(hmGreenInfDir, 256));
+//                    aux += Distancia.Euclidiana(Histograma.normalizacao(hBlueInfDir, 256), Histograma.normalizacao(hmBlueInfDir, 256));
                     break;
                 case MANHATTAN:
                     //Calcular a distancia euclidiana para os 3 canais, da imagem superior esquerda
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hRedSupEsq, 256), Histograma.normalizacao(hmRedSupEsq, 256));
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hGreenSupEsq, 256), Histograma.normalizacao(hmGreenSupEsq, 256));
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hBlueSupEsq, 256), Histograma.normalizacao(hmBlueSupEsq, 256));
-
-                    //Calcular a distancia euclidiana para os 3 canais, da imagem superior direita
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hRedSupDir, 256), Histograma.normalizacao(hmRedSupDir, 256));
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hGreenSupDir, 256), Histograma.normalizacao(hmGreenSupDir, 256));
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hBlueSupDir, 256), Histograma.normalizacao(hmBlueSupDir, 256));
-
-                    //Calcular a distancia euclidiana para os 3 canais, da imagem inferior esquerda
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hRedInfEsq, 256), Histograma.normalizacao(hmRedInfEsq, 256));
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hGreenInfEsq, 256), Histograma.normalizacao(hmGreenInfEsq, 256));
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hBlueInfEsq, 256), Histograma.normalizacao(hmBlueInfEsq, 256));
-
-                    //Calcular a distancia euclidiana para os 3 canais, da imagem inferior direita
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hRedInfDir, 256), Histograma.normalizacao(hmRedInfDir, 256));
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hGreenInfDir, 256), Histograma.normalizacao(hmGreenInfDir, 256));
-                    aux += Distancia.Manhattan(Histograma.normalizacao(hBlueInfDir, 256), Histograma.normalizacao(hmBlueInfDir, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hRedSupEsq, 256), Histograma.normalizacao(hmRedSupEsq, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hGreenSupEsq, 256), Histograma.normalizacao(hmGreenSupEsq, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hBlueSupEsq, 256), Histograma.normalizacao(hmBlueSupEsq, 256));
+//
+//                    //Calcular a distancia euclidiana para os 3 canais, da imagem superior direita
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hRedSupDir, 256), Histograma.normalizacao(hmRedSupDir, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hGreenSupDir, 256), Histograma.normalizacao(hmGreenSupDir, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hBlueSupDir, 256), Histograma.normalizacao(hmBlueSupDir, 256));
+//
+//                    //Calcular a distancia euclidiana para os 3 canais, da imagem inferior esquerda
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hRedInfEsq, 256), Histograma.normalizacao(hmRedInfEsq, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hGreenInfEsq, 256), Histograma.normalizacao(hmGreenInfEsq, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hBlueInfEsq, 256), Histograma.normalizacao(hmBlueInfEsq, 256));
+//
+//                    //Calcular a distancia euclidiana para os 3 canais, da imagem inferior direita
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hRedInfDir, 256), Histograma.normalizacao(hmRedInfDir, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hGreenInfDir, 256), Histograma.normalizacao(hmGreenInfDir, 256));
+//                    aux += Distancia.Manhattan(Histograma.normalizacao(hBlueInfDir, 256), Histograma.normalizacao(hmBlueInfDir, 256));
             }
 
             if (aux < soma) {

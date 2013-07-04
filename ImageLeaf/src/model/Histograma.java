@@ -371,20 +371,16 @@ public class Histograma {
     }
     //normalização de histograma por scala
     //normalization by scaling between 0 and 1
-    public static double[] normalizacao(int[] histograma, int RANGE) {
-        //intensidade
-        if (RANGE >= 256) {
-            RANGE = 256;
-        }
+    public static double[] normalizacao(double[] histograma) {
 
         //Armazena a frequencia max e min do histograma
         double max = histograma[0];
         double min = histograma[0];
 
-        double[] hist = new double[RANGE];
+        double[] hist = new double[histograma.length];
 
         //identifica a frequencia maxima e minima existente no histograma
-        for (int i = 1; i < RANGE; i++) {
+        for (int i = 1; i < histograma.length; i++) {
             if (histograma[i] > max) {
                 max = histograma[i];
             } else if (histograma[i] < min) {
@@ -392,7 +388,7 @@ public class Histograma {
             }
         }
         //calcula os valores do no histograma
-        for (int i = 0; i < RANGE; i++) {
+        for (int i = 0; i < histograma.length; i++) {
             hist[i] = (histograma[i] - min) / (max - min);
         }
 

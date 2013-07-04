@@ -75,11 +75,11 @@ public class Signature {
     private double[] createNormSignal(ArrayList<Dimension> listaDimension, Dimension initPoint, int angle) {
         Dimension centroide = getCentroideMedian(listaDimension);
         Dimension[] point = getDimensionPoint(listaDimension, centroide, initPoint, angle);
-        int[] distance = new int[360 / angle];
+        double[] distance = new double[360 / angle];
         for (int i = 0; i < point.length; i++) {
             distance[i] = getDistanceManhattan(centroide, point[i]);
         }
-        return Histograma.normalizacao(distance, distance.length);
+        return Histograma.normalizacao(distance);
     }
 
     private Dimension getCentroideMedian(ArrayList<Dimension> lista) {
