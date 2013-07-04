@@ -18,29 +18,43 @@ import view.recognition.ViewPatternGeneration;
  * @author anderson
  */
 public class ControlPatternGeneration {
-    
+
     private ViewPatternGeneration view = null;
-    private String caminho = null;
-    
-    public ControlPatternGeneration(){
+    private String pathData = null;
+    private String pathARFF = null;
+    private JFileChooser cDiretorio = new JFileChooser();
+
+    public ControlPatternGeneration() {
         view = new ViewPatternGeneration();
         initEvents();
         view.setVisible(true);
     }
 
     private void initEvents() {
-        
+
         stopProgressBar();
 
         view.getBtnLocale().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser cDiretorio = new JFileChooser();
                 cDiretorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 if (cDiretorio.showOpenDialog(view) == cDiretorio.APPROVE_OPTION) {
-                    caminho = cDiretorio.getSelectedFile().getAbsolutePath();
-                    view.getTxtPath().setText(caminho);
+                    pathData = cDiretorio.getSelectedFile().getAbsolutePath();
+                    view.getTxtPath().setText(pathData);
                 }
+                cDiretorio.setCurrentDirectory(cDiretorio.getSelectedFile().getAbsoluteFile());
+            }
+        });
+
+        view.getBtnLocaleARFF().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cDiretorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                if (cDiretorio.showOpenDialog(view) == cDiretorio.APPROVE_OPTION) {
+                    pathARFF = cDiretorio.getSelectedFile().getAbsolutePath();
+                    view.getTxtPathARFF().setText(pathARFF);
+                }
+                cDiretorio.setCurrentDirectory(cDiretorio.getSelectedFile().getAbsoluteFile());
             }
         });
 
@@ -50,15 +64,29 @@ public class ControlPatternGeneration {
                 SwingWorker work = new SwingWorker() {
                     @Override
                     protected Object doInBackground() throws Exception {
-                        if (!view.getTxtPath().getText().equals("...")) {
-                            startProgressBar();
-                            //especificar o angulo pelo codigo
-                            int angle = 10;
-                            new Pattern().startAnglePattern(caminho, angle);
-                            stopProgressBar();
-                            JOptionPane.showMessageDialog(view, "Finished", "", JOptionPane.INFORMATION_MESSAGE);
-                        } else {
-                            JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
+                        try {
+                            if (!view.getTxtPath().getText().equals("...")) {
+                                startProgressBar();
+                                boolean signature = view.getCkSignature().isSelected();
+                                boolean chaincode = view.getCkChainCode().isSelected();
+                                boolean fourier = view.getCkFourier().isSelected();
+                                int angle = Integer.parseInt(view.getTxtAngle().getText());
+                                int width = Integer.parseInt(view.getTxtWidth().getText());
+                                int heigth = Integer.parseInt(view.getTxtHeigth().getText());
+                                int series = Integer.parseInt(view.getTxtSeries().getText());
+                            if (signature == chaincode == fourier == false) {
+                                    JOptionPane.showMessageDialog(view, "Select a descritor", "", JOptionPane.INFORMATION_MESSAGE);
+                                } else {
+                                    Pattern pattern = new Pattern();
+                                    pattern.startAnglePattern(pathData, pathARFF, signature, angle, chaincode, width, heigth, fourier, series);
+                                }
+                                stopProgressBar();
+                                JOptionPane.showMessageDialog(view, "Finished", "", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(view, "Erro!", "", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                         return null;
                     }
@@ -66,9 +94,9 @@ public class ControlPatternGeneration {
                 work.execute();
             }
         });
-        
+
     }
-    
+
     public void startProgressBar() {
         view.getPgBar().setIndeterminate(true);
         view.getPgBar().setVisible(true);

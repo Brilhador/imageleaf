@@ -4,9 +4,7 @@
  */
 package view.recognition;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JProgressBar;
+import javax.swing.JTextField;
 
 /**
  *
@@ -39,22 +37,22 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jCheckBox3 = new javax.swing.JCheckBox();
+        ckFourier = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtSeries = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        ckChainCode = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txtWidth = new javax.swing.JTextField();
+        txtHeigth = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        ckSignature = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtAngle = new javax.swing.JTextField();
+        btnLocaleARFF = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        txtPathARFF = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -74,11 +72,11 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Features selection:");
 
-        jCheckBox3.setText("Descriptor Fourier");
+        ckFourier.setText("Descriptor Fourier");
 
         jLabel2.setText("Series");
 
-        jTextField1.setText("126");
+        txtSeries.setText("126");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -87,12 +85,12 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox3)
+                    .addComponent(ckFourier)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSeries, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -100,19 +98,23 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox3)
+                .addComponent(ckFourier)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSeries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jCheckBox2.setText("Chain Code");
+        ckChainCode.setText("Chain Code");
 
         jLabel6.setText("width");
 
         jLabel7.setText("heigth");
+
+        txtWidth.setText("480");
+
+        txtHeigth.setText("640");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -121,7 +123,7 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox2)
+                    .addComponent(ckChainCode)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,29 +131,31 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4))))
+                            .addComponent(txtWidth)
+                            .addComponent(txtHeigth))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox2)
+                .addComponent(ckChainCode)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHeigth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jCheckBox1.setText("Signature");
+        ckSignature.setText("Signature");
 
         jLabel5.setText("Angle");
+
+        txtAngle.setText("2");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -164,9 +168,9 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2))
+                        .addComponent(txtAngle))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jCheckBox1)
+                        .addComponent(ckSignature)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -174,11 +178,11 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox1)
+                .addComponent(ckSignature)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAngle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -209,11 +213,11 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
                 .addGap(18, 18, 18))
         );
 
-        jButton1.setText("Locale Save ARFF");
+        btnLocaleARFF.setText("Locale Save ARFF");
 
         jLabel3.setText("Path:");
 
-        jLabel4.setText("...");
+        txtPathARFF.setText("...");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -232,11 +236,11 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(btnLocale, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLocaleARFF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(txtPathARFF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -255,11 +259,11 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
                             .addComponent(lblPath)
                             .addComponent(txtPath))
                         .addGap(44, 44, 44)
-                        .addComponent(jButton1)
+                        .addComponent(btnLocaleARFF)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel4))
+                            .addComponent(txtPathARFF))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnStart))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -277,15 +281,14 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLocale;
+    private javax.swing.JButton btnLocaleARFF;
     private javax.swing.JButton btnStart;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox ckChainCode;
+    private javax.swing.JCheckBox ckFourier;
+    private javax.swing.JCheckBox ckSignature;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -293,14 +296,15 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel lblPath;
     private javax.swing.JLabel lblPattern;
     private javax.swing.JProgressBar pgBar;
+    private javax.swing.JTextField txtAngle;
+    private javax.swing.JTextField txtHeigth;
     private javax.swing.JLabel txtPath;
+    private javax.swing.JLabel txtPathARFF;
+    private javax.swing.JTextField txtSeries;
+    private javax.swing.JTextField txtWidth;
     // End of variables declaration//GEN-END:variables
 
     public javax.swing.JButton getBtnLocale() {
@@ -334,4 +338,78 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
     public void setTxtPath(javax.swing.JLabel txtPath) {
         this.txtPath = txtPath;
     }
+
+    public javax.swing.JButton getBtnLocaleARFF() {
+        return btnLocaleARFF;
+    }
+
+    public void setBtnLocaleARFF(javax.swing.JButton btnLocaleARFF) {
+        this.btnLocaleARFF = btnLocaleARFF;
+    }
+
+    public javax.swing.JCheckBox getCkChainCode() {
+        return ckChainCode;
+    }
+
+    public void setCkChainCode(javax.swing.JCheckBox ckChainCode) {
+        this.ckChainCode = ckChainCode;
+    }
+
+    public javax.swing.JCheckBox getCkFourier() {
+        return ckFourier;
+    }
+
+    public void setCkFourier(javax.swing.JCheckBox ckFourier) {
+        this.ckFourier = ckFourier;
+    }
+
+    public javax.swing.JCheckBox getCkSignature() {
+        return ckSignature;
+    }
+
+    public void setCkSignature(javax.swing.JCheckBox ckSignature) {
+        this.ckSignature = ckSignature;
+    }
+
+    public javax.swing.JTextField getTxtHeigth() {
+        return txtHeigth;
+    }
+
+    public void setTxtHeigth(javax.swing.JTextField txtHeigth) {
+        this.txtHeigth = txtHeigth;
+    }
+
+    public javax.swing.JLabel getTxtPathARFF() {
+        return txtPathARFF;
+    }
+
+    public void setTxtPathARFF(javax.swing.JLabel txtPathARFF) {
+        this.txtPathARFF = txtPathARFF;
+    }
+
+    public javax.swing.JTextField getTxtSeries() {
+        return txtSeries;
+    }
+
+    public void setTxtSeries(javax.swing.JTextField txtSeries) {
+        this.txtSeries = txtSeries;
+    }
+
+    public javax.swing.JTextField getTxtWidth() {
+        return txtWidth;
+    }
+
+    public void setTxtWidth(javax.swing.JTextField txtWidth) {
+        this.txtWidth = txtWidth;
+    }
+
+    public JTextField getTxtAngle() {
+        return txtAngle;
+    }
+
+    public void setTxtAngle(JTextField txtAngle) {
+        this.txtAngle = txtAngle;
+    }
+    
+    
 }

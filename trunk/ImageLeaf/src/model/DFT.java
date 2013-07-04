@@ -56,8 +56,8 @@ public class DFT {
     }
     
     public double[] getCoefficients(int indice) {
-        double[] vector = new double[indice - 1];
-        for (int i = 0; i < indice - 1; i++) {
+        double[] vector = new double[indice];
+        for (int i = 0; i < indice; i++) {
             vector[i] = x1[i];
         }
         return vector;
@@ -185,9 +185,5 @@ public class DFT {
 
     private void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {
         drawImage.setRGB(point.width, point.height, cor.getRGB());
-        drawImage.setRGB(point.width + 1, point.height, cor.getRGB());//0
-        drawImage.setRGB(point.width, point.height - 1, cor.getRGB());//2
-        drawImage.setRGB(point.width - 1, point.height, cor.getRGB());//4
-        drawImage.setRGB(point.width, point.height + 1, cor.getRGB());//6
     }
 }
