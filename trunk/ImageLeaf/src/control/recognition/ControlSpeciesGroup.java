@@ -7,6 +7,7 @@ package control.recognition;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingWorker;
@@ -24,6 +25,8 @@ public class ControlSpeciesGroup {
 
     public ControlSpeciesGroup() {
         view = new ViewSpeciesGroup();
+        view.setLocationRelativeTo(null);
+        view.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initEvents();
         view.setVisible(true);
     }
