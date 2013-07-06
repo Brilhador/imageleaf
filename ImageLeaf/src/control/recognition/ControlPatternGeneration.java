@@ -71,6 +71,7 @@ public class ControlPatternGeneration {
                             if (!view.getTxtPath().getText().equals("...")) {
                                 startProgressBar();
                                 boolean signature = view.getCkSignature().isSelected();
+                                boolean measures = view.getCkMeasures().isSelected();
                                 boolean chaincode = view.getCkChainCode().isSelected();
                                 boolean fourier = view.getCkFourier().isSelected();
                                 int angle = Integer.parseInt(view.getTxtAngle().getText());
@@ -81,7 +82,7 @@ public class ControlPatternGeneration {
                                     JOptionPane.showMessageDialog(view, "Select a descritor", "", JOptionPane.INFORMATION_MESSAGE);
                                 } else {
                                     Pattern pattern = new Pattern();
-                                    pattern.startAnglePattern(pathData, pathARFF, signature, angle, chaincode, width, heigth, fourier, series);
+                                    pattern.startAnglePattern(pathData, pathARFF, signature, angle,measures, chaincode, width, heigth, fourier, series);
                                 }
                                 stopProgressBar();
                                 JOptionPane.showMessageDialog(view, "Finished", "", JOptionPane.INFORMATION_MESSAGE);

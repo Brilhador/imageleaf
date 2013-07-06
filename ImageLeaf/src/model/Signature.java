@@ -229,24 +229,7 @@ public class Signature {
         return Distancia.Manhattan(point1, point2);
     }
 
-    private double calcMedian(double[] distance) {
-        double soma = 0;
-        for (int i = 0; i < distance.length; i++) {
-            soma += distance[i];
-        }
-        return soma / distance.length;
-    }
-
-    private double calcVariance(double[] distance) {
-        double median = calcMedian(distance);
-        double variance = 0;
-        for (int i = 0; i < distance.length; i++) {
-            variance += Math.pow((distance[i] - median), 2);
-        }
-        return variance / (distance.length - 1);
-    }
-    
-     public void drawSignature(ArrayList<Dimension> lista, Dimension centroide, Dimension[] point) {
+    public void drawSignature(ArrayList<Dimension> lista, Dimension centroide, Dimension[] point) {
         imageSignature = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
         Graphics2D g2d = imageSignature.createGraphics();
         g2d.drawImage(imageOriginal, null, 0, 0);
@@ -259,7 +242,7 @@ public class Signature {
             g2d.drawLine(centroide.width, centroide.height, point[i].width, point[i].height);
         }
         g2d.dispose();
-        
+
         for (Dimension dimension : lista) {
             drawPoint(imageSignature, dimension, Color.GREEN);
         }
@@ -274,7 +257,7 @@ public class Signature {
         drawImage.setRGB(point.width, point.height - 1, cor.getRGB());//2
         drawImage.setRGB(point.width - 1, point.height, cor.getRGB());//4
         drawImage.setRGB(point.width, point.height + 1, cor.getRGB());//6
-    } 
+    }
 
     public BufferedImage getImageSignature() {
         return imageSignature;
