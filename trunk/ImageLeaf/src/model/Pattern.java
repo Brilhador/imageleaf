@@ -21,7 +21,7 @@ import javax.imageio.ImageIO;
  * @author anderson
  */
 public class Pattern {
-    
+
     private String relation = "imageClef2012";
     private ArrayList<String> attribute = new ArrayList<>();
     private ArrayList<String> classe = new ArrayList<>();
@@ -29,31 +29,41 @@ public class Pattern {
     //variaveis
     private boolean signature = false;
     private int angle = 0;
+    private boolean measures = false;
     private boolean chaincode = false;
     private int width = 0;
     private int heigth = 0;
     private boolean fourier = false;
     private int series = 0;
-    
-    public void startAnglePattern(String caminho, String caminhoArff, boolean signature, int angle, boolean chaincode, int width, int heigth, boolean fourier, int series) {
+
+    public void startAnglePattern(String caminho, String caminhoArff, boolean signature, int angle, boolean measures, boolean chaincode, int width, int heigth, boolean fourier, int series) {
         this.signature = signature;
+        this.measures = measures;
         this.chaincode = chaincode;
         this.fourier = fourier;
         relation += System.currentTimeMillis();
         if (signature) {
             this.angle = angle;
-            for (int i = 0; i < 360 / angle; i++) {
-                attribute.add("distance" + i + " NUMERIC ");
+            if (measures) {
+                attribute.add("CoefficientVariation" + " NUMERIC ");
+                attribute.add("Median" + " NUMERIC ");
+                attribute.add("MedianDeviation" + " NUMERIC ");
+                attribute.add("StandardDeviation" + " NUMERIC ");
+                attribute.add("Variance" + " NUMERIC ");
+            } else {
+                for (int i = 0; i < 360 / angle; i++) {
+                    attribute.add("distance" + i + " NUMERIC ");
+                }
             }
         }
-        if(chaincode){
+        if (chaincode) {
             this.width = width;
             this.heigth = heigth;
             for (int i = 0; i < 8; i++) {
                 attribute.add("direction" + i + " NUMERIC ");
             }
         }
-        if(fourier){
+        if (fourier) {
             this.series = series;
             for (int i = 0; i < series; i++) {
                 attribute.add("fourier" + i + " NUMERIC ");
@@ -83,7 +93,7 @@ public class Pattern {
             }
         }
     }
-    
+
     private void createAnglePattern(File[] files, String caminho, String classe) {
         try {
             List<String> folha = new ArrayList<>();
@@ -97,21 +107,30 @@ public class Pattern {
                 if (image != null) {
                     try {
                         ArrayList<Double> vectorFeature = new ArrayList();
-                        if(signature){
+                        if (signature) {
                             Signature sigImage = new Signature(image, angle, true, 0, true);
-                            for (Double d : sigImage.getSignature()) {
-                                vectorFeature.add(d);
+                            if (measures) {
+                                Medida med = new Medida(sigImage.getSignature());
+                                vectorFeature.add(med.calcCoefficientVariation());
+                                vectorFeature.add(med.calcMedian());
+                                vectorFeature.add(med.calcMedianDeviation());
+                                vectorFeature.add(med.calcStandardDeviation());
+                                vectorFeature.add(med.calcVariance());
+                            } else {
+                                for (Double d : sigImage.getSignature()) {
+                                    vectorFeature.add(d);
+                                }
                             }
 //                            saveImage(caminho + "/segmentacao", file.getName() + "Signature", sigImage.getImageSignature());
                         }
-                        if(chaincode){
+                        if (chaincode) {
                             ChainCode chainImage = new ChainCode(image, true, width, heigth, true, true);
                             for (Double d : chainImage.getHistChainCode()) {
                                 vectorFeature.add(d);
                             }
 //                            saveImage(caminho + "/segmentacao", file.getName() + "ChainCode", chainImage.getChainImage());
                         }
-                        if(fourier){
+                        if (fourier) {
                             DFT dftImage = new DFT(image, true, true, true);
                             for (Double d : dftImage.getCoefficients(series)) {
                                 vectorFeature.add(d);
@@ -123,7 +142,7 @@ public class Pattern {
                             textData += d + ",";
                         }
                         data.add(textData += classe);
-                        
+
                         if (vectorFeature != null) {
                             try {
                                 //adiciono no relatorio se a folha foi segmenteda
@@ -174,7 +193,7 @@ public class Pattern {
             Logger.getLogger(ManageDirectory.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void writingPattern(String caminhoNome, List<String> dados) {
         try {
             FileWriter arquivo = new FileWriter(caminhoNome + ".txt");
@@ -190,7 +209,7 @@ public class Pattern {
             Logger.getLogger(ManageDirectory.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void saveImage(String caminho, String nome, BufferedImage image) {
         new ManageDirectory().criarDiretorio(caminho);
         try {

@@ -4,6 +4,7 @@
  */
 package view.recognition;
 
+import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
 /**
@@ -50,6 +51,7 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
         ckSignature = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
         txtAngle = new javax.swing.JTextField();
+        ckMeasures = new javax.swing.JCheckBox();
         btnLocaleARFF = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtPathARFF = new javax.swing.JLabel();
@@ -157,21 +159,28 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
 
         txtAngle.setText("2");
 
+        ckMeasures.setText("Measures");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtAngle))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                         .addComponent(ckSignature)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 61, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(ckMeasures)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtAngle)))))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -183,6 +192,8 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtAngle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ckMeasures)
                 .addContainerGap())
         );
 
@@ -285,6 +296,7 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
     private javax.swing.JButton btnStart;
     private javax.swing.JCheckBox ckChainCode;
     private javax.swing.JCheckBox ckFourier;
+    private javax.swing.JCheckBox ckMeasures;
     private javax.swing.JCheckBox ckSignature;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -410,6 +422,13 @@ public class ViewPatternGeneration extends javax.swing.JFrame {
     public void setTxtAngle(JTextField txtAngle) {
         this.txtAngle = txtAngle;
     }
-    
-    
+
+    public JCheckBox getCkMeasures() {
+        return ckMeasures;
+    }
+
+    public void setCkMeasures(JCheckBox ckMeasures) {
+        this.ckMeasures = ckMeasures;
+    }
+
 }
