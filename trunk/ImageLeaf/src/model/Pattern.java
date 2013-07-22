@@ -22,7 +22,7 @@ import javax.imageio.ImageIO;
  */
 public class Pattern {
 
-    private String relation = "imageClef2012";
+    private String relation = null;
     private ArrayList<String> attribute = new ArrayList<>();
     private ArrayList<String> classe = new ArrayList<>();
     private ArrayList<String> data = new ArrayList<>();
@@ -35,13 +35,19 @@ public class Pattern {
     private int heigth = 0;
     private boolean fourier = false;
     private int series = 0;
+    private boolean qcch = false;
+    private boolean haralick = false;
 
-    public void startAnglePattern(String caminho, String caminhoArff, boolean signature, int angle, boolean measures, boolean chaincode, int width, int heigth, boolean fourier, int series) {
+    public void startAnglePattern(String nome, String caminho, String caminhoArff, boolean signature, int angle, boolean measures, boolean chaincode, int width, int heigth, boolean fourier, int series, boolean qcch, boolean haralick) {
+
         this.signature = signature;
         this.measures = measures;
         this.chaincode = chaincode;
         this.fourier = fourier;
-        relation += System.currentTimeMillis();
+        this.qcch = qcch;
+        this.haralick = haralick;
+
+        relation = nome;
         if (signature) {
             this.angle = angle;
             if (measures) {
@@ -67,6 +73,26 @@ public class Pattern {
             this.series = series;
             for (int i = 0; i < series; i++) {
                 attribute.add("fourier" + i + " NUMERIC ");
+            }
+        }
+        if (qcch) {
+            for (int i = 0; i < 40; i++) {
+                attribute.add("QCCH" + i + " NUMERIC ");
+            }
+        }
+        if (haralick) {
+            String[] name = Haralick.get_posHaralick();
+            for (String atributo : name) {
+                attribute.add("HARALICK" + atributo.trim() + "0" + " NUMERIC ");
+            }
+            for (String atributo : name) {
+                attribute.add("HARALICK" + atributo.trim() + "45" + " NUMERIC ");
+            }
+            for (String atributo : name) {
+                attribute.add("HARALICK" + atributo.trim() + "90" + " NUMERIC ");
+            }
+            for (String atributo : name) {
+                attribute.add("HARALICK" + atributo.trim() + "135" + " NUMERIC ");
             }
         }
         //A partir do caminho, aonde esta localizado o banco de folha lista se todos os diretorios
@@ -136,6 +162,23 @@ public class Pattern {
                                 vectorFeature.add(d);
                             }
 //                            saveImage(caminho + "/segmentacao", file.getName() + "Fourier", dftImage.getImageFourier());
+                        }
+                        if (qcch) {
+                            QCCH qcch = new QCCH(image, 1);
+                            for (Double d : qcch.get_histogram()) {
+                                vectorFeature.add(d);
+                            }
+                        }
+                        if (haralick) {
+                            int i = 0;
+                            while(i <= 135){
+                                Coocorrencia c = new Coocorrencia(image, 256, 1, i);
+                                Haralick h = new Haralick(c);
+                                for (Double d : h.getFeatures()) {
+                                    vectorFeature.add(d);
+                                }
+                                i += 45;
+                            }
                         }
                         String textData = "";
                         for (double d : vectorFeature) {
