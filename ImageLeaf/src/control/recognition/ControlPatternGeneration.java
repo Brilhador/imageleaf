@@ -70,19 +70,22 @@ public class ControlPatternGeneration {
                         try {
                             if (!view.getTxtPath().getText().equals("...")) {
                                 startProgressBar();
+                                String nome = view.getTxtNameARFF().getText();
                                 boolean signature = view.getCkSignature().isSelected();
                                 boolean measures = view.getCkMeasures().isSelected();
                                 boolean chaincode = view.getCkChainCode().isSelected();
                                 boolean fourier = view.getCkFourier().isSelected();
+                                boolean haralick = view.getCkHaralick().isSelected();
+                                boolean qcch = view.getCkQCCH().isSelected();
                                 int angle = Integer.parseInt(view.getTxtAngle().getText());
                                 int width = Integer.parseInt(view.getTxtWidth().getText());
                                 int heigth = Integer.parseInt(view.getTxtHeigth().getText());
                                 int series = Integer.parseInt(view.getTxtSeries().getText());
-                            if (signature ==  false && chaincode == false && fourier == false) {
+                                if (signature == false && chaincode == false && fourier == false && haralick == false && qcch == false) {
                                     JOptionPane.showMessageDialog(view, "Select a descritor", "", JOptionPane.INFORMATION_MESSAGE);
                                 } else {
                                     Pattern pattern = new Pattern();
-                                    pattern.startAnglePattern(pathData, pathARFF, signature, angle,measures, chaincode, width, heigth, fourier, series);
+                                    pattern.startAnglePattern(nome, pathData, pathARFF, signature, angle, measures, chaincode, width, heigth, fourier, series, qcch, haralick);
                                 }
                                 stopProgressBar();
                                 JOptionPane.showMessageDialog(view, "Finished", "", JOptionPane.INFORMATION_MESSAGE);
