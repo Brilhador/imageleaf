@@ -111,6 +111,66 @@ public class Thresholding {
         return imgOut;
     }
 
+    // limiarização basica com valor já pré-definido (valores atribuidos a uma
+    // matriz) com liminar por parametro, que retona uma imagem
+    public static BufferedImage limiarizacao(BufferedImage img, boolean[][] mat) {
+        //Imagem de saida
+        BufferedImage imgOut = new BufferedImage(
+                img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+        // atribuido valores a imagem dos pixels
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                if (mat[x][y]) {
+                    imgOut.setRGB(x, y, Color.BLACK.getRGB());
+                } else {
+                    imgOut.setRGB(x, y, Color.WHITE.getRGB());
+                }
+            }
+        }
+        // retorna a imagem binarizada
+        return imgOut;
+    }
+    
+    public static int[][] convertBoolToBinary(boolean[][] mat){
+        int w = mat.length;
+        int h = mat[0].length;
+        
+        int[][] matOut = new int[w][h];
+        
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                if(mat[i][j]){
+                    matOut[i][j] = 1;
+                }else{
+                    matOut[i][j] = 0;
+                }
+            }
+        }
+        
+        return matOut;
+    }
+    
+    public static boolean[][] convertBinaryToBool(int[][] mat){
+        int w = mat.length;
+        int h = mat[0].length;
+        
+        boolean[][] matOut = new boolean[w][h];
+        
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                if(mat[i][j] == 1){
+                    matOut[i][j] = true;
+                }else{
+                    matOut[i][j] = false;
+                }
+            }
+        }
+        
+        return matOut;
+    }
+    
+
     /**
      * ****************************************************************************************************************************************
      */
@@ -187,7 +247,6 @@ public class Thresholding {
 
         int TOtsu = 0;
         double VOtsu = 0;
-
 
         miT = 0;
         pi = 0;

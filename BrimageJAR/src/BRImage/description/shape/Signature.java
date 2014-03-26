@@ -84,7 +84,7 @@ public class Signature {
         for (int i = 0; i < point.length; i++) {
             distance[i] = getDistanceManhattan(centroide, point[i]);
         }
-        return Histogram.normalizacao(distance);
+        return Histogram.normalization(distance);
     }
 
     private Dimension getCentroideMedian(ArrayList<Dimension> lista) {

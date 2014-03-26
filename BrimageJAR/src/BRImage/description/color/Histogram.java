@@ -4,16 +4,10 @@
  */
 package BRImage.description.color;
 
-import BRImage.segmetation.Thresholding;
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -173,208 +167,10 @@ public class Histogram {
         }
         return h;
     }
-
-    //calcula o histograma medio de um array de imagens recebido por parametro
-    public static int[] histogramaMedioRed(BufferedImage[] imagens, boolean threshold) {
-        //histograma
-        int[] histogramaOut = new int[256];
-
-        try {
-            //percorre as fotos
-            int cont = 0;
-            for (BufferedImage image : imagens) {
-                int[] histograma;
-                //calcula o histograma individual de cada foto
-                //se verdadeiro o threshold esta ligado
-                if (threshold) {
-                    histograma = histogramaRed(image, Thresholding.limiarizacaoBool(image, Thresholding.otsuTreshold(Histogram.histogramaGray(image), image.getWidth() * image.getHeight())));
-                } else {
-                    histograma = histogramaRed(image);
-                }
-
-                for (int i = 0; i < 256; i++) {
-                    //agrega o valor a cada posicao no histograma geral
-                    histogramaOut[i] += histograma[i];
-                }
-            }
-            //obtendo a media para cada tonalidade de cor
-            for (int i = 0; i < 256; i++) {
-                //dividir o valor agregado pelo numero de imagens
-                histogramaOut[i] /= imagens.length;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return histogramaOut;
-    }
-
-    //funcao que calcula o desvio padrao de um array de imagens e seu respectivo histograma meedio
-    public static int[] histogramaDesvioPadraoRed(BufferedImage[] imagens, int[] hMedioRed, boolean threshold) {
-        //histograma
-        int[] histogramaOut = new int[256];
-
-        try {
-            //percorre as fotos
-            for (BufferedImage image : imagens) {
-                int[] histograma;
-                //calcula o histograma individual de cada foto
-                //se verdadeiro o threshold esta ligado
-                if (threshold) {
-                    histograma = histogramaRed(image, Thresholding.limiarizacaoBool(image, Thresholding.otsuTreshold(Histogram.histogramaGray(image), image.getWidth() * image.getHeight())));
-                } else {
-                    histograma = histogramaRed(image);
-                }
-                for (int i = 0; i < 256; i++) {
-                    //calcula o desvio quadratico de cada tonalidade
-                    histogramaOut[i] += Math.pow(hMedioRed[i] - histograma[i], 2);
-                }
-            }
-            //obtendo o desvio padrão
-            for (int i = 0; i < 256; i++) {
-                //divindo os desvios quadraticos de cada tonalidade, obtem a variância
-                //Atraves da raiz quadrada de cada variancia se obtem o desvio padrão
-                histogramaOut[i] = (int) Math.sqrt(histogramaOut[i] / imagens.length);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //retorna o array com os valores do desvio padrão
-        return histogramaOut;
-    }
-
-    //calcula o histograma medio de um array de imagens
-    public static int[] histogramaMedioGreen(BufferedImage[] imagens, boolean threshold) {
-        //histograma
-        int[] histogramaOut = new int[256];
-
-        try {
-            //percorre as fotos
-            for (BufferedImage image : imagens) {
-                int[] histograma;
-                //calcula o histograma individual de cada foto
-                //se verdadeiro o threshold esta ligado
-                if (threshold) {
-                    histograma = histogramaGreen(image, Thresholding.limiarizacaoBool(image, Thresholding.otsuTreshold(Histogram.histogramaGray(image), image.getWidth() * image.getHeight())));
-                } else {
-                    histograma = histogramaGreen(image);
-                }
-                for (int i = 0; i < 256; i++) {
-                    //agrega o valor a cada posicao no histograma geral
-                    histogramaOut[i] += histograma[i];
-                }
-            }
-            for (int i = 0; i < 256; i++) {
-                //dividir o valor agregado pelo numero de imagens
-                histogramaOut[i] /= imagens.length;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return histogramaOut;
-    }
-
-    public static int[] histogramaDesvioPadraoGreen(BufferedImage[] imagens, int[] hMedioGreen, boolean threshold) {
-        //histograma
-        int[] histogramaOut = new int[256];
-
-        try {
-            //percorre as fotos
-            for (BufferedImage image : imagens) {
-                int[] histograma;
-                //calcula o histograma individual de cada foto
-                //se verdadeiro o threshold esta ligado
-                if (threshold) {
-                    histograma = histogramaGreen(image, Thresholding.limiarizacaoBool(image, Thresholding.otsuTreshold(Histogram.histogramaGray(image), image.getWidth() * image.getHeight())));
-                } else {
-                    histograma = histogramaGreen(image);
-                }
-                for (int i = 0; i < 256; i++) {
-                    //calcula o desvio quadratico de cada tonalidade
-                    histogramaOut[i] += Math.pow(hMedioGreen[i] - histograma[i], 2);
-                }
-            }
-            //obtendo o desvio padrão
-            for (int i = 0; i < 256; i++) {
-                //divindo os desvios quadraticos de cada tonalidade, obtem a variância
-                //Atraves da raiz quadrada de cada variancia se obtem o desvio padrão
-                histogramaOut[i] = (int) Math.sqrt(histogramaOut[i] / imagens.length);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //retorna o array com os valores do desvio padrão
-        return histogramaOut;
-    }
-
-    //calcula o histograma medio de um array de imagens
-    public static int[] histogramaMedioBlue(BufferedImage[] imagens, boolean threshold) {
-        //histograma
-        int[] histogramaOut = new int[256];
-
-        try {
-            //percorre as fotos
-            for (BufferedImage image : imagens) {
-                int[] histograma;
-                //calcula o histograma individual de cada foto
-                //se verdadeiro o threshold esta ligado
-                if (threshold) {
-                    histograma = histogramaBlue(image, Thresholding.limiarizacaoBool(image, Thresholding.otsuTreshold(Histogram.histogramaGray(image), image.getWidth() * image.getHeight())));
-                } else {
-                    histograma = histogramaBlue(image);
-                }
-                for (int i = 0; i < 256; i++) {
-                    //agrega o valor a cada posicao no histograma geral
-                    histogramaOut[i] += histograma[i];
-                }
-            }
-            for (int i = 0; i < 256; i++) {
-                //dividir o valor agregado pelo numero de imagens
-                histogramaOut[i] /= imagens.length;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return histogramaOut;
-    }
-
-    public static int[] histogramaDesvioPadraoBlue(BufferedImage[] imagens, int[] hMedioBlue, boolean threshold) {
-        //histograma
-        int[] histogramaOut = new int[256];
-
-        try {
-            //percorre as fotos
-            for (BufferedImage image : imagens) {
-                int[] histograma;
-                //calcula o histograma individual de cada foto
-                //se verdadeiro o threshold esta ligado
-                if (threshold) {
-                    histograma = histogramaBlue(image, Thresholding.limiarizacaoBool(image, Thresholding.otsuTreshold(Histogram.histogramaGray(image), image.getWidth() * image.getHeight())));
-                } else {
-                    histograma = histogramaBlue(image);
-                }
-                for (int i = 0; i < 256; i++) {
-                    //calcula o desvio quadratico de cada tonalidade
-                    histogramaOut[i] += Math.pow(hMedioBlue[i] - histograma[i], 2);
-                }
-            }
-            //obtendo o desvio padrão
-            for (int i = 0; i < 256; i++) {
-                //divindo os desvios quadraticos de cada tonalidade, obtem a variância
-                //Atraves da raiz quadrada de cada variancia se obtem o desvio padrão
-                histogramaOut[i] = (int) Math.sqrt(histogramaOut[i] / imagens.length);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //retorna o array com os valores do desvio padrão
-        return histogramaOut;
-    }
+    
     //normalização de histograma por scala
     //normalization by scaling between 0 and 1
-    public static double[] normalizacao(double[] histograma) {
+    public static double[] normalization(double[] histograma) {
 
         //Armazena a frequencia max e min do histograma
         double max = histograma[0];
@@ -397,38 +193,6 @@ public class Histogram {
 
         //retorna o histograma 
         return hist;
-    }
-
-    //funcao que cria um txt com os dados de um histograma
-    public static void criarTxtHistograma(String caminhoNome, int[] histograma) {
-        try {
-            FileWriter arquivo = new FileWriter(caminhoNome + ".txt");
-            BufferedWriter buffer = new BufferedWriter(arquivo);
-            for (int i : histograma) {
-                buffer.write(i + "");
-                buffer.newLine();
-            }
-            buffer.flush();
-            buffer.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    //funcao que pega um txt de inteiros e converte em histograma
-    public static int[] lerTxtHistograma(String caminhoNome) {
-        int[] histograma = new int[256];
-        try {
-            FileReader reader = new FileReader(caminhoNome);
-            BufferedReader buffer = new BufferedReader(reader);
-            for (int i = 0; i < 256; i++) {
-                histograma[i] = Integer.parseInt(buffer.readLine());
-            }
-            buffer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return histograma;
     }
 
     public static BufferedImage equalizaRGB(BufferedImage img, int[] hRed, int[] hGreen, int[] hBlue) {

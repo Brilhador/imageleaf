@@ -23,6 +23,29 @@ import BRImage.segmetation.Thresholding;
  * @author Anderson
  */
 public class MyImage {
+    
+    //salvar imagem
+    public static boolean salvar(BufferedImage image, File file){
+        try{
+            return ImageIO.write(image, "JPG", file);
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+     public static boolean salvar(BufferedImage image, String path){
+        try{
+            File file = new File(path);
+            if(!file.exists()){
+                file.mkdirs();
+            }
+            return ImageIO.write(image, "JPG", new File(path));
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     //redimensiona um array de imagens
     public static BufferedImage[] resizeImages(File[] arquivos, int width, int heigth) {
