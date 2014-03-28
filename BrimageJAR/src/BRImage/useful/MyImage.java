@@ -17,31 +17,97 @@ import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 import BRImage.description.color.Histogram;
 import BRImage.segmetation.Thresholding;
+import java.awt.Dimension;
+import java.util.ArrayList;
 
 /**
  *
  * @author Anderson
  */
 public class MyImage {
-    
+
+    public static BufferedImage paintPoint(BufferedImage imageOriginal, ArrayList<Dimension> point) {
+        BufferedImage imgOut = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
+        Graphics2D g2d = imgOut.createGraphics();
+        g2d.drawImage(imageOriginal, null, 0, 0);
+        for (Dimension dimension : point) {
+            drawPoint(imgOut, dimension, Color.RED);
+        }
+        g2d.dispose();
+        return imgOut;
+    }
+
+    public static BufferedImage paintCross(BufferedImage imageOriginal, ArrayList<Dimension> point, int tam, Color cor) {
+        BufferedImage imgOut = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
+        Graphics2D g2d = imgOut.createGraphics();
+        g2d.drawImage(imageOriginal, null, 0, 0);
+        for (Dimension dimension : point) {
+            drawCross(imgOut, dimension, cor, tam);
+        }
+        g2d.dispose();
+        return imgOut;
+    }
+
+    private static void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {
+        if ((point.width + 1) < drawImage.getWidth()) {
+            drawImage.setRGB(point.width + 1, point.height, cor.getRGB());//0
+        }
+        if ((point.height - 1) > 0) {
+            drawImage.setRGB(point.width, point.height - 1, cor.getRGB());//2
+        }
+        if ((point.width - 1) > 0) {
+            drawImage.setRGB(point.width - 1, point.height, cor.getRGB());//4
+        }
+        if ((point.height + 1) < drawImage.getHeight()) {
+            drawImage.setRGB(point.width, point.height + 1, cor.getRGB());//6
+        }
+    }
+
+    private static void drawCross(BufferedImage drawImage, Dimension point, Color cor, int tam) {
+        drawImage.setRGB(point.width, point.height, cor.getRGB());
+        if ((point.width + tam) < drawImage.getWidth()) {//2
+            for (int i = 1; i < tam; i++) {
+                drawPoint(drawImage, new Dimension(point.width + i, point.height), cor);
+            }
+        }
+
+        if ((point.width - tam) > 0) {
+            for (int i = 1; i < tam; i++) {//4
+                drawPoint(drawImage, new Dimension(point.width - i, point.height), cor);
+            }
+        }
+
+        if ((point.height - tam) > 0) {
+            for (int i = 1; i < tam; i++) {
+                drawPoint(drawImage, new Dimension(point.width, point.height - i), cor);
+            }
+        }
+
+        if ((point.height + tam) < drawImage.getHeight()) {
+            for (int i = 1; i < tam; i++) {
+                drawPoint(drawImage, new Dimension(point.width, point.height + i), cor);
+            }
+        }
+    }
+
     //salvar imagem
-    public static boolean salvar(BufferedImage image, File file){
-        try{
+    public static boolean salvar(BufferedImage image, File file) {
+        try {
             return ImageIO.write(image, "JPG", file);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-    
-     public static boolean salvar(BufferedImage image, String path){
-        try{
+
+    public static boolean salvar(BufferedImage image, String path) {
+        try {
             File file = new File(path);
-            if(!file.exists()){
+            if (!file.exists()) {
                 file.mkdirs();
             }
             return ImageIO.write(image, "JPG", new File(path));
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

@@ -26,7 +26,7 @@ public class Erosion {
             for (int i = 0; i < largura; i++) {
                 for (int j = 0; j < altura; j++) {
                     if (imgIteration[i][j] == true) {
-                        imgOut[i][j] = erode(img, kernel, i, j);
+                        imgOut[i][j] = erode(imgIteration, kernel, i, j);
                     }
                 }
             }
@@ -35,16 +35,16 @@ public class Erosion {
     }
 
     private static boolean erode(boolean[][] img, boolean[][] kernel, int i, int j) {
-
+        int largura = i - (int) (kernel.length / 2);
+        int altura = j - (int) (kernel[0].length / 2);
+        
         for (int k = 0; k < kernel.length; k++) {
             for (int l = 0; l < kernel[0].length; l++) {
                 if (kernel[k][l] == true) {
-                    if (inBounds(img, i + k, j + l)) {
-                        if (img[i + k][j + l] == false) {
+                    if (inBounds(img, largura + k, altura + l)) {
+                        if (img[largura + k][altura + l] == false) {
                             return false;
                         }
-                    }else{
-                        return false;
                     }
                 }
             }

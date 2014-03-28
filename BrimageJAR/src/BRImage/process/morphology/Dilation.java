@@ -38,11 +38,14 @@ public class Dilation {
     
     private static void dilApply(boolean[][] imgOut, boolean[][] kernel, int i, int j) {
 
+        int largura = i - (int) (kernel.length / 2);
+        int altura = j - (int) (kernel[0].length / 2);
+        
         for (int k = 0; k < kernel.length; k++) {
             for (int l = 0; l < kernel[0].length; l++) {
                 if (kernel[k][l] == true) {
-                    if (inBounds(imgOut, i + k, j + l)) {
-                        imgOut[i + k][j + l] = true;
+                    if (inBounds(imgOut, largura + k, altura + l)) {
+                        imgOut[largura + k][altura + l] = true;
                     }
                 }
 
