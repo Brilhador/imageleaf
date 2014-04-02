@@ -1,4 +1,4 @@
-package BRImage.segmetation;
+package BRImage.shape;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

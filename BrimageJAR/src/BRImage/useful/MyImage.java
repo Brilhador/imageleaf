@@ -47,6 +47,18 @@ public class MyImage {
         g2d.dispose();
         return imgOut;
     }
+    
+    public static BufferedImage paintLine(BufferedImage imageOriginal, ArrayList<Dimension> point, Color cor){
+        BufferedImage imgOut = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
+        Graphics2D g2d = imgOut.createGraphics();
+        g2d.drawImage(imageOriginal, null, 0, 0);
+        g2d.setColor(cor);
+        for (int i = 0; i < point.size() - 1; i++) {
+            g2d.drawLine(point.get(i).width, point.get(i).height, point.get(i+1).width, point.get(i+1).height);
+        }
+        g2d.dispose();
+        return imgOut;
+    }
 
     private static void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {
         if ((point.width + 1) < drawImage.getWidth()) {
