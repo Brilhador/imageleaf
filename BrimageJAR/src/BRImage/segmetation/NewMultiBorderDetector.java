@@ -7,12 +7,13 @@ package BRImage.segmetation;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
  * @author Anderson
  */
-public class MultiBorderDetector {
+public class NewMultiBorderDetector {
 
     //variaveis globais    
     private boolean[][] imageBorder = null;
@@ -25,47 +26,80 @@ public class MultiBorderDetector {
     private int lastDirection = 0;
 
     //construtor
-    public MultiBorderDetector(boolean[][] imageBorder) {
-        this.imageBorder = imageBorder;
+    public NewMultiBorderDetector(boolean[][] imageBorder) {
         this.width = imageBorder.length;
         this.heigth = imageBorder[0].length;
+        copyImgBorder(imageBorder);
     }
 
     public ArrayList<Dimension> getObjects() {
         ArrayList<Dimension> lista = new ArrayList<>();
-        int x = 1;
-        int y = 1;
+        int x = 0;
+        int y = 0;
 
+        //identificar novo objeto 
         while (getNextPixel(x, y)) {
+            //encontra o proximo o objeto e retorna seu contorno
             ArrayList<Dimension> contorno = getBorder();
-            lista.add(getCentroide(contorno));
-            x = 0;
-            y = getOutY(contorno);;
+
+            //remove o objeto da matriz
+            if (contorno != null) {
+                removeObject(contorno);
+                //adicionar centroide a lista
+                lista.add(getCentroide(contorno));
+            }else{
+                return lista;
+            }
         }
-        
+
         return lista;
     }
 
-    private int getOutY(ArrayList<Dimension> contorno){
-        int y = 0;
-        for (Dimension dimension : contorno) {
-            if(dimension.height > y){
-                y = dimension.height;
+    private void removeObject(ArrayList<Dimension> Contorno) {
+        //Coordenadas Limite
+        int minX = Integer.MAX_VALUE;
+        int minY = Integer.MAX_VALUE;
+        int maxX = 0;
+        int maxY = 0;
+
+        for (Dimension d : Contorno) {
+            if (minX > d.width) {
+                minX = d.width;
+            }
+            if (maxX < d.width) {
+                maxX = d.width;
+            }
+            if (minY > d.height) {
+                minY = d.height;
+            }
+            if (maxY < d.height) {
+                maxY = d.height;
             }
         }
-        
-        if(inBounds(1, y+1)){
-            y = y + 1;
-        }else if(width == y){
-            
+
+        //apagar objeto
+        for (int x = minX; x <= maxX; x++) {
+            for (int y = minY; y <= maxY; y++) {
+                imageBorder[x][y] = false;
+            }
         }
-        return y;
     }
-    
+
+    private void copyImgBorder(boolean[][] imageBorder) {
+        this.imageBorder = new boolean[width][heigth];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < heigth; y++) {
+                this.imageBorder[x][y] = imageBorder[x][y];
+            }
+        }
+    }
+
     private boolean getNextPixel(int x, int y) {
         //pega o pixel inicial            
-        for (int j = y; j < heigth - 1; j++) {
-            for (int i = x; i < width - 1; i++) {
+//        for (int j = y; j < heigth - 1; j++) {
+        for (int j = heigth - 1; j >= 0; j--) {
+//            for (int i = x; i < width - 1; i++) {
+            for (int i = width - 1; i >= 0; i--) {
                 if (imageBorder[i][j]) {
                     startx = i;
                     starty = j;
@@ -75,7 +109,7 @@ public class MultiBorderDetector {
         }
         return false;
     }
-    
+
     //pega o valor da direçao
     //pensa numa logica para essa busca
     private Dimension getNextDirection(int x, int y) {

@@ -9,6 +9,7 @@ import Jama.Matrix;
 import Jama.QRDecomposition;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -16,7 +17,7 @@ import java.util.ArrayList;
  */
 public class PolynomialRegression {
 
-    public static ArrayList<Dimension> apply(ArrayList<Dimension> points, int degree, boolean invert) {
+    public static ArrayList<Dimension> apply(ArrayList<Dimension> points, int degree) {
         int N = points.size();
         Matrix beta = null;
         double SSE = 0;
@@ -25,16 +26,9 @@ public class PolynomialRegression {
         double[] y = new double[N];
 
         //vetores auxiliares
-        if (invert) {
-            for (int i = 0; i < N; i++) {
-                x[i] = points.get(i).height;
-                y[i] = points.get(i).width;
-            }
-        } else {
-            for (int i = 0; i < N; i++) {
-                x[i] = points.get(i).width;
-                y[i] = points.get(i).height;
-            }
+        for (int i = 0; i < N; i++) {
+            x[i] = points.get(i).width;
+            y[i] = points.get(i).height;
         }
 
         // build Vandermonde matrix
@@ -74,12 +68,15 @@ public class PolynomialRegression {
 
         ArrayList<Dimension> rPoint = new ArrayList<>();
 
+        Arrays.sort(x);
+
         for (int i = 0; i < N; i++) {
             double aux = 0;
             for (int j = degree; j >= 0; j--) {
                 aux = (int) (beta.get(j, 0) + (x[i] * aux));
             }
-            rPoint.add(new Dimension((int) x[i], (int) aux));
+            rPoint.add(new Dimension((int) x[i], (int) Math.abs(aux)));
+
         }
 
         return rPoint;

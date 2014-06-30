@@ -91,5 +91,7 @@ public class Distance {
     public static int Manhattan(Dimension cod1, Dimension cod2) {
         return Math.abs(cod1.width - cod2.width) + Math.abs(cod1.height - cod2.height);
     }
+    
+    
 
 }

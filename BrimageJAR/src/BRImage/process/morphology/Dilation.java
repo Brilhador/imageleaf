@@ -33,6 +33,7 @@ public class Dilation {
                 }
             }
         }
+        
         return imgOut;
     }
     
