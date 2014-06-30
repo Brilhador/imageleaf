@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package BRImage.segmetation;
+package BRImage.segmetation.color;
 
 import java.awt.image.BufferedImage;
 import java.awt.Color;
@@ -12,7 +12,7 @@ import java.awt.Color;
  *
  * @author ANDERSON
  */
-public class SegColor {
+public class Shrestha {
 
     /*
      valore propostos no artigo:
@@ -23,7 +23,7 @@ public class SegColor {
     
     
      */
-    public static boolean[][] shrestha(BufferedImage img, double d, double e, double f) {
+    public static boolean[][] apply(BufferedImage img, double d, double e, double f) {
 
         //matriz de saida
         boolean[][] output = new boolean[img.getWidth()][img.getHeight()];
@@ -53,7 +53,7 @@ public class SegColor {
         return output;
     }
 
-    public static boolean[][] shrestha(BufferedImage img) {
+    public static boolean[][] apply(BufferedImage img) {
 
         //matriz de saida
         boolean[][] output = new boolean[img.getWidth()][img.getHeight()];
