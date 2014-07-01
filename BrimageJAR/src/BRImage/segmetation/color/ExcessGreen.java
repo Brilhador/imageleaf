@@ -16,7 +16,7 @@ import BRImage.segmetation.Thresholding;
  */
 public class ExcessGreen {
 
-    public static BufferedImage apply(BufferedImage img) {
+    public static boolean[][] apply(BufferedImage img) {
         //largura e altura da imagem
         int largura = img.getWidth();
         int altura = img.getHeight();
@@ -82,21 +82,19 @@ public class ExcessGreen {
                 //Preenchendo a Matriz de Verde Excessivo
                 exg[x][y] = (2 * green - blue - red) * 255;
                 
-                //convertendo os valores para 8 bits
+                //corrigindo a limitação de valores
                 if(exg[x][y] > 255){
                     exg[x][y] = 255;
                 }else if(exg[x][y] < 0){
                     exg[x][y] = 0;
                 }
                 
-//              histograma[(int) exg[x][y]]++;
                 outImage.setRGB(x, y, (int) exg[x][y]);
             }
         }
-        
-        
-        //limiarização da imagem
-        return Thresholding.limiarizacao(outImage, Thresholding.otsuTreshold(Histogram.histogramaGray(outImage), altura * largura));
+         
+        //matriz de boolean
+        return Thresholding.limiarizacaoBool(outImage, Thresholding.otsuTreshold(Histogram.histogramaGray(outImage), altura * largura));
     }
 
     
