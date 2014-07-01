@@ -6,26 +6,26 @@
 package BRImage.segmetation.color;
 
 import BRImage.description.color.Histogram;
+import BRImage.segmetation.Thresholding;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import BRImage.segmetation.Thresholding;
 
 /**
  *
  * @author Anderson
  */
-public class ExcessGreen {
+public class ExcessGreenMinusRed {
 
     public static BufferedImage apply(BufferedImage img) {
         //largura e altura da imagem
         int largura = img.getWidth();
         int altura = img.getHeight();
-        
+
         //Imagem de saida
         BufferedImage outImage = new BufferedImage(largura, altura, BufferedImage.TYPE_3BYTE_BGR);
-        
+
         //matriz de ExcessGreen
-        double[][] exg = new double[largura][altura];
+        double[][] exgr = new double[largura][altura];
 
         //matriz de saida
         boolean[][] output = new boolean[largura][altura];
@@ -67,33 +67,50 @@ public class ExcessGreen {
 
                 //2º normalização 
                 double full = red + green + blue;
-                
+
                 red /= full;
                 green /= full;
                 blue /= full;
-                
-                //Preenchendo a Matriz de Verde Excessivo
-                exg[x][y] = (2 * green - blue - red) * 255;
-                
-                //corrigindo a limitação de valores
-                if(exg[x][y] > 255){
-                    exg[x][y] = 255;
-                }else if(exg[x][y] < 0){
-                    exg[x][y] = 0;
-                }
-                
-                System.out.println(exg[x][y]);
-                
-                outImage.setRGB(x, y, (int) exg[x][y]);
+
+                //Preenchendo a Matriz de Verde Excessivo menos Vermelho Excessivo
+                exgr[x][y] = (2 * green - blue - red) - (1.4 * red - green);
             }
         }
-         
-        return outImage;
+
+        //convertendo index para image monocromatica
+        return outImage = index2mono(exgr);
         
         //matriz de boolean
 //        return Thresholding.limiarizacaoBool(outImage, Thresholding.otsuTreshold(Histogram.histogramaGray(outImage), altura * largura));
     }
 
-    
-    
+    private static BufferedImage index2mono(double[][] mat) {
+        //largura e altura da imagem
+        int largura = mat.length;
+        int altura = mat[0].length;
+        
+        //Imagem de saida
+        BufferedImage outImage = new BufferedImage(largura, altura, BufferedImage.TYPE_3BYTE_BGR);
+
+        //matriz auxiliar
+        int[][] auxMat = new int[largura][altura];
+
+        for (int x = 0; x < largura; x++) {
+            for (int y = 0; y < altura; y++) {
+                
+                auxMat[x][y] = (int) mat[x][y];
+                
+                //corrigindo a limitação de valores
+                if(auxMat[x][y] > 255){
+                    auxMat[x][y] = 255;
+                }else if(auxMat[x][y] < 0){
+                    auxMat[x][y] = 0;
+                }
+                
+                outImage.setRGB(x, y, auxMat[x][y]);
+            }
+        }
+        
+        return outImage;
+    }
 }
