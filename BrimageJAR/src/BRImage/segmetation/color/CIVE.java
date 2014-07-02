@@ -6,6 +6,8 @@
 
 package BRImage.segmetation.color;
 
+import BRImage.description.color.Histogram;
+import BRImage.segmetation.Thresholding;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
@@ -15,7 +17,7 @@ import java.awt.image.BufferedImage;
  */
 public class CIVE {
     
-    public static BufferedImage apply(BufferedImage img){
+    public static boolean[][] apply(BufferedImage img){
         
         //largura e altura da imagem
         int largura = img.getWidth();
@@ -40,11 +42,12 @@ public class CIVE {
                 //CIVE
                 cive[x][y] = 0.441 * red - 0.811 * green + 0.385 * blue + 18.787;
                 
-                System.out.println(cive[x][y]);
             }
         }
         
-        return index2mono(cive);
+        outImage = index2mono(cive);
+        
+        return Thresholding.limiarizacaoBool(outImage, Thresholding.otsuTreshold(Histogram.histogramaGray(outImage), altura * largura));
     }
     
     private static BufferedImage index2mono(double[][] mat) {
@@ -62,14 +65,7 @@ public class CIVE {
             for (int y = 0; y < altura; y++) {
                 
                 auxMat[x][y] = (int) mat[x][y];
-                
-                //corrigindo a limitação de valores
-                if(auxMat[x][y] > 255){
-                    auxMat[x][y] = 255;
-                }else if(auxMat[x][y] < 0){
-                    auxMat[x][y] = 0;
-                }
-                
+  
                 outImage.setRGB(x, y, auxMat[x][y]);
             }
         }

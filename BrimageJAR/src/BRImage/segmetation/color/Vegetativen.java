@@ -6,6 +6,8 @@
 
 package BRImage.segmetation.color;
 
+import BRImage.description.color.Histogram;
+import BRImage.segmetation.Thresholding;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
@@ -15,7 +17,7 @@ import java.awt.image.BufferedImage;
  */
 public class Vegetativen {
     
-    public static BufferedImage apply(BufferedImage img){
+    public static boolean[][] apply(BufferedImage img){
         
         //largura e altura da imagem
         int largura = img.getWidth();
@@ -39,10 +41,22 @@ public class Vegetativen {
 
                 //vegetativen
                 veg[x][y] = green / (Math.pow(red, 0.667) * Math.pow(blue, 1 - 0.667));
+                
+                if(veg[x][y] < 0){
+                    output[x][y] = true;
+                }else{
+                    output[x][y] = false;
+                } 
             }
         }
         
-        return index2mono(veg);
+//        //convertendo index para image monocromatica
+//        outImage = index2mono(veg);
+//        
+//        //matriz de boolean
+//        return Thresholding.limiarizacaoBool(outImage, Thresholding.otsuTreshold(Histogram.histogramaGray(outImage), altura * largura));
+        
+        return output;
     }
     
     private static BufferedImage index2mono(double[][] mat) {

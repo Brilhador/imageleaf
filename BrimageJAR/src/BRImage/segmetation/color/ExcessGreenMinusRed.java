@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
  */
 public class ExcessGreenMinusRed {
 
-    public static BufferedImage apply(BufferedImage img) {
+    public static boolean[][] apply(BufferedImage img) {
         //largura e altura da imagem
         int largura = img.getWidth();
         int altura = img.getHeight();
@@ -73,15 +73,23 @@ public class ExcessGreenMinusRed {
                 blue /= full;
 
                 //Preenchendo a Matriz de Verde Excessivo menos Vermelho Excessivo
-                exgr[x][y] = (2 * green - blue - red) - (1.4 * red - green);
+                exgr[x][y] = (2 * green - blue - red) - (1.3 * red - green);
+                
+                if(exgr[x][y] < 0){
+                    output[x][y] = false;
+                }else{
+                    output[x][y] = true;
+                } 
             }
         }
 
         //convertendo index para image monocromatica
-        return outImage = index2mono(exgr);
-        
-        //matriz de boolean
+//        outImage = index2mono(exgr);
+//        
+//        //matriz de boolean
 //        return Thresholding.limiarizacaoBool(outImage, Thresholding.otsuTreshold(Histogram.histogramaGray(outImage), altura * largura));
+        
+        return output;
     }
 
     private static BufferedImage index2mono(double[][] mat) {
@@ -98,7 +106,7 @@ public class ExcessGreenMinusRed {
         for (int x = 0; x < largura; x++) {
             for (int y = 0; y < altura; y++) {
                 
-                auxMat[x][y] = (int) mat[x][y] * 100;
+                auxMat[x][y] = (int) mat[x][y] * 255;
                 
                 //corrigindo a limitação de valores
                 if(auxMat[x][y] > 255){

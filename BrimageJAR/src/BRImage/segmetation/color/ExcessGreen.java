@@ -16,7 +16,7 @@ import BRImage.segmetation.Thresholding;
  */
 public class ExcessGreen {
 
-    public static BufferedImage apply(BufferedImage img) {
+    public static boolean[][] apply(BufferedImage img) {
         //largura e altura da imagem
         int largura = img.getWidth();
         int altura = img.getHeight();
@@ -78,10 +78,10 @@ public class ExcessGreen {
             }
         }
          
-        return index2mono(exg);
+        outImage = index2mono(exg);
         
         //matriz de boolean
-//        return Thresholding.limiarizacaoBool(outImage, Thresholding.otsuTreshold(Histogram.histogramaGray(outImage), altura * largura));
+        return Thresholding.limiarizacaoBool(outImage, Thresholding.otsuTreshold(Histogram.histogramaGray(outImage), altura * largura));
     }
 
     private static BufferedImage index2mono(double[][] mat) {
