@@ -39,8 +39,6 @@ public class Vegetativen {
 
                 //vegetativen
                 veg[x][y] = green / (Math.pow(red, 0.667) * Math.pow(blue, 1 - 0.667));
-                
-//                System.out.println(veg[x][y]);
             }
         }
         

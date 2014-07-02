@@ -64,11 +64,11 @@ public class CIVE {
                 auxMat[x][y] = (int) mat[x][y];
                 
                 //corrigindo a limitação de valores
-//                if(auxMat[x][y] > 255){
-//                    auxMat[x][y] = 255;
-//                }else if(auxMat[x][y] < 0){
-//                    auxMat[x][y] = 0;
-//                }
+                if(auxMat[x][y] > 255){
+                    auxMat[x][y] = 255;
+                }else if(auxMat[x][y] < 0){
+                    auxMat[x][y] = 0;
+                }
                 
                 outImage.setRGB(x, y, auxMat[x][y]);
             }

@@ -98,7 +98,7 @@ public class ExcessGreenMinusRed {
         for (int x = 0; x < largura; x++) {
             for (int y = 0; y < altura; y++) {
                 
-                auxMat[x][y] = (int) mat[x][y];
+                auxMat[x][y] = (int) mat[x][y] * 100;
                 
                 //corrigindo a limitação de valores
                 if(auxMat[x][y] > 255){
