@@ -74,7 +74,7 @@ public class ExcessGreen {
                 
                 //Preenchendo a Matriz de Verde Excessivo
                 exg[x][y] = 2 * green - blue - red;
-                
+
             }
         }
          
@@ -108,6 +108,8 @@ public class ExcessGreen {
                 }
                 
                 outImage.setRGB(x, y, auxMat[x][y]);
+                
+                
             }
         }
         
