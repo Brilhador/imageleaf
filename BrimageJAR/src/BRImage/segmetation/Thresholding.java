@@ -51,6 +51,7 @@ public class Thresholding {
         for (int x = 0; x < img.getWidth(); x++) {
             for (int y = 0; y < img.getHeight(); y++) {
                 cor = (Color.getColor("red", img.getRGB(x, y)).getRed() + Color.getColor("green", img.getRGB(x, y)).getGreen() + Color.getColor("blue", img.getRGB(x, y)).getBlue()) / 3;
+                //maior com o limiar objeto de interesse
                 if (cor >= limiar) {
                     boolImg[x][y] = true;
                 } else {
@@ -121,6 +122,7 @@ public class Thresholding {
         // atribuido valores a imagem dos pixels
         for (int x = 0; x < img.getWidth(); x++) {
             for (int y = 0; y < img.getHeight(); y++) {
+                //se a for um objeto de interesse
                 if (mat[x][y]) {
                     imgOut.setRGB(x, y, Color.BLACK.getRGB());
                 } else {
