@@ -6,13 +6,12 @@
 package BRImage.process.morphology;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
 
 /**
  *
  * @author ANDERSON
  */
-public class Thinning {
+public class Skeleton {
 
     //Afinamento do disponivel no livro gonzalez woods pag. 535
     public static boolean[][] apply(boolean[][] img) {
@@ -95,7 +94,7 @@ public class Thinning {
 
                         //condição C violada
                         if (a != null && b != null && c != null) {
-                            if ((img[a.width][a.height] == true) && (img[b.width][b.height] == true) && (img[b.width][b.height] == true)) {
+                            if ((img[a.width][a.height] == true) && (img[b.width][b.height] == true) && (img[c.width][c.height] == true)) {
                                 continue;
                             }
                         }
@@ -107,7 +106,7 @@ public class Thinning {
 
                         //condição D violada
                         if (a != null && b != null && c != null) {
-                            if ((img[a.width][a.height] == true) && (img[b.width][b.height] == true) && (img[b.width][b.height] == true)) {
+                            if ((img[a.width][a.height] == true) && (img[b.width][b.height] == true) && (img[c.width][c.height] == true)) {
                                 continue;
                             }
                         }
@@ -127,7 +126,10 @@ public class Thinning {
                     }
                 }
             }
-
+            
+            //redefinir a matriz auxiliar
+            auxMat = new boolean[largura][altura];
+            
             //passo 2
             for (int x = 0; x < largura; x++) {
                 for (int y = 0; y < altura; y++) {
@@ -193,7 +195,7 @@ public class Thinning {
 
                         //condição C violada
                         if (a != null && b != null && c != null) {
-                            if ((img[a.width][a.height] == true) && (img[b.width][b.height] == true) && (img[b.width][b.height] == true)) {
+                            if ((img[a.width][a.height] == true) && (img[b.width][b.height] == true) && (img[c.width][c.height] == true)) {
                                 continue;
                             }
                         }
@@ -205,7 +207,7 @@ public class Thinning {
 
                         //condição D violada
                         if (a != null && b != null && c != null) {
-                            if ((img[a.width][a.height] == true) && (img[b.width][b.height] == true) && (img[b.width][b.height] == true)) {
+                            if ((img[a.width][a.height] == true) && (img[b.width][b.height] == true) && (img[c.width][c.height] == true)) {
                                 continue;
                             }
                         }
