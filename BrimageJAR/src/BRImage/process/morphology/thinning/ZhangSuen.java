@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package BRImage.process.morphology;
+package BRImage.process.morphology.thinning;
 
 import java.awt.Dimension;
 
@@ -11,7 +11,7 @@ import java.awt.Dimension;
  *
  * @author ANDERSON
  */
-public class Skeleton {
+public class ZhangSuen {
 
     //Afinamento do disponivel no livro gonzalez woods pag. 535
     public static boolean[][] apply(boolean[][] img) {
