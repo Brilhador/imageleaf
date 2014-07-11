@@ -55,7 +55,7 @@ public class HuangWanLiu {
                         count--;
 
                         //condição 1 ------------------------------------
-                        if (count < 2 || count > 7) {
+                        if (count >= 2 && count <= 7) {
                             auxMat[x][y] = true;
                             excluir++;
                             break;
@@ -82,6 +82,20 @@ public class HuangWanLiu {
                             }
                         }
 
+                        Dimension aux = getVizinho(0, largura, altura, x, y, img);
+
+                        if (aux != null) {
+                            if (img[aux.width][aux.height] == true) {
+                                count++;
+                            } else {
+                                count = 0;
+                            }
+                        }
+
+                        if (count == 2) {
+                            flag = true;
+                        }
+
                         //condição 2 ------------------------------------
                         if (flag) {
                             auxMat[x][y] = true;
@@ -95,7 +109,7 @@ public class HuangWanLiu {
                         count = 0;
 
                         for (int i = 0; i < 8; i++) {
-                            Dimension aux = getVizinho(i, largura, altura, x, y, img);
+                            aux = getVizinho(i, largura, altura, x, y, img);
 
                             if (aux != null) {
                                 if (img[aux.width][aux.height] == true) {
@@ -108,9 +122,23 @@ public class HuangWanLiu {
                             if (count == 3) {
                                 flag = true;
                             }
-                           
+
                         }
-                        
+
+                        aux = getVizinho(0, largura, altura, x, y, img);
+
+                        if (aux != null) {
+                            if (img[aux.width][aux.height] == true) {
+                                count++;
+                            } else {
+                                count = 0;
+                            }
+                        }
+
+                        if (count == 3) {
+                            flag = true;
+                        }
+
                         //condição 3 ------------------------------------
                         if (flag) {
                             auxMat[x][y] = true;
@@ -125,18 +153,80 @@ public class HuangWanLiu {
                         boolean[][] mask4 = {{false, true, true}, {true, true, false}, {false, false, false}};
 
                         //verificando se a máscara corresponde ao pixel
-                        if (compare(img, mask1, x, y)) {
+                        //máscara 1
+                        flag = true;
+
+                        int maskAltura = mask1.length;
+                        int maskLargura = mask1[0].length;
+
+                        for (int i = 0; i < 8; i++) {
+                            if (!getVizinhoBool(i, largura, altura, x, y, img) == getVizinhoBool(i, maskLargura, maskAltura, x, y, mask1)) {
+                                flag = false;
+                                break;
+                            }
+                        }
+
+                        if (flag) {
                             auxMat[x][y] = true;
                             excluir++;
-                        } else if (compare(img, mask2, x, y)) {
+                            break;
+                        }
+
+                        //máscara 2
+                        flag = true;
+
+                        maskAltura = mask2.length;
+                        maskLargura = mask2[0].length;
+
+                        for (int i = 0; i < 8; i++) {
+                            if (!getVizinhoBool(i, largura, altura, x, y, img) == getVizinhoBool(i, maskLargura, maskAltura, x, y, mask2)) {
+                                flag = false;
+                                break;
+                            }
+                        }
+
+                        if (flag) {
                             auxMat[x][y] = true;
                             excluir++;
-                        } else if (compare(img, mask3, x, y)) {
+                            break;
+                        }
+
+                        //máscara 3
+                        flag = true;
+
+                        maskAltura = mask3.length;
+                        maskLargura = mask3[0].length;
+
+                        for (int i = 0; i < 8; i++) {
+                            if (!getVizinhoBool(i, largura, altura, x, y, img) == getVizinhoBool(i, maskLargura, maskAltura, x, y, mask3)) {
+                                flag = false;
+                                break;
+                            }
+                        }
+
+                        if (flag) {
                             auxMat[x][y] = true;
                             excluir++;
-                        } else if (compare(img, mask4, x, y)) {
+                            break;
+                        }
+
+                        //máscara 4
+                        flag = true;
+
+                        maskAltura = mask4.length;
+                        maskLargura = mask4[0].length;
+
+                        for (int i = 0; i < 8; i++) {
+                            if (!getVizinhoBool(i, largura, altura, x, y, img) == getVizinhoBool(i, maskLargura, maskAltura, x, y, mask4)) {
+                                flag = false;
+                                break;
+                            }
+                        }
+
+                        if (flag) {
                             auxMat[x][y] = true;
                             excluir++;
+                            break;
                         }
 
                         //condição 4 ------------------------------------
@@ -145,7 +235,7 @@ public class HuangWanLiu {
                         count = 0;
 
                         for (int i = 0; i < 8; i++) {
-                            Dimension aux = getVizinho(i, largura, altura, x, y, img);
+                            aux = getVizinho(i, largura, altura, x, y, img);
 
                             if (aux != null) {
                                 if (img[aux.width][aux.height] == true) {
@@ -158,9 +248,23 @@ public class HuangWanLiu {
                             if (count == 4) {
                                 flag = true;
                             }
-                           
+
                         }
-                        
+
+                        aux = getVizinho(0, largura, altura, x, y, img);
+
+                        if (aux != null) {
+                            if (img[aux.width][aux.height] == true) {
+                                count++;
+                            } else {
+                                count = 0;
+                            }
+                        }
+
+                        if (count == 4) {
+                            flag = true;
+                        }
+
                         //condição 4 ------------------------------------
                         if (flag) {
                             auxMat[x][y] = true;
@@ -173,11 +277,39 @@ public class HuangWanLiu {
                         boolean[][] mask6 = {{false, true, true}, {true, true, false}, {true, false, false}};
 
                         //verificando se a máscara corresponde ao pixel
-                        if (compare(img, mask5, x, y)) {
+                        //máscara 5
+                        flag = true;
+
+                        maskAltura = mask5.length;
+                        maskLargura = mask5[0].length;
+
+                        for (int i = 0; i < 8; i++) {
+                            if (!getVizinhoBool(i, largura, altura, x, y, img) == getVizinhoBool(i, maskLargura, maskAltura, x, y, mask5)) {
+                                flag = false;
+                                break;
+                            }
+                        }
+
+                        if (flag) {
                             auxMat[x][y] = true;
                             excluir++;
                             break;
-                        } else if (compare(img, mask6, x, y)) {
+                        }
+
+                        //máscara 6
+                        flag = true;
+
+                        maskAltura = mask6.length;
+                        maskLargura = mask6[0].length;
+
+                        for (int i = 0; i < 8; i++) {
+                            if (!getVizinhoBool(i, largura, altura, x, y, img) == getVizinhoBool(i, maskLargura, maskAltura, x, y, mask6)) {
+                                flag = false;
+                                break;
+                            }
+                        }
+
+                        if (flag) {
                             auxMat[x][y] = true;
                             excluir++;
                             break;
@@ -188,7 +320,7 @@ public class HuangWanLiu {
                         count = 0;
 
                         for (int i = 0; i < 8; i++) {
-                            Dimension aux = getVizinho(i, largura, altura, x, y, img);
+                            aux = getVizinho(i, largura, altura, x, y, img);
 
                             if (aux != null) {
                                 if (img[aux.width][aux.height] == true) {
@@ -201,9 +333,23 @@ public class HuangWanLiu {
                             if (count == 5) {
                                 flag = true;
                             }
-                           
+
                         }
-                        
+
+                        aux = getVizinho(0, largura, altura, x, y, img);
+
+                        if (aux != null) {
+                            if (img[aux.width][aux.height] == true) {
+                                count++;
+                            } else {
+                                count = 0;
+                            }
+                        }
+
+                        if (count == 5) {
+                            flag = true;
+                        }
+
                         //condição 5 ------------------------------------
                         if (flag) {
                             auxMat[x][y] = true;
@@ -218,7 +364,7 @@ public class HuangWanLiu {
                         Dimension vizinho4 = getVizinho(4, largura, altura, x, y, img);
 
                         for (int i = 0; i < 8; i++) {
-                            Dimension aux = getVizinho(i, largura, altura, x, y, img);
+                            aux = getVizinho(i, largura, altura, x, y, img);
 
                             if (aux != null) {
                                 if (img[aux.width][aux.height] == true) {
@@ -233,7 +379,22 @@ public class HuangWanLiu {
                                 flag = true;
                             }
                         }
-                        
+
+                        aux = getVizinho(0, largura, altura, x, y, img);
+
+                        if (aux != null) {
+                            if (img[aux.width][aux.height] == true) {
+                                count++;
+                            } else {
+                                count = 0;
+                            }
+                        }
+
+                        //condição 6 ------------------------------------
+                        if (count == 7 && (img[vizinho4.width][vizinho4.height] == true)) {
+                            flag = true;
+                        }
+
                         //condição 6 ------------------------------------
                         if (flag) {
                             auxMat[x][y] = true;
@@ -244,50 +405,175 @@ public class HuangWanLiu {
                 }
             }
 
+            //O pixel não é sinalidado se ele corresponder algumas das máscara abaixo
+            boolean[][] mask1 = {{false, false, false}, {true, true, true}, {true, true, true}, {false, false, false}};
+            boolean[][] mask2 = {{false, false, false}, {true, true, false}, {false, true, false}, {false, false, false}};
+            boolean[][] mask3 = {{false, false, false}, {false, true, false}, {false, true, true}, {false, false, false}};
+            boolean[][] mask4 = {{false, false, false, false}, {false, true, true, false}, {false, true, true, false}, {false, false, false, false}};
+            boolean[][] mask5 = {{false, false, false, false}, {false, true, true, false}, {false, false, true, false}};
+            boolean[][] mask6 = {{false, true, true, false}, {false, true, true, false}, {false, true, true, false}};
+            boolean[][] mask7 = {{false, false, false, false}, {false, true, true, false}, {false, true, false, false}};
+
             //passo 2
             for (int x = 0; x < largura; x++) {
                 for (int y = 0; y < altura; y++) {
 
                     if (auxMat[x][y]) {
-                    //Condição 1 
-                        //O pixel não é sinalidado se ele corresponder algumas das máscara abaixo
-                        boolean[][] mask1 = {{false, false, false}, {true, true, true}, {true, true, true}, {false, false, false}};
-                        boolean[][] mask2 = {{false, false, false}, {true, true, false}, {false, true, false}, {false, false, false}};
-                        boolean[][] mask3 = {{false, false, false}, {false, true, false}, {false, true, true}, {false, false, false}};
-                        boolean[][] mask4 = {{false, false, false, false}, {false, true, true, false}, {false, true, true, false}, {false, false, false, false}};
-                        boolean[][] mask5 = {{false, false, false, false}, {false, true, true, false}, {false, false, true, false}};
-                        boolean[][] mask6 = {{false, true, true, false}, {false, true, true, false}, {false, true, true, false}};
-                        boolean[][] mask7 = {{false, false, false, false}, {false, true, true, false}, {false, true, false, false}};
 
-                        int[] cond1 = {0, 2, 9, 11};
-                        int[] cond2 = {0, 11};
-                        int[] cond3 = {0, 11};
-                        int[] cond5 = {0, 11};
-                        int[] cond6 = {0, 3, 8, 11};
-                        int[] cond7 = {3, 8};
+                        //máscara1 
+                        boolean flag = false;
 
-                        //verificando se a máscara corresponde ao pixel
-                        if (compare(img, mask1, x, y, cond1)) {
+                        try {
+                            if ((img[x][y - 1] == mask1[1][1 - 1])
+                                    && (img[x - 1][y] == mask1[1 - 1][1])
+                                    && (img[x + 1][y] == mask1[1 + 1][1])
+                                    && (img[x - 1][y + 1] == mask1[1 - 1][1 + 1])
+                                    && (img[x][y + 1] == mask1[1][1 + 1])
+                                    && (img[x + 1][y + 1] == mask1[1 + 1][1 + 1])
+                                    && (img[x][y + 2] == mask1[1][1 + 2])) {
+                                flag = true;
+                            }
+                        } catch (Exception e) {
+                            flag = false;
+                        }
+
+                        //máscara 2
+                        if (!flag) {
+                            try {
+                                if ((img[x][y - 2] == mask2[1][2 - 2])
+                                        && (img[x + 1][y - 2] == mask2[1 + 1][2 - 2])
+                                        && (img[x - 1][y - 1] == mask2[1 - 1][2 - 1])
+                                        && (img[x][y - 1] == mask2[1][2 - 1])
+                                        && (img[x + 1][y - 1] == mask2[1 + 1][2 - 1])
+                                        && (img[x - 1][y] == mask2[1 - 1][2])
+                                        && (img[x + 1][y] == mask2[1 + 1][2])
+                                        && (img[x - 1][y + 1] == mask2[1 - 1][2 + 1])
+                                        && (img[x][y + 1] == mask2[1][2 + 1])) {
+                                    flag = true;
+                                }
+                            } catch (Exception e) {
+                                flag = false;
+                            }
+                        }
+
+                        //máscara 3
+                        if (!flag) {
+                            try {
+                                if ((img[x][y - 1] == mask3[1][1 - 1])
+                                        && (img[x - 1][y] == mask3[1 - 1][1])
+                                        && (img[x + 1][y] == mask3[1 + 1][1])
+                                        && (img[x - 1][y + 1] == mask3[1 - 1][1 + 1])
+                                        && (img[x][y + 1] == mask3[1][1 + 1])
+                                        && (img[x + 1][y + 1] == mask3[1 + 1][1 + 1])
+                                        && (img[x][y + 2] == mask3[1][1 + 2])
+                                        && (img[x + 1][y - 1] == mask3[1 + 1][1 - 1])
+                                        && (img[x - 1][y + 2] == mask3[1 - 1][1 + 2])) {
+                                    flag = true;
+                                }
+                            } catch (Exception e) {
+                                flag = false;
+                            }
+                        }
+
+//                        //máscara 4
+                        if (!flag) {
+                            try {
+                                if ((img[x - 1][y - 1] == mask4[1 - 1][1 - 1])
+                                        && (img[x][y - 1] == mask4[1][1 - 1])
+                                        && (img[x + 1][y - 1] == mask4[1 + 1][1 - 1])
+                                        && (img[x + 2][y - 1] == mask4[1 + 2][1 - 1])
+                                        && (img[x - 1][y] == mask4[x - 1][1])
+                                        && (img[x + 1][y] == mask4[x + 1][1])
+                                        && (img[x + 2][y] == mask4[x + 2][1])
+                                        && (img[x - 1][y + 1] == mask4[x - 1][1 + 1])
+                                        && (img[x][y + 1] == mask4[x][1 + 1])
+                                        && (img[x + 1][y + 1] == mask4[x + 1][1 + 1])
+                                        && (img[x + 2][y + 1] == mask4[x + 2][1 + 1])
+                                        && (img[x - 1][y + 2] == mask4[x - 1][1 + 2])
+                                        && (img[x][y + 2] == mask4[x][1 + 2])
+                                        && (img[x + 1][y + 2] == mask4[x + 1][1 + 2])
+                                        && (img[x + 2][y + 2] == mask4[x + 2][1 + 2])) {
+                                    flag = true;
+                                }
+                            } catch (Exception e) {
+                                flag = false;
+                            }
+                        }
+
+                        //máscara 5
+                        if (!flag) {
+                            try {
+                                if ((img[x][y - 1] == mask5[1][1 - 1])
+                                        && (img[x + 1][y - 1] == mask5[1 + 1][1 - 1])
+                                        && (img[x + 2][y - 1] == mask5[1 + 2][1 - 1])
+                                        && (img[x - 1][y] == mask5[1 - 1][1])
+                                        && (img[x + 1][y] == mask5[1 + 1][1])
+                                        && (img[x + 2][y] == mask5[1 + 2][1])
+                                        && (img[x - 1][y + 1] == mask5[1 - 1][1 + 1])
+                                        && (img[x][y + 1] == mask5[1][1 + 1])
+                                        && (img[x + 1][y + 1] == mask5[1 + 1][1 + 1])) {
+                                    flag = true;
+                                }
+                            } catch (Exception e) {
+                                flag = false;
+                            }
+                        }
+
+                        //máscara 6
+                        if (!flag) {
+                            try {
+                                if ((img[x][y - 1] == mask6[1][1 - 1])
+                                        && (img[x + 1][y - 1] == mask6[1 + 1][1 - 1])
+                                        && (img[x - 1][y] == mask6[1 - 1][1])
+                                        && (img[x + 1][y] == mask6[1 + 1][1])
+                                        && (img[x + 2][y] == mask6[1 + 2][1])
+                                        && (img[x][y + 1] == mask6[1][1 + 1])
+                                        && (img[x + 1][y + 1] == mask6[1 + 1][1 + 1])) {
+                                    flag = true;
+                                }
+                            } catch (Exception e) {
+                                flag = false;
+                            }
+                        }
+
+                        //máscara 7
+                        if (!flag) {
+                            try {
+                                if ((img[x - 2][y - 1] == mask7[2 - 2][1])
+                                        && (img[x - 2][y - 1] == mask7[2 - 2][1])
+                                        && (img[x - 1][y - 1] == mask7[2 - 1][1 - 1])
+                                        && (img[x - 1][y] == mask7[2 - 1][1])
+                                        && (img[x - 1][y + 1] == mask7[2 - 1][1 + 1])
+                                        && (img[x][y - 1] == mask7[2][1 - 1])
+                                        && (img[x][y + 1] == mask7[2][1 + 1])
+                                        && (img[x + 1][y] == mask7[2 + 1][1])
+                                        && (img[x + 1][y + 1] == mask7[2 + 1][1 + 1])) {
+                                    flag = true;
+                                }
+                            } catch (Exception e) {
+                                flag = false;
+                            }
+                        }
+
+                        //verifica se a flag foi alterada para exclusão
+                        if (flag) {
                             auxMat[x][y] = false;
-                        } else if (compare(img, mask2, x, y, cond2)) {
-                            auxMat[x][y] = false;
-                        } else if (compare(img, mask3, x, y, cond3)) {
-                            auxMat[x][y] = false;
-                        } else if (compare(img, mask4, x, y)) {
-                            auxMat[x][y] = false;
-                        } else if (compare(img, mask5, x, y, cond5)) {
-                            auxMat[x][y] = false;
-                        } else if (compare(img, mask6, x, y, cond6)) {
-                            auxMat[x][y] = false;
-                        } else if (compare(img, mask7, x, y, cond7)) {
-                            auxMat[x][y] = false;
-                        } else {
-                            img[x][y] = false;
+                            excluir--;
                         }
                     }
                 }
             }
 
+            //exclusão
+            for (int x = 0; x < largura; x++) {
+                for (int y = 0; y < altura; y++) {
+                    if (auxMat[x][y]) {
+                        img[x][y] = false;
+                    }
+                }
+            }
+
+            System.out.println("finalizou um loop excluir=" + excluir);
         } while (excluir != 0);
 
         return img;
@@ -325,85 +611,26 @@ public class HuangWanLiu {
         }
     }
 
-    private static boolean compare(boolean[][] img, boolean[][] mask, int x, int y) {
-        int largura = img.length;
-        int altura = img[0].length;
-
-        int lk = mask.length;
-        int ak = mask[0].length;
-
-        //
-        x -= (lk / 2);
-        y -= (ak / 2);
-
-        int tam = lk * ak;
-
-        //identificar o kernel
-        int count = 0;
-        for (int k = 0; k < lk; k++) {
-            for (int l = 0; l < ak; l++) {
-                if (inBounds(largura, altura, x + k, y + l)) {
-                    if (img[x + k][y + l] == mask[k][l]) {
-                        count++;
-                    }
-                }
-
-            }
+    private static boolean getVizinhoBool(int dir, int largura, int altura, int x, int y, boolean[][] img) {
+        switch (dir) {
+            case 6:
+                return inBounds(largura, altura, x, y - 1) ? img[x][y - 1] : false;
+            case 7:
+                return inBounds(largura, altura, x + 1, y - 1) ? img[x + 1][y - 1] : false;
+            case 0:
+                return inBounds(largura, altura, x + 1, y) ? img[x + 1][y] : false;
+            case 1:
+                return inBounds(largura, altura, x + 1, y + 1) ? img[x + 1][y + 1] : false;
+            case 2:
+                return inBounds(largura, altura, x, y + 1) ? img[x][y + 1] : false;
+            case 3:
+                return inBounds(largura, altura, x - 1, y + 1) ? img[x - 1][y + 1] : false;
+            case 4:
+                return inBounds(largura, altura, x - 1, y) ? img[x - 1][y] : false;
+            case 5:
+                return inBounds(largura, altura, x - 1, y - 1) ? img[x - 1][y - 1] : false;
+            default:
+                return false;
         }
-
-        if (count == tam) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private static boolean compare(boolean[][] img, boolean[][] mask, int x, int y, int[] no) {
-        int largura = img.length;
-        int altura = img[0].length;
-
-        int lk = mask.length;
-        int ak = mask[0].length;
-
-        //
-        x -= (lk / 2);
-        y -= (ak / 2);
-
-        int tam = lk * ak;
-
-        //identificar o kernel
-        int count = 0;
-        int inter = 0;
-        for (int k = 0; k < lk; k++) {
-            for (int l = 0; l < ak; l++) {
-                
-                boolean aux = false;
-
-                for (int i = 0; i < no.length; i++) {
-                    if (no[i] == inter) {
-                        aux = true;
-                        count++;
-                    }
-                }
-
-                if (aux != true) {
-                    if (inBounds(largura, altura, x + k, y + l)) {
-                        if (img[x + k][y + l] == mask[k][l]) {
-                            count++;
-                        }else{
-                            return false;
-                        }
-                    }
-                }
-                
-                inter++;
-            }
-        }
-
-        if (count == tam) {
-            return true;
-        }
-
-        return false;
     }
 }
