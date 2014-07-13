@@ -245,19 +245,19 @@ public class ZhangSuen {
     private static Dimension getVizinho(int dir, int largura, int altura, int x, int y, boolean[][] img) {
         switch (dir) {
             case 2:
-                return inBounds(largura, altura, x, y - 1) ? new Dimension(x, y - 1) : null;
+                return inBounds(largura, altura, x - 1, y) ? new Dimension(x - 1, y) : null;
             case 3:
-                return inBounds(largura, altura, x + 1, y - 1) ? new Dimension(x + 1, y - 1) : null;
+                return inBounds(largura, altura, x - 1, y + 1) ? new Dimension(x - 1, y + 1) : null;
             case 4:
-                return inBounds(largura, altura, x + 1, y) ? new Dimension(x + 1, y) : null;
+                return inBounds(largura, altura, x, y + 1) ? new Dimension(x, y + 1) : null;
             case 5:
                 return inBounds(largura, altura, x + 1, y + 1) ? new Dimension(x + 1, y + 1) : null;
             case 6:
-                return inBounds(largura, altura, x, y + 1) ? new Dimension(x, y + 1) : null;
+                return inBounds(largura, altura, x + 1, y) ? new Dimension(x + 1, y) : null;
             case 7:
-                return inBounds(largura, altura, x - 1, y + 1) ? new Dimension(x - 1, y + 1) : null;
+                return inBounds(largura, altura, x + 1, y - 1) ? new Dimension(x + 1, y - 1) : null;
             case 8:
-                return inBounds(largura, altura, x - 1, y) ? new Dimension(x - 1, y) : null;
+                return inBounds(largura, altura, x, y - 1) ? new Dimension(x, y - 1) : null;
             case 9:
                 return inBounds(largura, altura, x - 1, y - 1) ? new Dimension(x - 1, y - 1) : null;
             default:
