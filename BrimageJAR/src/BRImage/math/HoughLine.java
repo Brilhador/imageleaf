@@ -1,5 +1,6 @@
-package BRImage.shape;
+package BRImage.math;
 
+import BRImage.shape.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 

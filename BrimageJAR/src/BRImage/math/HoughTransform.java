@@ -1,5 +1,5 @@
 
-package BRImage.shape;
+package BRImage.math;
 
 import java.awt.image.BufferedImage; 
 import java.awt.*; 

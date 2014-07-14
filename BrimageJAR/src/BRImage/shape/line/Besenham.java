@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package BRImage.shape;
+package BRImage.shape.line;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
