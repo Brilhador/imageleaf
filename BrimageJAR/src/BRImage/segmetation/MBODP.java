@@ -33,12 +33,11 @@ public class MBODP {
         this.heigth = imageBorder[0].length;
         this.limite = limite;
     }
-    
+
     public MBODP(boolean[][] imageBorder) {
         this.imageBorder = imageBorder;
         this.width = imageBorder.length;
         this.heigth = imageBorder[0].length;
-        this.limite = limite;
     }
 
     public ArrayList<Dimension> getObjects() {
@@ -46,28 +45,26 @@ public class MBODP {
         ArrayList<Integer> perimetro = new ArrayList<>();
         ArrayList<Dimension> objeto = new ArrayList<>();
 
-        //variaveis auxiliares
-        int x = 1;
-        int y = 1;
-
         //identificar novo objeto 
-        while (getNextPixel(x, y)) {
+        while (getNextObject()) {
             //encontra o proximo o objeto e retorna seu contorno
             ArrayList<Dimension> contorno = getBorder();
 
-            //
-            System.out.println(contorno.size());
+            try {
 
-            //remove o objeto da matriz
-            if (contorno != null) {
+                System.out.println(contorno.size());
+
                 if (contorno.size() > limite) {
                     //adiciona o perimetro na lista
                     perimetro.add(contorno.size());
                     //adicionar centroide a lista
                     objeto.add(getCentroide(contorno));
                 }
-                x = 0;
-                y = getOutY(contorno);;
+
+                //remove objeto da imagem
+                removeObject(contorno);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
@@ -106,29 +103,43 @@ public class MBODP {
         return objeto;
     }
 
-    private int getOutY(ArrayList<Dimension> contorno) {
-        int y = 0;
-        for (Dimension dimension : contorno) {
-            if (dimension.height > y) {
-                y = dimension.height;
+    private void removeObject(ArrayList<Dimension> Contorno) {
+        //Coordenadas Limite
+        int minX = Integer.MAX_VALUE;
+        int minY = Integer.MAX_VALUE;
+        int maxX = 0;
+        int maxY = 0;
+
+        for (Dimension d : Contorno) {
+            if (minX >= d.width) {
+                minX = d.width;
+            }
+            if (maxX <= d.width) {
+                maxX = d.width;
+            }
+            if (minY >= d.height) {
+                minY = d.height;
+            }
+            if (maxY <= d.height) {
+                maxY = d.height;
             }
         }
 
-        if (inBounds(1, y + 1)) {
-            y = y + 1;
-        } else if (width == y) {
-
+        //apagar objeto
+        for (int x = minX; x <= maxX; x++) {
+            for (int y = minY; y <= maxY; y++) {
+                imageBorder[x][y] = false;
+            }
         }
-        return y;
     }
 
-    private boolean getNextPixel(int x, int y) {
-        //pega o pixel inicial            
-        for (int j = y; j < heigth - 1; j++) {
-            for (int i = x; i < width - 1; i++) {
-                if (imageBorder[i][j]) {
-                    startx = i;
-                    starty = j;
+    private boolean getNextObject() {
+        //pega o pixel inicial   
+        for (int y = heigth - 1; y >= 0; y--) {
+            for (int x = width - 1; x >= 0; x--) {
+                if (imageBorder[x][y]) {
+                    startx = x;
+                    starty = y;
                     return true;
                 }
             }
@@ -210,21 +221,21 @@ public class MBODP {
         //coordenada auxiliares
         int x = startx;
         int y = starty;
+        //Primeiro ponto do contorno
+        lista.add(new Dimension(startx, starty));
         Dimension d = null;
 //        System.out.println("Inicial: \n" + x + "," + y);
         do {
             d = getNextDirection(x, y);
-            if (d == null) {
-                System.out.println("Erro, Não foi encontrada uma direção");
-                return null;
+            if (d != null) {
+                lista.add(d);
+                lastx = x;
+                lasty = y;
+                x = d.width;
+                y = d.height;
+            } else {
+                break;
             }
-            //se nao for nulo continua 
-            lista.add(d);
-            lastx = x;
-            lasty = y;
-            x = d.width;
-            y = d.height;
-            //System.out.println(x + "," + y);
         } while ((startx != x || starty != y));//sai quando encontra o ponto inicial
         return lista;
     }

@@ -60,7 +60,7 @@ public class MyImage {
         return imgOut;
     }
 
-    private static void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {
+    public static void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {
         if ((point.width + 1) < drawImage.getWidth()) {
             drawImage.setRGB(point.width + 1, point.height, cor.getRGB());//0
         }
@@ -75,7 +75,7 @@ public class MyImage {
         }
     }
 
-    private static void drawCross(BufferedImage drawImage, Dimension point, Color cor, int tam) {
+    public static void drawCross(BufferedImage drawImage, Dimension point, Color cor, int tam) {
         drawImage.setRGB(point.width, point.height, cor.getRGB());
         if ((point.width + tam) < drawImage.getWidth()) {//2
             for (int i = 1; i < tam; i++) {
