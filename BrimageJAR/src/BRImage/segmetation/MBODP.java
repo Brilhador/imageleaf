@@ -23,12 +23,22 @@ public class MBODP {
     private int lastx = 0;
     private int lasty = 0;
     private int lastDirection = 0;
+    //limite mínimo de petimetro
+    private int limite = 0;
 
     //construtor
+    public MBODP(boolean[][] imageBorder, int limite) {
+        this.imageBorder = imageBorder;
+        this.width = imageBorder.length;
+        this.heigth = imageBorder[0].length;
+        this.limite = limite;
+    }
+    
     public MBODP(boolean[][] imageBorder) {
         this.imageBorder = imageBorder;
         this.width = imageBorder.length;
         this.heigth = imageBorder[0].length;
+        this.limite = limite;
     }
 
     public ArrayList<Dimension> getObjects() {
@@ -45,9 +55,12 @@ public class MBODP {
             //encontra o proximo o objeto e retorna seu contorno
             ArrayList<Dimension> contorno = getBorder();
 
+            //
+            System.out.println(contorno.size());
+
             //remove o objeto da matriz
             if (contorno != null) {
-                if (contorno.size() > 10) {
+                if (contorno.size() > limite) {
                     //adiciona o perimetro na lista
                     perimetro.add(contorno.size());
                     //adicionar centroide a lista
@@ -90,22 +103,21 @@ public class MBODP {
 //                objeto.add(lista.get(i));
 //            }
 //        }
-
         return objeto;
     }
 
-    private int getOutY(ArrayList<Dimension> contorno){
+    private int getOutY(ArrayList<Dimension> contorno) {
         int y = 0;
         for (Dimension dimension : contorno) {
-            if(dimension.height > y){
+            if (dimension.height > y) {
                 y = dimension.height;
             }
         }
-        
-        if(inBounds(1, y+1)){
+
+        if (inBounds(1, y + 1)) {
             y = y + 1;
-        }else if(width == y){
-            
+        } else if (width == y) {
+
         }
         return y;
     }
