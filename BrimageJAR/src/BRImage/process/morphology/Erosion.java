@@ -34,6 +34,7 @@ public class Erosion {
         return imgOut;
     }
 
+    
     private static boolean erode(boolean[][] img, boolean[][] kernel, int i, int j) {
         int largura = i - (int) (kernel.length / 2);
         int altura = j - (int) (kernel[0].length / 2);
