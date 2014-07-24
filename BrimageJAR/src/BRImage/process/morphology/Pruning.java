@@ -12,7 +12,7 @@ package BRImage.process.morphology;
 public class Pruning {
 
     public static boolean[][] simple(boolean[][] img, int iteration) {
-        boolean[][] imgOut = img;
+        boolean[][] imgOut = clone(img);;
 
         int largura = img.length;
         int altura = img[0].length;
@@ -34,65 +34,68 @@ public class Pruning {
             for (int i = 0; i < largura; i++) {
                 for (int j = 0; j < altura; j++) {
                     if (imgIteration[i][j] == true) {
-                        //maskA
-                        if ((imgIteration[i - 1][j] == maskA[0][1])
-                                && (imgIteration[i - 1][j + 1] == maskA[0][2])
-                                && (imgIteration[i][j - 1] == maskA[1][0])
-                                && (imgIteration[i][j] == maskA[1][1])
-                                && (imgIteration[i][j + 1] == maskA[1][2])
-                                && (imgIteration[i + 1][j] == maskA[2][1])
-                                && (imgIteration[i + 1][j + 1] == maskA[2][2])) {
-                            imgOut[i][j] = false;
-                        }
-                        //maskA90
-                        if ((imgIteration[i - 1][j - 1] == maskA90[0][0])
-                                && (imgIteration[i - 1][j] == maskA90[0][1])
-                                && (imgIteration[i - 1][j + 1] == maskA90[0][2])
-                                && (imgIteration[i][j - 1] == maskA90[1][0])
-                                && (imgIteration[i][j] == maskA90[1][1])
-                                && (imgIteration[i][j + 1] == maskA90[1][2])
-                                && (imgIteration[i + 1][j] == maskA90[2][1])) {
-                            imgOut[i][j] = false;
-                        }
-                        //maskA180
-                        if ((imgIteration[i - 1][j - 1] == maskA180[0][0])
-                                && (imgIteration[i - 1][j] == maskA180[0][1])
-                                && (imgIteration[i][j - 1] == maskA180[1][0])
-                                && (imgIteration[i][j] == maskA180[1][1])
-                                && (imgIteration[i][j + 1] == maskA180[1][2])
-                                && (imgIteration[i + 1][j - 1] == maskA180[2][0])
-                                && (imgIteration[i + 1][j] == maskA180[2][1])) {
-                            imgOut[i][j] = false;
-                        }
-                        //maskA270
-                        if ((imgIteration[i - 1][j] == maskA270[0][1])
-                                && (imgIteration[i][j - 1] == maskA270[1][0])
-                                && (imgIteration[i][j] == maskA270[1][1])
-                                && (imgIteration[i][j + 1] == maskA270[1][2])
-                                && (imgIteration[i + 1][j - 1] == maskA270[2][0])
-                                && (imgIteration[i + 1][j] == maskA270[2][1])
-                                && (imgIteration[i + 1][j + 1] == maskA270[2][2])) {
-                            imgOut[i][j] = false;
-                        }
+                        try {
+                            //maskA
+                            if ((imgIteration[i - 1][j] == maskA[0][1])
+                                    && (imgIteration[i - 1][j + 1] == maskA[0][2])
+                                    && (imgIteration[i][j - 1] == maskA[1][0])
+                                    && (imgIteration[i][j] == maskA[1][1])
+                                    && (imgIteration[i][j + 1] == maskA[1][2])
+                                    && (imgIteration[i + 1][j] == maskA[2][1])
+                                    && (imgIteration[i + 1][j + 1] == maskA[2][2])) {
+                                imgOut[i][j] = false;
+                            }
+                            //maskA90
+                            if ((imgIteration[i - 1][j - 1] == maskA90[0][0])
+                                    && (imgIteration[i - 1][j] == maskA90[0][1])
+                                    && (imgIteration[i - 1][j + 1] == maskA90[0][2])
+                                    && (imgIteration[i][j - 1] == maskA90[1][0])
+                                    && (imgIteration[i][j] == maskA90[1][1])
+                                    && (imgIteration[i][j + 1] == maskA90[1][2])
+                                    && (imgIteration[i + 1][j] == maskA90[2][1])) {
+                                imgOut[i][j] = false;
+                            }
+                            //maskA180
+                            if ((imgIteration[i - 1][j - 1] == maskA180[0][0])
+                                    && (imgIteration[i - 1][j] == maskA180[0][1])
+                                    && (imgIteration[i][j - 1] == maskA180[1][0])
+                                    && (imgIteration[i][j] == maskA180[1][1])
+                                    && (imgIteration[i][j + 1] == maskA180[1][2])
+                                    && (imgIteration[i + 1][j - 1] == maskA180[2][0])
+                                    && (imgIteration[i + 1][j] == maskA180[2][1])) {
+                                imgOut[i][j] = false;
+                            }
+                            //maskA270
+                            if ((imgIteration[i - 1][j] == maskA270[0][1])
+                                    && (imgIteration[i][j - 1] == maskA270[1][0])
+                                    && (imgIteration[i][j] == maskA270[1][1])
+                                    && (imgIteration[i][j + 1] == maskA270[1][2])
+                                    && (imgIteration[i + 1][j - 1] == maskA270[2][0])
+                                    && (imgIteration[i + 1][j] == maskA270[2][1])
+                                    && (imgIteration[i + 1][j + 1] == maskA270[2][2])) {
+                                imgOut[i][j] = false;
+                            }
 
-                        //------------------------------------------------------
-                        //maskB
-                        if ((imgOut[i][j] == erode(imgIteration, maskB, i, j))) {
+                            //------------------------------------------------------
+                            //maskB
+                            if ((imgOut[i][j] == erode(imgIteration, maskB, i, j))) {
+                                imgOut[i][j] = false;
+                            }
+                            //maskB90
+                            if ((imgOut[i][j] == erode(imgIteration, maskB90, i, j))) {
+                                imgOut[i][j] = false;
+                            }
+                            //maskB180
+                            if ((imgOut[i][j] == erode(imgIteration, maskB180, i, j))) {
+                                imgOut[i][j] = false;
+                            }
+                            //maskB270
+                            if ((imgOut[i][j] == erode(imgIteration, maskB270, i, j))) {
+                                imgOut[i][j] = false;
+                            }
+                        } catch (ArrayIndexOutOfBoundsException e) {
                             imgOut[i][j] = false;
                         }
-                        //maskB90
-                        if ((imgOut[i][j] == erode(imgIteration, maskB90, i, j))) {
-                            imgOut[i][j] = false;
-                        }
-                        //maskB180
-                        if ((imgOut[i][j] == erode(imgIteration, maskB180, i, j))) {
-                            imgOut[i][j] = false;
-                        }
-                        //maskB270
-                        if ((imgOut[i][j] == erode(imgIteration, maskB270, i, j))) {
-                            imgOut[i][j] = false;
-                        }
-
                     }
                 }
             }
@@ -107,62 +110,66 @@ public class Pruning {
             for (int j = 0; j < altura; j++) {
                 amount = 0;
                 if (imgOut[i][j] == true) {
-                    if ((imgOut[i - 1][j] == maskA[0][1])
-                            && (imgOut[i - 1][j + 1] == maskA[0][2])
-                            && (imgOut[i][j - 1] == maskA[1][0])
-                            && (imgOut[i][j] == maskA[1][1])
-                            && (imgOut[i][j + 1] == maskA[1][2])
-                            && (imgOut[i + 1][j] == maskA[2][1])
-                            && (imgOut[i + 1][j + 1] == maskA[2][2])) {
-                        amount++;
-                    }
-                    //maskA90
-                    if ((imgOut[i - 1][j - 1] == maskA90[0][0])
-                            && (imgOut[i - 1][j] == maskA90[0][1])
-                            && (imgOut[i - 1][j + 1] == maskA90[0][2])
-                            && (imgOut[i][j - 1] == maskA90[1][0])
-                            && (imgOut[i][j] == maskA90[1][1])
-                            && (imgOut[i][j + 1] == maskA90[1][2])
-                            && (imgOut[i + 1][j] == maskA90[2][1])) {
-                        amount++;
-                    }
-                    //maskA180
-                    if ((imgOut[i - 1][j - 1] == maskA180[0][0])
-                            && (imgOut[i - 1][j] == maskA180[0][1])
-                            && (imgOut[i][j - 1] == maskA180[1][0])
-                            && (imgOut[i][j] == maskA180[1][1])
-                            && (imgOut[i][j + 1] == maskA180[1][2])
-                            && (imgOut[i + 1][j - 1] == maskA180[2][0])
-                            && (imgOut[i + 1][j] == maskA180[2][1])) {
-                        amount++;
-                    }
-                    //maskA270
-                    if ((imgOut[i - 1][j] == maskA270[0][1])
-                            && (imgOut[i][j - 1] == maskA270[1][0])
-                            && (imgOut[i][j] == maskA270[1][1])
-                            && (imgOut[i][j + 1] == maskA270[1][2])
-                            && (imgOut[i + 1][j - 1] == maskA270[2][0])
-                            && (imgOut[i + 1][j] == maskA270[2][1])
-                            && (imgOut[i + 1][j + 1] == maskA270[2][2])) {
-                        amount++;
-                    }
+                    try {
+                        if ((imgOut[i - 1][j] == maskA[0][1])
+                                && (imgOut[i - 1][j + 1] == maskA[0][2])
+                                && (imgOut[i][j - 1] == maskA[1][0])
+                                && (imgOut[i][j] == maskA[1][1])
+                                && (imgOut[i][j + 1] == maskA[1][2])
+                                && (imgOut[i + 1][j] == maskA[2][1])
+                                && (imgOut[i + 1][j + 1] == maskA[2][2])) {
+                            amount++;
+                        }
+                        //maskA90
+                        if ((imgOut[i - 1][j - 1] == maskA90[0][0])
+                                && (imgOut[i - 1][j] == maskA90[0][1])
+                                && (imgOut[i - 1][j + 1] == maskA90[0][2])
+                                && (imgOut[i][j - 1] == maskA90[1][0])
+                                && (imgOut[i][j] == maskA90[1][1])
+                                && (imgOut[i][j + 1] == maskA90[1][2])
+                                && (imgOut[i + 1][j] == maskA90[2][1])) {
+                            amount++;
+                        }
+                        //maskA180
+                        if ((imgOut[i - 1][j - 1] == maskA180[0][0])
+                                && (imgOut[i - 1][j] == maskA180[0][1])
+                                && (imgOut[i][j - 1] == maskA180[1][0])
+                                && (imgOut[i][j] == maskA180[1][1])
+                                && (imgOut[i][j + 1] == maskA180[1][2])
+                                && (imgOut[i + 1][j - 1] == maskA180[2][0])
+                                && (imgOut[i + 1][j] == maskA180[2][1])) {
+                            amount++;
+                        }
+                        //maskA270
+                        if ((imgOut[i - 1][j] == maskA270[0][1])
+                                && (imgOut[i][j - 1] == maskA270[1][0])
+                                && (imgOut[i][j] == maskA270[1][1])
+                                && (imgOut[i][j + 1] == maskA270[1][2])
+                                && (imgOut[i + 1][j - 1] == maskA270[2][0])
+                                && (imgOut[i + 1][j] == maskA270[2][1])
+                                && (imgOut[i + 1][j + 1] == maskA270[2][2])) {
+                            amount++;
+                        }
 
-                    //------------------------------------------------------
-                    //maskB
-                    if ((imgOut[i][j] == erode(imgOut, maskB, i, j))) {
-                        amount++;
-                    }
-                    //maskB90
-                    if ((imgOut[i][j] == erode(imgOut, maskB90, i, j))) {
-                        amount++;
-                    }
-                    //maskB180
-                    if ((imgOut[i][j] == erode(imgOut, maskB180, i, j))) {
-                        amount++;
-                    }
-                    //maskB270
-                    if ((imgOut[i][j] == erode(imgOut, maskB270, i, j))) {
-                        amount++;
+                        //------------------------------------------------------
+                        //maskB
+                        if ((imgOut[i][j] == erode(imgOut, maskB, i, j))) {
+                            amount++;
+                        }
+                        //maskB90
+                        if ((imgOut[i][j] == erode(imgOut, maskB90, i, j))) {
+                            amount++;
+                        }
+                        //maskB180
+                        if ((imgOut[i][j] == erode(imgOut, maskB180, i, j))) {
+                            amount++;
+                        }
+                        //maskB270
+                        if ((imgOut[i][j] == erode(imgOut, maskB270, i, j))) {
+                            amount++;
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        amount = 1;
                     }
 
                     if (amount == 1) {
@@ -174,9 +181,11 @@ public class Pruning {
 
         //dilatação utilizando a matriz de pontos finais como delimitador
         for (int indice = 0; indice < iteration; indice++) {
+            boolean[][] imgIteration = clone(endPoint);
+
             for (int i = 0; i < largura; i++) {
                 for (int j = 0; j < altura; j++) {
-                    if (endPoint[i][j] == true) {
+                    if (imgIteration[i][j] == true) {
                         //maskA
                         dilApply(img, endPoint, i, j);
                     }
@@ -184,16 +193,16 @@ public class Pruning {
             }
         }
 
-//        //reconstruindo o elementos
-//        for (int i = 0; i < largura; i++) {
-//            for (int j = 0; j < altura; j++) {
-//                if (endPoint[i][j] == true) {
-//                    imgOut[i][j] = true;
-//                }
-//            }
-//        }
-        
-        return endPoint;
+        //reconstruindo o elementos
+        for (int i = 0; i < largura; i++) {
+            for (int j = 0; j < altura; j++) {
+                if (endPoint[i][j] == true) {
+                    imgOut[i][j] = true;
+                }
+            }
+        }
+
+        return imgOut;
     }
 
     //erosão
