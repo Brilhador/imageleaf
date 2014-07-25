@@ -911,23 +911,23 @@ public class HuangWanLiu {
      * 567
      * 4 0
      * 321
-     */
+     */ 
     private static boolean getVizinhoBool(int dir, int largura, int altura, int x, int y, boolean[][] img) {
         switch (dir) {
             case 6:
-                return inBounds(largura, altura, x - 1, y) ? img[x - 1][y] : true;
+                return inBounds(largura, altura, x, y - 1) ? img[x][y - 1] : true;
             case 7:
-                return inBounds(largura, altura, x - 1, y + 1) ? img[x - 1][y + 1] : true;
+                return inBounds(largura, altura, x + 1, y - 1) ? img[x + 1][y - 1] : true;
             case 0:
-                return inBounds(largura, altura, x, y + 1) ? img[x][y + 1] : true;
+                return inBounds(largura, altura, x + 1, y) ? img[x + 1][y] : true;
             case 1:
                 return inBounds(largura, altura, x + 1, y + 1) ? img[x + 1][y + 1] : true;
             case 2:
-                return inBounds(largura, altura, x + 1, y) ? img[x + 1][y] : true;
+                return inBounds(largura, altura, x, y + 1) ? img[x][y + 1] : true;
             case 3:
-                return inBounds(largura, altura, x + 1, y - 1) ? img[x + 1][y - 1] : true;
+                return inBounds(largura, altura, x - 1, y + 1) ? img[x - 1][y + 1] : true;
             case 4:
-                return inBounds(largura, altura, x, y - 1) ? img[x][y - 1] : true;
+                return inBounds(largura, altura, x - 1, y) ? img[x - 1][y] : true;
             case 5:
                 return inBounds(largura, altura, x - 1, y - 1) ? img[x - 1][y - 1] : true;
             default:
