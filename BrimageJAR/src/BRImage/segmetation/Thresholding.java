@@ -134,6 +134,28 @@ public class Thresholding {
         return imgOut;
     }
     
+    // limiarização basica com valor já pré-definido (valores atribuidos a uma
+    // matriz) com liminar por parametro, que retona uma imagem
+    public static BufferedImage limiarizacaoColor(BufferedImage img, boolean[][] mat) {
+        //Imagem de saida
+        BufferedImage imgOut = new BufferedImage(
+                img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+        // atribuido valores a imagem dos pixels
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                //se a for um objeto de interesse
+                if (mat[x][y]) {
+                    imgOut.setRGB(x, y, img.getRGB(x, y));
+                } else {
+                    imgOut.setRGB(x, y, Color.WHITE.getRGB());
+                }
+            }
+        }
+        // retorna a imagem binarizada
+        return imgOut;
+    }
+    
     public static int[][] convertBoolToBinary(boolean[][] mat){
         int w = mat.length;
         int h = mat[0].length;
