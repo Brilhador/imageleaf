@@ -5,7 +5,7 @@
  */
 package BRImage.math;
 
-import java.awt.Dimension;
+import BRImage.useful.Coordinate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,7 +15,7 @@ import java.util.Arrays;
  */
 public class LinearRegression {
 
-    public static ArrayList<Dimension> apply(ArrayList<Dimension> points, boolean invert) {
+    public static ArrayList<Coordinate> apply(ArrayList<Coordinate> points, boolean invert) {
 
         int n = points.size();
 
@@ -31,13 +31,13 @@ public class LinearRegression {
         //vetores auxiliares
         if (invert) {
             for (int i = 0; i < n; i++) {
-                y[i] = points.get(i).width;
-                x[i] = points.get(i).height;
+                y[i] = points.get(i).getX();
+                x[i] = points.get(i).getY();
             }
         } else {
             for (int i = 0; i < n; i++) {
-                x[i] = points.get(i).width;
-                y[i] = points.get(i).height;
+                x[i] = points.get(i).getX();
+                y[i] = points.get(i).getY();
             }
         }
 
@@ -67,22 +67,19 @@ public class LinearRegression {
 
         //System.out.println(" y = " + beta1 + "\n x = " + beta0);
         //estimativa
-        ArrayList<Dimension> rPoint = new ArrayList<>();
-
+        ArrayList<Coordinate> rPoint = new ArrayList<>();
 
         Arrays.sort(x);
 
-        if(invert){
+        if (invert) {
             for (int i = 0; i < n; i++) {
-            rPoint.add(new Dimension((int) (beta0 + beta1 * x[i]), (int) x[i]));
-        }
-        }else{
+                rPoint.add(new Coordinate((int) (beta0 + beta1 * x[i]), (int) x[i]));
+            }
+        } else {
             for (int i = 0; i < n; i++) {
-            rPoint.add(new Dimension((int) x[i], (int) (beta0 + beta1 * x[i])));
+                rPoint.add(new Coordinate((int) x[i], (int) (beta0 + beta1 * x[i])));
+            }
         }
-        }
-        
-        
 
         return rPoint;
 

@@ -26,78 +26,78 @@ import java.util.ArrayList;
  */
 public class MyImage {
 
-    public static BufferedImage paintPoint(BufferedImage imageOriginal, ArrayList<Dimension> point) {
+    public static BufferedImage paintPoint(BufferedImage imageOriginal, ArrayList<Coordinate> point) {
         BufferedImage imgOut = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
         Graphics2D g2d = imgOut.createGraphics();
         g2d.drawImage(imageOriginal, null, 0, 0);
-        for (Dimension dimension : point) {
+        for (Coordinate dimension : point) {
             drawPoint(imgOut, dimension, Color.RED);
         }
         g2d.dispose();
         return imgOut;
     }
 
-    public static BufferedImage paintCross(BufferedImage imageOriginal, ArrayList<Dimension> point, int tam, Color cor) {
+    public static BufferedImage paintCross(BufferedImage imageOriginal, ArrayList<Coordinate> point, int tam, Color cor) {
         BufferedImage imgOut = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
         Graphics2D g2d = imgOut.createGraphics();
         g2d.drawImage(imageOriginal, null, 0, 0);
-        for (Dimension dimension : point) {
+        for (Coordinate dimension : point) {
             drawCross(imgOut, dimension, cor, tam);
         }
         g2d.dispose();
         return imgOut;
     }
     
-    public static BufferedImage paintLine(BufferedImage imageOriginal, ArrayList<Dimension> point, Color cor){
+    public static BufferedImage paintLine(BufferedImage imageOriginal, ArrayList<Coordinate> point, Color cor){
         BufferedImage imgOut = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
         Graphics2D g2d = imgOut.createGraphics();
         g2d.drawImage(imageOriginal, null, 0, 0);
         g2d.setColor(cor);
         for (int i = 0; i < point.size() - 1; i++) {
-            g2d.drawLine(point.get(i).width, point.get(i).height, point.get(i+1).width, point.get(i+1).height);
+            g2d.drawLine(point.get(i).getX(), point.get(i).getY(), point.get(i+1).getX(), point.get(i+1).getY());
         }
         g2d.dispose();
         return imgOut;
     }
 
-    public static void drawPoint(BufferedImage drawImage, Dimension point, Color cor) {
-        if ((point.width + 1) < drawImage.getWidth()) {
-            drawImage.setRGB(point.width + 1, point.height, cor.getRGB());//0
+    public static void drawPoint(BufferedImage drawImage, Coordinate point, Color cor) {
+        if ((point.getX() + 1) < drawImage.getWidth()) {
+            drawImage.setRGB(point.getX() + 1, point.getY(), cor.getRGB());//0
         }
-        if ((point.height - 1) > 0) {
-            drawImage.setRGB(point.width, point.height - 1, cor.getRGB());//2
+        if ((point.getY() - 1) > 0) {
+            drawImage.setRGB(point.getX(), point.getY() - 1, cor.getRGB());//2
         }
-        if ((point.width - 1) > 0) {
-            drawImage.setRGB(point.width - 1, point.height, cor.getRGB());//4
+        if ((point.getX() - 1) > 0) {
+            drawImage.setRGB(point.getX() - 1, point.getY(), cor.getRGB());//4
         }
-        if ((point.height + 1) < drawImage.getHeight()) {
-            drawImage.setRGB(point.width, point.height + 1, cor.getRGB());//6
+        if ((point.getY() + 1) < drawImage.getHeight()) {
+            drawImage.setRGB(point.getX(), point.getY() + 1, cor.getRGB());//6
         }
     }
 
-    public static void drawCross(BufferedImage drawImage, Dimension point, Color cor, int tam) {
-        drawImage.setRGB(point.width, point.height, cor.getRGB());
-        if ((point.width + tam) < drawImage.getWidth()) {//2
+    public static void drawCross(BufferedImage drawImage, Coordinate point, Color cor, int tam) {
+        drawImage.setRGB(point.getX(), point.getY(), cor.getRGB());
+        if ((point.getX() + tam) < drawImage.getWidth()) {//2
             for (int i = 1; i < tam; i++) {
-                drawPoint(drawImage, new Dimension(point.width + i, point.height), cor);
+                drawPoint(drawImage, new Coordinate(point.getX() + i, point.getY()), cor);
             }
         }
 
-        if ((point.width - tam) > 0) {
+        if ((point.getX() - tam) > 0) {
             for (int i = 1; i < tam; i++) {//4
-                drawPoint(drawImage, new Dimension(point.width - i, point.height), cor);
+                drawPoint(drawImage, new Coordinate(point.getX() - i, point.getY()), cor);
             }
         }
 
-        if ((point.height - tam) > 0) {
+        if ((point.getY() - tam) > 0) {
             for (int i = 1; i < tam; i++) {
-                drawPoint(drawImage, new Dimension(point.width, point.height - i), cor);
+                drawPoint(drawImage, new Coordinate(point.getX(), point.getY() - i), cor);
             }
         }
 
-        if ((point.height + tam) < drawImage.getHeight()) {
+        if ((point.getY() + tam) < drawImage.getHeight()) {
             for (int i = 1; i < tam; i++) {
-                drawPoint(drawImage, new Dimension(point.width, point.height + i), cor);
+                drawPoint(drawImage, new Coordinate(point.getX(), point.getY() + i), cor);
             }
         }
     }

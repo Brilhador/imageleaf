@@ -5,7 +5,7 @@
  */
 package BRImage.segmetation;
 
-import java.awt.Dimension;
+import BRImage.useful.Coordinate;
 import java.util.ArrayList;
 
 /**
@@ -40,15 +40,15 @@ public class MBODP {
         this.heigth = imageBorder[0].length;
     }
 
-    public ArrayList<Dimension> getObjects() {
-        ArrayList<Dimension> lista = new ArrayList<>();
+    public ArrayList<Coordinate> getObjects() {
+        ArrayList<Coordinate> lista = new ArrayList<>();
         ArrayList<Integer> perimetro = new ArrayList<>();
-        ArrayList<Dimension> objeto = new ArrayList<>();
+        ArrayList<Coordinate> objeto = new ArrayList<>();
 
         //identificar novo objeto 
         while (getNextObject()) {
             //encontra o proximo o objeto e retorna seu contorno
-            ArrayList<Dimension> contorno = getBorder();
+            ArrayList<Coordinate> contorno = getBorder();
 
             try {
 
@@ -103,25 +103,25 @@ public class MBODP {
         return objeto;
     }
 
-    private void removeObject(ArrayList<Dimension> Contorno) {
+    private void removeObject(ArrayList<Coordinate> Contorno) {
         //Coordenadas Limite
         int minX = Integer.MAX_VALUE;
         int minY = Integer.MAX_VALUE;
         int maxX = 0;
         int maxY = 0;
 
-        for (Dimension d : Contorno) {
-            if (minX >= d.width) {
-                minX = d.width;
+        for (Coordinate d : Contorno) {
+            if (minX >= d.getX()) {
+                minX = d.getX();
             }
-            if (maxX <= d.width) {
-                maxX = d.width;
+            if (maxX <= d.getX()) {
+                maxX = d.getX();
             }
-            if (minY >= d.height) {
-                minY = d.height;
+            if (minY >= d.getY()) {
+                minY = d.getY();
             }
-            if (maxY <= d.height) {
-                maxY = d.height;
+            if (maxY <= d.getY()) {
+                maxY = d.getY();
             }
         }
 
@@ -149,14 +149,14 @@ public class MBODP {
 
     //pega o valor da direçao
     //pensa numa logica para essa busca
-    private Dimension getNextDirection(int x, int y) {
+    private Coordinate getNextDirection(int x, int y) {
         int point = ((lastDirection % 2) == 0) ? ((lastDirection + 7) % 8) : ((lastDirection + 6) % 8);
         int direction = point;
-        Dimension d = null;
+        Coordinate d = null;
         while (direction < 8) {
             d = getNextCoordinates(x, y, direction);
             if (d != null) {
-                if ((d.width != lastx || d.height != lasty)) {
+                if ((d.getX() != lastx || d.getY() != lasty)) {
 //                    System.out.println(direction);
                     lastDirection = direction;
                     return d;
@@ -168,7 +168,7 @@ public class MBODP {
         while (direction < point) {
             d = getNextCoordinates(x, y, direction);
             if (d != null) {
-                if ((d.width != lastx || d.height != lasty)) {
+                if ((d.getX() != lastx || d.getY() != lasty)) {
 //                    System.out.println(direction);
                     lastDirection = direction;
                     return d;
@@ -184,24 +184,24 @@ public class MBODP {
      * 4 0
      * 567
      */
-    private Dimension getNextCoordinates(int x, int y, int direction) {
+    private Coordinate getNextCoordinates(int x, int y, int direction) {
         switch (direction) {
             case 0:
-                return ((inBounds(x + 1, y)) && (isObjectLeaf(x + 1, y))) ? new Dimension(x + 1, y) : null;
+                return ((inBounds(x + 1, y)) && (isObjectLeaf(x + 1, y))) ? new Coordinate(x + 1, y) : null;
             case 1:
-                return ((inBounds(x + 1, y - 1)) && (isObjectLeaf(x + 1, y - 1))) ? new Dimension(x + 1, y - 1) : null;
+                return ((inBounds(x + 1, y - 1)) && (isObjectLeaf(x + 1, y - 1))) ? new Coordinate(x + 1, y - 1) : null;
             case 2:
-                return ((inBounds(x, y - 1)) && (isObjectLeaf(x, y - 1))) ? new Dimension(x, y - 1) : null;
+                return ((inBounds(x, y - 1)) && (isObjectLeaf(x, y - 1))) ? new Coordinate(x, y - 1) : null;
             case 3:
-                return ((inBounds(x - 1, y - 1)) && (isObjectLeaf(x - 1, y - 1))) ? new Dimension(x - 1, y - 1) : null;
+                return ((inBounds(x - 1, y - 1)) && (isObjectLeaf(x - 1, y - 1))) ? new Coordinate(x - 1, y - 1) : null;
             case 4:
-                return ((inBounds(x - 1, y)) && (isObjectLeaf(x - 1, y))) ? new Dimension(x - 1, y) : null;
+                return ((inBounds(x - 1, y)) && (isObjectLeaf(x - 1, y))) ? new Coordinate(x - 1, y) : null;
             case 5:
-                return ((inBounds(x - 1, y + 1)) && (isObjectLeaf(x - 1, y + 1))) ? new Dimension(x - 1, y + 1) : null;
+                return ((inBounds(x - 1, y + 1)) && (isObjectLeaf(x - 1, y + 1))) ? new Coordinate(x - 1, y + 1) : null;
             case 6:
-                return ((inBounds(x, y + 1)) && (isObjectLeaf(x, y + 1))) ? new Dimension(x, y + 1) : null;
+                return ((inBounds(x, y + 1)) && (isObjectLeaf(x, y + 1))) ? new Coordinate(x, y + 1) : null;
             case 7:
-                return ((inBounds(x + 1, y + 1)) && (isObjectLeaf(x + 1, y + 1))) ? new Dimension(x + 1, y + 1) : null;
+                return ((inBounds(x + 1, y + 1)) && (isObjectLeaf(x + 1, y + 1))) ? new Coordinate(x + 1, y + 1) : null;
             default:
                 return null;
         }
@@ -215,15 +215,15 @@ public class MBODP {
         return imageBorder[x][y];
     }
 
-    private ArrayList<Dimension> getBorder() {
+    private ArrayList<Coordinate> getBorder() {
         //gera chain code
-        ArrayList<Dimension> lista = new ArrayList<>();
+        ArrayList<Coordinate> lista = new ArrayList<>();
         //coordenada auxiliares
         int x = startx;
         int y = starty;
         //Primeiro ponto do contorno
-        lista.add(new Dimension(startx, starty));
-        Dimension d = null;
+        lista.add(new Coordinate(startx, starty));
+        Coordinate d = null;
 //        System.out.println("Inicial: \n" + x + "," + y);
         do {
             d = getNextDirection(x, y);
@@ -231,8 +231,8 @@ public class MBODP {
                 lista.add(d);
                 lastx = x;
                 lasty = y;
-                x = d.width;
-                y = d.height;
+                x = d.getX();
+                y = d.getY();
             } else {
                 break;
             }
@@ -240,13 +240,13 @@ public class MBODP {
         return lista;
     }
 
-    private static Dimension getCentroide(ArrayList<Dimension> lista) {
+    private static Coordinate getCentroide(ArrayList<Coordinate> lista) {
         int x = 0;
         int y = 0;
-        for (Dimension dimension : lista) {
-            x += dimension.width;
-            y += dimension.height;
+        for (Coordinate dimension : lista) {
+            x += dimension.getX();
+            y += dimension.getY();
         }
-        return new Dimension(x / lista.size(), y / lista.size());
+        return new Coordinate(x / lista.size(), y / lista.size());
     }
 }

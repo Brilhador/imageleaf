@@ -1,6 +1,7 @@
 
 package BRImage.math;
 
+import BRImage.useful.Coordinate;
 import java.awt.image.BufferedImage; 
 import java.awt.*; 
 import java.util.ArrayList;
@@ -104,10 +105,10 @@ public class HoughTransform extends Thread {
         } 
     } 
     
-    public void addPoints(ArrayList<Dimension> point) { 
+    public void addPoints(ArrayList<Coordinate> point) { 
  
-        for (Dimension dimension : point) {
-            addPoint(dimension.width, dimension.height);
+        for (Coordinate dimension : point) {
+            addPoint(dimension.getX(), dimension.getY());
         }
  
     } 
