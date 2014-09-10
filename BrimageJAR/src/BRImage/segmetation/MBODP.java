@@ -28,20 +28,35 @@ public class MBODP {
 
     //construtor
     public MBODP(boolean[][] imageBorder, int limite) {
-        this.imageBorder = imageBorder;
+        
         this.width = imageBorder.length;
         this.heigth = imageBorder[0].length;
+        
+        this.imageBorder = new boolean[width][heigth];
+        
+        for (int x = 0; x < this.width; x++) {
+            for (int y = 0; y < this.heigth; y++) {
+                this.imageBorder[x][y] = imageBorder[x][y];
+            }
+        }
+        
         this.limite = limite;
     }
 
     public MBODP(boolean[][] imageBorder) {
-        this.imageBorder = imageBorder;
         this.width = imageBorder.length;
         this.heigth = imageBorder[0].length;
+        
+        this.imageBorder = new boolean[width][heigth];
+        
+        for (int x = 0; x < this.width; x++) {
+            for (int y = 0; y < this.heigth; y++) {
+                this.imageBorder[x][y] = imageBorder[x][y];
+            }
+        }
     }
 
     public ArrayList<Coordinate> getObjects() {
-        ArrayList<Coordinate> lista = new ArrayList<>();
         ArrayList<Integer> perimetro = new ArrayList<>();
         ArrayList<Coordinate> objeto = new ArrayList<>();
 
@@ -67,40 +82,35 @@ public class MBODP {
                 e.printStackTrace();
             }
         }
-
-//        //calcular a média e o desvio padrãos dos périmetros
-//        //média
-//        double media = 0;
-//        double soma = 0;
-//
-//        for (Integer tam : perimetro) {
-//            soma += tam;
-//        }
-//
-//        media = soma / perimetro.size();
-//
-//        //desvio padrão
-//        double variancia = 0;
-//        for (Integer tam : perimetro) {
-//            variancia += Math.abs(tam - media);
-//        }
-//        variancia /= (perimetro.size() - 1);
-//
-//        double desvio = Math.sqrt(variancia);
-//        System.out.println("desvio:" + desvio);
-//        System.out.println("media: " + media);
-//
-//        //removendo os objetos fora do padrão
-//        double min = media - desvio;
-//        double max = media + desvio;
-//
-//        for (int i = 0; i < perimetro.size(); i++) {
-//            int tam = perimetro.get(i);
-//            if ((tam >= min && tam <= max)) {
-//                objeto.add(lista.get(i));
-//            }
-//        }
         return objeto;
+    }
+    
+    public ArrayList<Coordinate> getBigPerimeter() {
+        ArrayList<Coordinate> perimetro = new ArrayList<>();
+        int tam = Integer.MIN_VALUE;
+        
+        //identificar novo objeto 
+        while (getNextObject()) {
+            //encontra o proximo o objeto e retorna seu contorno
+            //getBorder sempre retorna um objeto novo
+            ArrayList<Coordinate> contorno = getBorder();
+
+            try {
+                if (contorno.size() > limite) {
+                    //adiciona o perimetro na lista
+                    if(contorno.size() > tam){
+                        tam = contorno.size();
+                        perimetro = contorno;
+                    }
+                }
+                //remove objeto da imagem
+                removeObject(contorno);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return perimetro;
     }
 
     private void removeObject(ArrayList<Coordinate> Contorno) {

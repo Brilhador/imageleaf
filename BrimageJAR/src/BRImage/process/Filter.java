@@ -115,4 +115,41 @@ public class Filter {
         }
         return imgOut;
     }
+    
+    public static boolean[][] median(boolean[][] img, int maskSize) {
+
+        boolean[][] imgOut = new boolean[img.length][img[0].length];
+        
+        int altura, largura;
+
+        ArrayList mascara = new ArrayList<Boolean>();
+
+
+        //perrcorrer a imagem;
+        for (largura = 0; largura < img.length; largura++) {
+            for (altura = 0; altura < img[0].length; altura++) {
+                // encher a mascara
+                for (int i = largura - maskSize / 2; i <= largura + maskSize / 2; i++) {
+                    for (int j = altura - maskSize / 2; j <= altura + maskSize / 2; j++) {
+                        if (i >= 0 && i < img.length) {
+                            if (j >= 0 && j < img[0].length) {
+                                mascara.add(img[i][j]);
+                            }
+                        }
+                    }
+                }
+                // ordena a mascara
+                Collections.sort(mascara);
+
+
+                // grava no arquivo novo
+                boolean b = (boolean) mascara.get(mascara.size() / 2);
+                imgOut[largura][altura] = b;
+
+                // limpa pro próximo pixel
+                mascara.clear();
+            }
+        }
+        return imgOut;
+    }
 }

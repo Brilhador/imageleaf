@@ -31,9 +31,9 @@ public class Thresholding {
                 cor = (Color.getColor("red", img.getRGB(x, y)).getRed() + Color.getColor("green", img.getRGB(x, y)).getGreen() + Color.getColor("blue", img.getRGB(x, y)).getBlue()) / 3;
                 if (cor >= limiar) {
                     //maior que o limiar fundo
-                    imgOut.setRGB(x, y, Color.WHITE.getRGB());
-                } else {
                     imgOut.setRGB(x, y, Color.BLACK.getRGB());
+                } else {
+                    imgOut.setRGB(x, y, Color.WHITE.getRGB());
                 }
             }
         }
@@ -63,6 +63,134 @@ public class Thresholding {
         // retorna a imagem binarizada
         return boolImg;
     }
+    
+    public static boolean[][] limiarizacaoBoolInv(BufferedImage img, int limiar) {
+        //vetor de boolean para saida da funcao
+        //valores true sao obejto de interesse
+        boolean[][] boolImg = new boolean[img.getWidth()][img.getHeight()];
+
+        int cor;
+        // atribuido valores a imagem dos pixels
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                cor = (Color.getColor("red", img.getRGB(x, y)).getRed() + Color.getColor("green", img.getRGB(x, y)).getGreen() + Color.getColor("blue", img.getRGB(x, y)).getBlue()) / 3;
+                //maior com o limiar objeto de interesse
+                if (cor >= limiar) {
+                    boolImg[x][y] = false;
+                } else {
+                    boolImg[x][y] = true;
+
+                }
+            }
+        }
+        // retorna a imagem binarizada
+        return boolImg;
+    }
+    
+    public static boolean[][] limiarizacaoBool(BufferedImage img, int lRed, int lGreen, int lBlue) {
+        //vetor de boolean para saida da funcao
+        //valores true sao obejto de interesse
+        boolean[][] boolImg = new boolean[img.getWidth()][img.getHeight()];
+
+        int cor;
+        // atribuido valores a imagem dos pixels
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                double red = Color.getColor("red", img.getRGB(x, y)).getRed();
+                double green = Color.getColor("green", img.getRGB(x, y)).getGreen();
+                double blue = Color.getColor("blue", img.getRGB(x, y)).getBlue();
+                
+                //maior com o limiar objeto de interesse
+                if (red > lRed && green > lGreen && blue > lBlue) {
+                    boolImg[x][y] = true;
+                } else {
+                    boolImg[x][y] = false;
+
+                }
+            }
+        }
+        // retorna a imagem binarizada
+        return boolImg;
+    }
+    
+    public static boolean[][] limiarizacaoBoolInv(BufferedImage img, int lRed, int lGreen, int lBlue) {
+        //vetor de boolean para saida da funcao
+        //valores true sao obejto de interesse
+        boolean[][] boolImg = new boolean[img.getWidth()][img.getHeight()];
+
+        int cor;
+        // atribuido valores a imagem dos pixels
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                double red = Color.getColor("red", img.getRGB(x, y)).getRed();
+                double green = Color.getColor("green", img.getRGB(x, y)).getGreen();
+                double blue = Color.getColor("blue", img.getRGB(x, y)).getBlue();
+                
+                //maior com o limiar objeto de interesse
+                if (red > lRed && green > lGreen && blue > lBlue) {
+                    boolImg[x][y] = false;
+                } else {
+                    boolImg[x][y] = true;
+
+                }
+            }
+        }
+        // retorna a imagem binarizada
+        return boolImg;
+    }
+    
+    public static boolean[][] limiarizacaoBool(BufferedImage img, int redInf, int redSup, int greenInf, int greenSup, int blueInf, int blueSup) {
+        //vetor de boolean para saida da funcao
+        //valores true sao obejto de interesse
+        boolean[][] boolImg = new boolean[img.getWidth()][img.getHeight()];
+
+        int cor;
+        // atribuido valores a imagem dos pixels
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                double red = Color.getColor("red", img.getRGB(x, y)).getRed();
+                double green = Color.getColor("green", img.getRGB(x, y)).getGreen();
+                double blue = Color.getColor("blue", img.getRGB(x, y)).getBlue();
+                
+                //maior com o limiar objeto de interesse
+                if ((red > redInf && green > greenInf && blue > blueInf) && (red < redSup && green < greenSup && blue < blueSup)) {
+                    boolImg[x][y] = true;
+                } else {
+                    boolImg[x][y] = false;
+
+                }
+            }
+        }
+        // retorna a imagem binarizada
+        return boolImg;
+    }
+    
+    public static boolean[][] limiarizacaoBoolInv(BufferedImage img, int redInf, int redSup, int greenInf, int greenSup, int blueInf, int blueSup) {
+        //vetor de boolean para saida da funcao
+        //valores true sao obejto de interesse
+        boolean[][] boolImg = new boolean[img.getWidth()][img.getHeight()];
+
+        int cor;
+        // atribuido valores a imagem dos pixels
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                double red = Color.getColor("red", img.getRGB(x, y)).getRed();
+                double green = Color.getColor("green", img.getRGB(x, y)).getGreen();
+                double blue = Color.getColor("blue", img.getRGB(x, y)).getBlue();
+                
+                //maior com o limiar objeto de interesse
+                if ((red > redInf && green > greenInf && blue > blueInf) && (red < redSup && green < greenSup && blue < blueSup)) {
+                    boolImg[x][y] = false;
+                } else {
+                    boolImg[x][y] = true;
+
+                }
+            }
+        }
+        // retorna a imagem binarizada
+        return boolImg;
+    }
+    
     // limiarização basica com valor já pré-definido (valores atrivuidos a uma
     // matriz) com liminar por parametro,
     // retornando uma matriz com os valores booleanos true para borda; false
@@ -114,6 +242,7 @@ public class Thresholding {
 
     // limiarização basica com valor já pré-definido (valores atribuidos a uma
     // matriz) com liminar por parametro, que retona uma imagem
+    //esse
     public static BufferedImage limiarizacao(BufferedImage img, boolean[][] mat) {
         //Imagem de saida
         BufferedImage imgOut = new BufferedImage(

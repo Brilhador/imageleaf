@@ -167,7 +167,32 @@ public class Histogram {
         }
         return h;
     }
-    
+
+    public static int[] histogramaGray(BufferedImage img, boolean[][] imgBool) {
+        // Histogramas
+        int h[] = new int[256];
+
+        // Inicialização dos vetores
+        for (int i = 0; i <= 255; i++) {
+            h[i] = 0;
+        }
+
+        // Recebe a media das cores Red, Green e Blue que é o tom de cinza do
+        // pixel
+        int media;
+
+        // pegando os valores RGB
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                if (imgBool[x][y]) {
+                    media = (Color.getColor("red", img.getRGB(x, y)).getRed() + Color.getColor("green", img.getRGB(x, y)).getGreen() + Color.getColor("blue", img.getRGB(x, y)).getBlue()) / 3;
+                    h[media]++;
+                }
+            }
+        }
+        return h;
+    }
+
     //normalização de histograma por scala
     //normalization by scaling between 0 and 1
     public static double[] normalization(double[] histograma) {
@@ -211,7 +236,6 @@ public class Histogram {
         float[] hacumuladoGreen = new float[256];
         float[] hacumuladoBlue = new float[256];
 
-
         for (x = 0; x < 256; x++) {
             hacumuladoRed[x] = hacumuladoGreen[x] = hacumuladoGreen[x] = 0;
         }
@@ -240,119 +264,119 @@ public class Histogram {
 
         return imgOut;
     }
-    
+
     public static int getTotalPxHistograma(BufferedImage img) {
         int[] histograma = BRImage.description.color.Histogram.histogramaGray(img);
-        
+
         int soma = 0;
         for (int i : histograma) {
             soma += i;
         }
-        
+
         return soma;
     }
-    
-     public static int getTotalPxImg(BufferedImage img) {
+
+    public static int getTotalPxImg(BufferedImage img) {
         ArrayList<Integer> imgVet = new ArrayList<Integer>();
-        
+
         for (int i = 0; i < img.getWidth(); i++) {
             for (int j = 0; j < img.getHeight(); j++) {
                 imgVet.add(img.getRGB(i, j));
             }
         }
-         
+
         int soma = 0;
-        
+
         for (int i : imgVet) {
             soma += i;
         }
-        
+
         return soma;
     }
-    
+
     public static double getMediana(BufferedImage img) {
         ArrayList<Integer> imgVet = new ArrayList<Integer>();
-        
+
         for (int i = 0; i < img.getWidth(); i++) {
             for (int j = 0; j < img.getHeight(); j++) {
                 imgVet.add(img.getRGB(i, j));
             }
         }
-        
+
         int tamanhoImg;
         double med;
         int meio;
         boolean par;
-        
+
         Collections.sort(imgVet);
-        
+
         tamanhoImg = imgVet.size();
         meio = tamanhoImg / 2;
-        
+
         if ((tamanhoImg % 2) == 0) {
             par = true;
         } else {
             par = false;
         }
-        
+
         if (par) {
             med = (imgVet.get(meio - 1) + imgVet.get(meio + 1)) / 2;
         } else {
             med = imgVet.get(meio);
         }
-        
+
         return med;
     }
-    
+
     public static double getMedia(BufferedImage img) {
-        
+
         ArrayList<Integer> imgVet = new ArrayList<Integer>();
-        
+
         for (int i = 0; i < img.getWidth(); i++) {
             for (int j = 0; j < img.getHeight(); j++) {
                 imgVet.add(img.getRGB(i, j));
             }
         }
-        
+
         double tamanho = img.getHeight() * img.getWidth();
         double soma = Histogram.getTotalPxImg(img);
         double media = soma / tamanho;
-        
+
         return media;
-        
+
     }
-    
+
     public static double getDesvioPadrao(BufferedImage img) {
-        
+
         ArrayList<Integer> imgVet = new ArrayList<Integer>();
-        
+
         for (int i = 0; i < img.getWidth(); i++) {
             for (int j = 0; j < img.getHeight(); j++) {
                 imgVet.add(img.getRGB(i, j));
             }
         }
-        
+
         double media = Histogram.getMedia(img);
-        
+
         ArrayList<Double> imgDesvio = new ArrayList<Double>();
         ArrayList<Double> imgQdDesvio = new ArrayList<Double>();
         double varianca = 0.0;
-        
+
         for (int i : imgVet) {
             imgDesvio.add(i - media);
         }
-        
+
         for (double i : imgDesvio) {
             imgQdDesvio.add(i * i);
         }
-        
+
         Double soma = 0.0;
         for (double i : imgQdDesvio) {
             soma += i;
         }
-        
+
         varianca = soma / (img.getHeight() * img.getWidth());
-        
+
         return Math.sqrt(varianca);
-    }    
+    }
 }

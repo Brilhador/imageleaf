@@ -6,14 +6,16 @@
 
 package BRImage.useful;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ANDERSON
  */
-public class Coordinate {
+public class Coordinate implements Serializable, Comparable{
     
-    private int x = 0;
-    private int y = 0;
+    private Integer x = 0;
+    private Integer y = 0;
 
     public Coordinate(int x, int y) {
         this.x = x;
@@ -34,5 +36,11 @@ public class Coordinate {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Coordinate c = (Coordinate) o;
+        return y.compareTo(c.getY());
     }
 }
