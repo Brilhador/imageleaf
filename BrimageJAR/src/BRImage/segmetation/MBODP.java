@@ -6,6 +6,7 @@
 package BRImage.segmetation;
 
 import BRImage.useful.Coordinate;
+import BRImage.useful.Perimeter;
 import java.util.ArrayList;
 
 /**
@@ -28,27 +29,27 @@ public class MBODP {
 
     //construtor
     public MBODP(boolean[][] imageBorder, int limite) {
-        
+
         this.width = imageBorder.length;
         this.heigth = imageBorder[0].length;
-        
+
         this.imageBorder = new boolean[width][heigth];
-        
+
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.heigth; y++) {
                 this.imageBorder[x][y] = imageBorder[x][y];
             }
         }
-        
+
         this.limite = limite;
     }
 
     public MBODP(boolean[][] imageBorder) {
         this.width = imageBorder.length;
         this.heigth = imageBorder[0].length;
-        
+
         this.imageBorder = new boolean[width][heigth];
-        
+
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.heigth; y++) {
                 this.imageBorder[x][y] = imageBorder[x][y];
@@ -56,22 +57,18 @@ public class MBODP {
         }
     }
 
+    //retorna o centroide das coordenadas do perimetro
     public ArrayList<Coordinate> getObjects() {
-        ArrayList<Integer> perimetro = new ArrayList<>();
-        ArrayList<Coordinate> objeto = new ArrayList<>();
 
+        ArrayList<Coordinate> objeto = new ArrayList<>();
         //identificar novo objeto 
         while (getNextObject()) {
-            //encontra o proximo o objeto e retorna seu contorno
-            ArrayList<Coordinate> contorno = getBorder();
-
             try {
 
-                System.out.println(contorno.size());
+                //encontra o proximo o objeto e retorna seu contorno
+                ArrayList<Coordinate> contorno = getBorder();
 
                 if (contorno.size() > limite) {
-                    //adiciona o perimetro na lista
-                    perimetro.add(contorno.size());
                     //adicionar centroide a lista
                     objeto.add(getCentroide(contorno));
                 }
@@ -84,32 +81,33 @@ public class MBODP {
         }
         return objeto;
     }
-    
-    public ArrayList<Coordinate> getBigPerimeter() {
-        ArrayList<Coordinate> perimetro = new ArrayList<>();
-        int tam = Integer.MIN_VALUE;
-        
+
+    public ArrayList<Perimeter> getPerimeter() {
+
+        ArrayList<Perimeter> perimetro = new ArrayList<>();
+
         //identificar novo objeto 
         while (getNextObject()) {
             //encontra o proximo o objeto e retorna seu contorno
             //getBorder sempre retorna um objeto novo
-            ArrayList<Coordinate> contorno = getBorder();
 
             try {
+
+                ArrayList<Coordinate> contorno = getBorder();
+
                 if (contorno.size() > limite) {
                     //adiciona o perimetro na lista
-                    if(contorno.size() > tam){
-                        tam = contorno.size();
-                        perimetro = contorno;
-                    }
+                    perimetro.add(new Perimeter(contorno));
                 }
+                
                 //remove objeto da imagem
                 removeObject(contorno);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
-        
+
         return perimetro;
     }
 
@@ -143,6 +141,7 @@ public class MBODP {
         }
     }
 
+    //desenvolver um getNextObject mais inteligente
     private boolean getNextObject() {
         //pega o pixel inicial   
         for (int y = heigth - 1; y >= 0; y--) {
@@ -228,13 +227,29 @@ public class MBODP {
     private ArrayList<Coordinate> getBorder() {
         //gera chain code
         ArrayList<Coordinate> lista = new ArrayList<>();
+        ArrayList<Coordinate> initial = new ArrayList<>();
         //coordenada auxiliares
         int x = startx;
         int y = starty;
         //Primeiro ponto do contorno
         lista.add(new Coordinate(startx, starty));
-        Coordinate d = null;
-//        System.out.println("Inicial: \n" + x + "," + y);
+        initial.add(new Coordinate(startx, starty));
+
+        //Pega o primeiro pixel próximo, senão tiver nem entra
+        Coordinate d = getNextDirection(x, y);
+
+        if (d != null) {
+            lista.add(d);
+            initial.add(d);
+            lastx = x;
+            lasty = y;
+            x = d.getX();
+            y = d.getY();
+        } else {
+            return lista;
+        }
+
+        //caso tenha mais de um pixel
         do {
             d = getNextDirection(x, y);
             if (d != null) {
@@ -244,13 +259,23 @@ public class MBODP {
                 x = d.getX();
                 y = d.getY();
             } else {
-                break;
+                return lista;
             }
-        } while ((startx != x || starty != y));//sai quando encontra o ponto inicial
+        } while (hasFound(initial, x, y));//sai quando encontra o ponto inicial
+
         return lista;
     }
 
-    private static Coordinate getCentroide(ArrayList<Coordinate> lista) {
+    private boolean hasFound(ArrayList<Coordinate> lista, int x, int y) {
+        for (Coordinate coordinate : lista) {
+            if (coordinate.getX() == x && coordinate.getY() == y) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static Coordinate getCentroide(ArrayList<Coordinate> lista) {
         int x = 0;
         int y = 0;
         for (Coordinate dimension : lista) {

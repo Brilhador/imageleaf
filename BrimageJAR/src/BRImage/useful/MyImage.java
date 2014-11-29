@@ -4,21 +4,24 @@
  */
 package BRImage.useful;
 
+import BRImage.description.color.Histogram;
+import BRImage.segmetation.Thresholding;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
-import BRImage.description.color.Histogram;
-import BRImage.segmetation.Thresholding;
-import java.awt.Dimension;
-import java.util.ArrayList;
 
 /**
  *
@@ -153,6 +156,40 @@ public class MyImage {
         g2d.dispose();
         return resizeImg;
     }
+    
+    //rotacionar
+    public static BufferedImage rotateImage(BufferedImage rotateImage, double angle) {
+    angle %= 360;
+    if (angle < 0) angle += 360;
+
+    AffineTransform tx = new AffineTransform();
+    tx.rotate(Math.toRadians(angle), rotateImage.getWidth() / 2.0, rotateImage.getHeight() / 2.0);
+
+    double ytrans = 0;
+    double xtrans = 0;
+    if( angle <= 90 ){
+        xtrans = tx.transform(new Point2D.Double(0, rotateImage.getHeight()), null).getX();
+        ytrans = tx.transform(new Point2D.Double(0.0, 0.0), null).getY();
+    }
+    else if( angle <= 180 ){
+        xtrans = tx.transform(new Point2D.Double(rotateImage.getWidth(), rotateImage.getHeight()), null).getX();
+        ytrans = tx.transform(new Point2D.Double(0, rotateImage.getHeight()), null).getY();
+    }
+    else if( angle <= 270 ){
+        xtrans = tx.transform(new Point2D.Double(rotateImage.getWidth(), 0), null).getX();
+        ytrans = tx.transform(new Point2D.Double(rotateImage.getWidth(), rotateImage.getHeight()), null).getY();
+    }
+    else{
+        xtrans = tx.transform(new Point2D.Double(0, 0), null).getX();
+        ytrans = tx.transform(new Point2D.Double(rotateImage.getWidth(), 0), null).getY();
+    }
+
+    AffineTransform translationTransform = new AffineTransform();
+    translationTransform.translate(-xtrans, -ytrans);
+    tx.preConcatenate(translationTransform);
+
+    return new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR).filter(rotateImage, null);
+} 
 
     public static BufferedImage[] FileToImage(File[] arquivos) {
         BufferedImage[] imagens = new BufferedImage[arquivos.length];
@@ -251,4 +288,5 @@ public class MyImage {
 
         return imagem.getSubimage(xmin, ymin, xmax, ymax);
     }
+
 }

@@ -79,6 +79,8 @@ public class HuangWanLiu {
 
 //                        System.out.println("quant: " + amount);
                         //condições para excluir o pixel
+                        
+                        
                         //condição 1 ------------------------------------ 
                         //Se o pixel tem 0, 1 ou 8 vizinhos fundos ele não é sinalizado para exclusão
                         if (amount < 2 && amount > 7) {
@@ -763,6 +765,7 @@ public class HuangWanLiu {
                         }
 
                         //pixel é eliminavel
+                        //validar se o pixel realmente será excluído
                         if (auxMat[x][y]) {
 
                             boolean twoPixel = false;
