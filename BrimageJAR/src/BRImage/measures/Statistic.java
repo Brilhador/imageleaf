@@ -4,6 +4,9 @@
  */
 package BRImage.measures;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  *
  * @author anderson
@@ -48,6 +51,16 @@ public class Statistic {
     
     public double coefficientVariation(){     
         return standardDeviation() / average();
+    }
+    
+    public double median(){
+        ArrayList<Double> dados = new ArrayList<>();
+        for (int i = 0; i < vector.length; i++) {
+            dados.add(vector[i]);
+        }
+        
+        Collections.sort(dados);
+        return dados.get(dados.size() / 2);
     }
     
 }

@@ -56,8 +56,7 @@ public class MBODP {
             }
         }
     }
-
-    //retorna o centroide das coordenadas do perimetro
+    
     public ArrayList<Coordinate> getObjects() {
 
         ArrayList<Coordinate> objeto = new ArrayList<>();
@@ -284,4 +283,10 @@ public class MBODP {
         }
         return new Coordinate(x / lista.size(), y / lista.size());
     }
+
+    public boolean[][] getImageBorder() {
+        return imageBorder;
+    }
+    
+
 }

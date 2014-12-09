@@ -12,12 +12,12 @@ import java.io.Serializable;
  *
  * @author Anderson
  */
-public class Coordinate implements Serializable, Comparable{
+public class CoordinateX implements Serializable, Comparable{
 
     private Integer x = 0;
     private Integer y = 0;
 
-    public Coordinate(int x, int y) {
+    public CoordinateX(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -40,7 +40,7 @@ public class Coordinate implements Serializable, Comparable{
 
     @Override
     public int compareTo(Object o) {
-        Coordinate c = (Coordinate) o;
-        return y.compareTo(c.getY());
+        CoordinateX c = (CoordinateX) o;
+        return x.compareTo(c.getX());
     }
 }
