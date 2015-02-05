@@ -362,6 +362,41 @@ public class Grafico {
             return null;
         }
     }
+    
+     public static BufferedImage histogramaGRAY(BufferedImage img, int sizeWidth, int sizeHeight, String title) {
+
+        try {
+
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+            //pega o histograma da imagem
+            int[] histogramaGRAY = Histogram.histogramaGray(img);
+
+            //carregar dataset com os histogramas
+            for (int i = 0; i <= 255; i++) {
+                dataset.addValue(histogramaGRAY[i], "GRAY", "" + i);
+            }
+
+            JFreeChart chart = ChartFactory.createLineChart(
+                    title,
+                    "Pixels",
+                    "Frequência",
+                    dataset,
+                    PlotOrientation.VERTICAL,
+                    true,
+                    false,
+                    false);
+
+            //custom chart
+            chart.getCategoryPlot().getRenderer().setSeriesPaint(0, Color.BLACK);
+
+            return chart.createBufferedImage(sizeWidth, sizeHeight);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public static BufferedImage histograma(int[] histograma, int width, int height, String title, String labelx, String labely) {
 

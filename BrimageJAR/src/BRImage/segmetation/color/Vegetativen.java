@@ -31,23 +31,20 @@ public class Vegetativen {
         //matriz de saida
         boolean[][] output = new boolean[largura][altura];
 
-        //calculando os valores do vegetativen
         for (int x = 0; x < largura; x++) {
             for (int y = 0; y < altura; y++) {
                 double red = Color.getColor("red", img.getRGB(x, y)).getRed();
                 double green = Color.getColor("green", img.getRGB(x, y)).getGreen();
                 double blue = Color.getColor("blue", img.getRGB(x, y)).getBlue();
-
+                
                 //vegetativen
                 veg[x][y] = green / (Math.pow(red, 0.667) * Math.pow(blue, 1 - 0.667));
 
             }
         }
-
-        //convertendo index para image monocromatica
+        
         outImage = index2mono(veg);
-
-        //matriz de boolean
+        
         return Thresholding.limiarizacaoBool(outImage, Thresholding.otsuTreshold(Histogram.histogramaGray(outImage), altura * largura));
     }
 

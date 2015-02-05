@@ -33,7 +33,7 @@ public class GreenLarge {
                 double red = Color.getColor("red", img.getRGB(x, y)).getRed();
                 double green = Color.getColor("green", img.getRGB(x, y)).getGreen();
                 
-                if (green > red) {
+                if (green > red ) {
                     output[x][y] = true;
                 } else {
                     output[x][y] = false;
