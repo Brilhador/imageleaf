@@ -40,6 +40,44 @@ public class MyImage {
         return imgOut;
     }
 
+    public static BufferedImage paintPoint(BufferedImage imageOriginal, Coordinate point) {
+        BufferedImage imgOut = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
+        Graphics2D g2d = imgOut.createGraphics();
+        g2d.drawImage(imageOriginal, null, 0, 0);
+        drawPoint(imgOut, point, Color.RED);
+        g2d.dispose();
+        return imgOut;
+    }
+
+    public static BufferedImage paintPoint(BufferedImage imageOriginal, ArrayList<Coordinate> point, Color cor) {
+        BufferedImage imgOut = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
+        Graphics2D g2d = imgOut.createGraphics();
+        g2d.drawImage(imageOriginal, null, 0, 0);
+        for (Coordinate dimension : point) {
+            drawPoint(imgOut, dimension, cor);
+        }
+        g2d.dispose();
+        return imgOut;
+    }
+
+    public static BufferedImage paintPoint(BufferedImage imageOriginal, Coordinate point, Color cor) {
+        BufferedImage imgOut = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
+        Graphics2D g2d = imgOut.createGraphics();
+        g2d.drawImage(imageOriginal, null, 0, 0);
+        drawPoint(imgOut, point, cor);
+        g2d.dispose();
+        return imgOut;
+    }
+
+    public static BufferedImage paintCross(BufferedImage imageOriginal, Coordinate point, int tam, Color cor) {
+        BufferedImage imgOut = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
+        Graphics2D g2d = imgOut.createGraphics();
+        g2d.drawImage(imageOriginal, null, 0, 0);
+        drawCross(imgOut, point, cor, tam);
+        g2d.dispose();
+        return imgOut;
+    }
+
     public static BufferedImage paintCross(BufferedImage imageOriginal, ArrayList<Coordinate> point, int tam, Color cor) {
         BufferedImage imgOut = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
         Graphics2D g2d = imgOut.createGraphics();
@@ -50,14 +88,14 @@ public class MyImage {
         g2d.dispose();
         return imgOut;
     }
-    
-    public static BufferedImage paintLine(BufferedImage imageOriginal, ArrayList<Coordinate> point, Color cor){
+
+    public static BufferedImage paintLine(BufferedImage imageOriginal, ArrayList<Coordinate> point, Color cor) {
         BufferedImage imgOut = new BufferedImage(imageOriginal.getWidth(), imageOriginal.getHeight(), imageOriginal.getType());
         Graphics2D g2d = imgOut.createGraphics();
         g2d.drawImage(imageOriginal, null, 0, 0);
         g2d.setColor(cor);
         for (int i = 0; i < point.size() - 1; i++) {
-            g2d.drawLine(point.get(i).getX(), point.get(i).getY(), point.get(i+1).getX(), point.get(i+1).getY());
+            g2d.drawLine(point.get(i).getX(), point.get(i).getY(), point.get(i + 1).getX(), point.get(i + 1).getY());
         }
         g2d.dispose();
         return imgOut;
@@ -156,40 +194,39 @@ public class MyImage {
         g2d.dispose();
         return resizeImg;
     }
-    
+
     //rotacionar
     public static BufferedImage rotateImage(BufferedImage rotateImage, double angle) {
-    angle %= 360;
-    if (angle < 0) angle += 360;
+        angle %= 360;
+        if (angle < 0) {
+            angle += 360;
+        }
 
-    AffineTransform tx = new AffineTransform();
-    tx.rotate(Math.toRadians(angle), rotateImage.getWidth() / 2.0, rotateImage.getHeight() / 2.0);
+        AffineTransform tx = new AffineTransform();
+        tx.rotate(Math.toRadians(angle), rotateImage.getWidth() / 2.0, rotateImage.getHeight() / 2.0);
 
-    double ytrans = 0;
-    double xtrans = 0;
-    if( angle <= 90 ){
-        xtrans = tx.transform(new Point2D.Double(0, rotateImage.getHeight()), null).getX();
-        ytrans = tx.transform(new Point2D.Double(0.0, 0.0), null).getY();
-    }
-    else if( angle <= 180 ){
-        xtrans = tx.transform(new Point2D.Double(rotateImage.getWidth(), rotateImage.getHeight()), null).getX();
-        ytrans = tx.transform(new Point2D.Double(0, rotateImage.getHeight()), null).getY();
-    }
-    else if( angle <= 270 ){
-        xtrans = tx.transform(new Point2D.Double(rotateImage.getWidth(), 0), null).getX();
-        ytrans = tx.transform(new Point2D.Double(rotateImage.getWidth(), rotateImage.getHeight()), null).getY();
-    }
-    else{
-        xtrans = tx.transform(new Point2D.Double(0, 0), null).getX();
-        ytrans = tx.transform(new Point2D.Double(rotateImage.getWidth(), 0), null).getY();
-    }
+        double ytrans = 0;
+        double xtrans = 0;
+        if (angle <= 90) {
+            xtrans = tx.transform(new Point2D.Double(0, rotateImage.getHeight()), null).getX();
+            ytrans = tx.transform(new Point2D.Double(0.0, 0.0), null).getY();
+        } else if (angle <= 180) {
+            xtrans = tx.transform(new Point2D.Double(rotateImage.getWidth(), rotateImage.getHeight()), null).getX();
+            ytrans = tx.transform(new Point2D.Double(0, rotateImage.getHeight()), null).getY();
+        } else if (angle <= 270) {
+            xtrans = tx.transform(new Point2D.Double(rotateImage.getWidth(), 0), null).getX();
+            ytrans = tx.transform(new Point2D.Double(rotateImage.getWidth(), rotateImage.getHeight()), null).getY();
+        } else {
+            xtrans = tx.transform(new Point2D.Double(0, 0), null).getX();
+            ytrans = tx.transform(new Point2D.Double(rotateImage.getWidth(), 0), null).getY();
+        }
 
-    AffineTransform translationTransform = new AffineTransform();
-    translationTransform.translate(-xtrans, -ytrans);
-    tx.preConcatenate(translationTransform);
+        AffineTransform translationTransform = new AffineTransform();
+        translationTransform.translate(-xtrans, -ytrans);
+        tx.preConcatenate(translationTransform);
 
-    return new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR).filter(rotateImage, null);
-} 
+        return new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR).filter(rotateImage, null);
+    }
 
     public static BufferedImage[] FileToImage(File[] arquivos) {
         BufferedImage[] imagens = new BufferedImage[arquivos.length];

@@ -4,6 +4,7 @@
  */
 package BRImage.measures;
 
+import BRImage.useful.Coordinate;
 import java.awt.Dimension;
 
 /**
@@ -58,6 +59,12 @@ public class Distance {
         double soma = (Math.pow(Math.abs(cod1.width - cod2.width), 2) + Math.pow(Math.abs(cod1.height - cod2.height), 2));
         return (int) Math.sqrt(soma);
     }
+    
+     //distancia de euclidiana entre dois pontos fixos
+    public static int Euclidean(Coordinate cod1, Coordinate cod2) {
+        double soma = (Math.pow(Math.abs(cod1.getX() - cod2.getX()), 2) + Math.pow(Math.abs(cod1.getY() - cod2.getY()), 2));
+        return (int) Math.sqrt(soma);
+    }
 
     //calcula a distancia Manhattan entre dois vetores
     public static Double Manhattan(double[] histgrama1, double[] histograma2) {
@@ -92,6 +99,9 @@ public class Distance {
         return Math.abs(cod1.width - cod2.width) + Math.abs(cod1.height - cod2.height);
     }
     
-    
+    //distancia de manhattan entre dois pontos fixos
+    public static int Manhattan(Coordinate cod1, Coordinate cod2) {
+        return Math.abs(cod1.getX() - cod2.getX()) + Math.abs(cod1.getY() - cod2.getY());
+    }
 
 }
