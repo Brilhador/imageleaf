@@ -6,16 +6,17 @@
 
 package BRImage.useful;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Anderson
  */
-public class Perimeter {
+public class Perimeter implements Serializable, Comparable{
     
     private ArrayList<Coordinate> coordenada = null;
-    private int tamanho = 0;
+    private Integer tamanho = 0;
 
     public Perimeter(ArrayList<Coordinate> coordenada) {
         this.coordenada = coordenada;
@@ -30,6 +31,14 @@ public class Perimeter {
         this.coordenada = coordenada;
     }
     
+    public int getSize(){
+        return coordenada.size();
+    }
     
+    @Override
+    public int compareTo(Object o) {
+        Perimeter p = (Perimeter) o;
+        return tamanho.compareTo(p.getSize());
+    }
     
 }
