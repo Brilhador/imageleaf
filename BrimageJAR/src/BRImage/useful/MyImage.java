@@ -165,6 +165,28 @@ public class MyImage {
             return false;
         }
     }
+    
+    public static boolean salvarPNG(BufferedImage image, File file) {
+        try {
+            return ImageIO.write(image, "PNG", file);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean salvarPNG(BufferedImage image, String path) {
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            return ImageIO.write(image, "PNG", new File(path));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     //redimensiona um array de imagens
     public static BufferedImage[] resizeImages(File[] arquivos, int width, int heigth) {

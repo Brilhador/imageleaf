@@ -7,6 +7,7 @@ package BRImage.segmetation.color;
 
 import BRImage.description.color.Histogram;
 import BRImage.segmetation.Thresholding;
+import BRImage.useful.Normalization;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
@@ -16,7 +17,7 @@ import java.awt.image.BufferedImage;
  */
 public class Vegetativen {
 
-    public static boolean[][] apply(BufferedImage img) {
+    public static BufferedImage apply(BufferedImage img) {
 
         //largura e altura da imagem
         int largura = img.getWidth();
@@ -36,16 +37,27 @@ public class Vegetativen {
                 double red = Color.getColor("red", img.getRGB(x, y)).getRed();
                 double green = Color.getColor("green", img.getRGB(x, y)).getGreen();
                 double blue = Color.getColor("blue", img.getRGB(x, y)).getBlue();
-                
+
+                //1º normalizando valores em uma scala de 0 e 1
+                red = red / 255;
+                green = green / 255;
+                blue = blue / 255;
+
+                //2º normalização 
+                double full = red + green + blue;
+
+                red /= full;
+                green /= full;
+                blue /= full;
+
                 //vegetativen
                 veg[x][y] = green / (Math.pow(red, 0.667) * Math.pow(blue, 1 - 0.667));
-
             }
         }
-        
-        outImage = index2mono(veg);
-        
-        return Thresholding.limiarizacaoBool(outImage, Thresholding.otsuTreshold(Histogram.histogramaGray(outImage), altura * largura));
+
+        veg = Normalization.apply(veg);
+
+        return index2mono(veg);
     }
 
     private static BufferedImage index2mono(double[][] mat) {
@@ -62,13 +74,55 @@ public class Vegetativen {
         for (int x = 0; x < largura; x++) {
             for (int y = 0; y < altura; y++) {
 
-                auxMat[x][y] = (int) mat[x][y];
+                auxMat[x][y] = (int) (mat[x][y] * 255);
 
-                outImage.setRGB(x, y, auxMat[x][y]);
+                Color rgb = new Color(auxMat[x][y], auxMat[x][y], auxMat[x][y]);
+                outImage.setRGB(x, y, rgb.getRGB());
+
             }
         }
 
         return outImage;
     }
 
+    public static double[][] getMatriz(BufferedImage img) {
+
+        //largura e altura da imagem
+        int largura = img.getWidth();
+        int altura = img.getHeight();
+
+        //Imagem de saida
+        BufferedImage outImage = new BufferedImage(largura, altura, BufferedImage.TYPE_3BYTE_BGR);
+
+        //matriz vegetativen
+        double[][] veg = new double[largura][altura];
+
+        //matriz de saida
+        boolean[][] output = new boolean[largura][altura];
+
+        for (int x = 0; x < largura; x++) {
+            for (int y = 0; y < altura; y++) {
+                double red = Color.getColor("red", img.getRGB(x, y)).getRed();
+                double green = Color.getColor("green", img.getRGB(x, y)).getGreen();
+                double blue = Color.getColor("blue", img.getRGB(x, y)).getBlue();
+
+                //1º normalizando valores em uma scala de 0 e 1
+                red = red / 255;
+                green = green / 255;
+                blue = blue / 255;
+
+                //2º normalização 
+                double full = red + green + blue;
+
+                red /= full;
+                green /= full;
+                blue /= full;
+
+                //vegetativen
+                veg[x][y] = green / (Math.pow(red, 0.667) * Math.pow(blue, 1 - 0.667));
+            }
+        }
+
+        return Normalization.apply(veg);
+    }
 }

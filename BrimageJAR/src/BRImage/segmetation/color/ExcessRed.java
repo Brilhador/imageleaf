@@ -5,19 +5,17 @@
  */
 package BRImage.segmetation.color;
 
-import BRImage.description.color.Histogram;
+import BRImage.useful.Normalization;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import BRImage.segmetation.Thresholding;
-import BRImage.useful.Normalization;
 
 /**
  *
- * @author Anderson
+ * @author ANDERSON
  */
-public class ExcessGreen {
-
-    public static BufferedImage apply(BufferedImage img) {
+public class ExcessRed {
+    
+public static BufferedImage apply(BufferedImage img) {
         //largura e altura da imagem
         int largura = img.getWidth();
         int altura = img.getHeight();
@@ -25,8 +23,8 @@ public class ExcessGreen {
         //Imagem de saida
         BufferedImage outImage = new BufferedImage(largura, altura, BufferedImage.TYPE_3BYTE_BGR);
 
-        //matriz de ExcessGreen
-        double[][] exg = new double[largura][altura];
+        //matriz de ExcessRed
+        double[][] exr = new double[largura][altura];
 
         //matriz de saida
         boolean[][] output = new boolean[largura][altura];
@@ -49,14 +47,14 @@ public class ExcessGreen {
                 green /= full;
                 blue /= full;
 
-                //Preenchendo a Matriz de Verde Excessivo
-                exg[x][y] = (2 * green) - red - blue;
+                //Preenchendo a Matriz de Verde Excessivo menos Vermelho Excessivo
+                exr[x][y] = (1.4 * red - green);
             }
         }
 
-        exg = Normalization.apply(exg);
+        exr = Normalization.apply(exr);
 
-        return index2mono(exg);
+        return index2mono(exr);
     }
 
     private static BufferedImage index2mono(double[][] mat) {
@@ -77,7 +75,6 @@ public class ExcessGreen {
 
                 Color rgb = new Color(auxMat[x][y], auxMat[x][y], auxMat[x][y]);
                 outImage.setRGB(x, y, rgb.getRGB());
-
             }
         }
 
@@ -93,7 +90,7 @@ public class ExcessGreen {
         BufferedImage outImage = new BufferedImage(largura, altura, BufferedImage.TYPE_3BYTE_BGR);
 
         //matriz de ExcessGreen
-        double[][] exg = new double[largura][altura];
+        double[][] exr = new double[largura][altura];
 
         //matriz de saida
         boolean[][] output = new boolean[largura][altura];
@@ -116,12 +113,12 @@ public class ExcessGreen {
                 green /= full;
                 blue /= full;
 
-                //Preenchendo a Matriz de Verde Excessivo
-                exg[x][y] = (2 * green) - red - blue;
+                //Preenchendo a Matriz de Verde Excessivo menos Vermelho Excessivo
+                exr[x][y] = (1.4 * red - green);
             }
         }
 
-        return Normalization.apply(exg);
+        return Normalization.apply(exr);
     }
     
     public static int[][] getMatrizInt(BufferedImage img) {
@@ -132,8 +129,8 @@ public class ExcessGreen {
         //Imagem de saida
         BufferedImage outImage = new BufferedImage(largura, altura, BufferedImage.TYPE_3BYTE_BGR);
 
-        //matriz de ExcessGreen
-        double[][] exg = new double[largura][altura];
+        //matriz de ExcessRed
+        double[][] exr = new double[largura][altura];
 
         //matriz de saida
         boolean[][] output = new boolean[largura][altura];
@@ -156,12 +153,12 @@ public class ExcessGreen {
                 green /= full;
                 blue /= full;
 
-                //Preenchendo a Matriz de Verde Excessivo
-                exg[x][y] = (2 * green) - red - blue;
+                //Preenchendo a Matriz de Verde Excessivo menos Vermelho Excessivo
+                exr[x][y] = (1.4 * red - green);
             }
         }
 
-        return getMonoMatriz(Normalization.apply(exg));
+        return getMonoMatriz(Normalization.apply(exr));
     }
     
     private static int[][] getMonoMatriz(double[][] mat) {
@@ -184,3 +181,4 @@ public class ExcessGreen {
         return auxMat;
     }
 }
+
