@@ -17,6 +17,7 @@ public class MBODP {
 
     //variaveis globais    
     private boolean[][] imageBorder = null;
+    private boolean[][] imageCopy = null;
     private int width = 0;
     private int heigth = 0;
     private int startx = 0;
@@ -34,10 +35,13 @@ public class MBODP {
         this.heigth = imageBorder[0].length;
 
         this.imageBorder = new boolean[width][heigth];
+        
+        this.imageCopy = new boolean[width][heigth];
 
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.heigth; y++) {
                 this.imageBorder[x][y] = imageBorder[x][y];
+                this.imageCopy[x][y] = imageBorder[x][y];
             }
         }
 
@@ -49,10 +53,13 @@ public class MBODP {
         this.heigth = imageBorder[0].length;
 
         this.imageBorder = new boolean[width][heigth];
+        
+        this.imageCopy = new boolean[width][heigth];
 
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.heigth; y++) {
                 this.imageBorder[x][y] = imageBorder[x][y];
+                this.imageCopy[x][y] = imageBorder[x][y];
             }
         }
     }
@@ -110,6 +117,36 @@ public class MBODP {
         return perimetro;
     }
 
+    public void removeObjectOfCopy(ArrayList<Coordinate> Contorno) {
+        //Coordenadas Limite
+        int minX = Integer.MAX_VALUE;
+        int minY = Integer.MAX_VALUE;
+        int maxX = 0;
+        int maxY = 0;
+
+        for (Coordinate d : Contorno) {
+            if (minX >= d.getX()) {
+                minX = d.getX();
+            }
+            if (maxX <= d.getX()) {
+                maxX = d.getX();
+            }
+            if (minY >= d.getY()) {
+                minY = d.getY();
+            }
+            if (maxY <= d.getY()) {
+                maxY = d.getY();
+            }
+        }
+
+        //apagar objeto
+        for (int x = minX; x <= maxX; x++) {
+            for (int y = minY; y <= maxY; y++) {
+                imageCopy[x][y] = false;
+            }
+        }
+    }
+    
     private void removeObject(ArrayList<Coordinate> Contorno) {
         //Coordenadas Limite
         int minX = Integer.MAX_VALUE;
@@ -287,6 +324,9 @@ public class MBODP {
     public boolean[][] getImageBorder() {
         return imageBorder;
     }
-    
+
+    public boolean[][] getImageCopy() {
+        return imageCopy;
+    }
 
 }

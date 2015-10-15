@@ -217,6 +217,28 @@ public class Thresholding {
         // retorna a matriz de boolean
         return borda;
     }
+    
+    public static boolean[][] limiarizacaoInv(int[][] img, int liminar) {
+        // cria uma matriz de booleanos com o mesmo tamanho da matriz recebida
+        // como parametro
+        boolean[][] borda = new boolean[img.length][img[0].length];
+
+        // atribuido caso o pixel seja uma borda recebe true
+        // linhas
+        for (int x = 0; x < img.length; x++) {
+            // colunas
+            for (int y = 0; y < img[0].length; y++) {
+                if (img[x][y] >= liminar) {
+                    //o valor gerado pelo dtector de bordas for maior que o limiar eh considerado uma borda
+                    borda[x][y] = false;
+                } else {
+                    borda[x][y] = true;//BLACK
+                }
+            }
+        }
+        // retorna a matriz de boolean
+        return borda;
+    }
 
     // limiarização basica com valor já pré-definido (valores atribuidos a uma
     // matriz) com liminar por parametro, que retona uma imagem
@@ -233,6 +255,26 @@ public class Thresholding {
                     imgOut.setRGB(x, y, Color.BLACK.getRGB());
                 } else {
                     imgOut.setRGB(x, y, Color.WHITE.getRGB());
+                }
+            }
+        }
+        // retorna a imagem binarizada
+        return imgOut;
+    }
+    
+     public static BufferedImage limiarizacaoInv(BufferedImage img, int[][] g, int limiar) {
+        //Imagem de saida
+        BufferedImage imgOut = new BufferedImage(
+                img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+        // atribuido valores a imagem dos pixels
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                if (g[x][y] >= limiar) {
+                    //TRUE
+                    imgOut.setRGB(x, y, Color.WHITE.getRGB());
+                } else {
+                    imgOut.setRGB(x, y, Color.BLACK.getRGB());    
                 }
             }
         }
@@ -256,6 +298,26 @@ public class Thresholding {
                     imgOut.setRGB(x, y, Color.BLACK.getRGB());
                 } else {
                     imgOut.setRGB(x, y, Color.WHITE.getRGB());
+                }
+            }
+        }
+        // retorna a imagem binarizada
+        return imgOut;
+    }
+    
+    public static BufferedImage limiarizacaoInv(BufferedImage img, boolean[][] mat) {
+        //Imagem de saida
+        BufferedImage imgOut = new BufferedImage(
+                img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+        // atribuido valores a imagem dos pixels
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                //se a for um objeto de interesse
+                if (mat[x][y]) {
+                    imgOut.setRGB(x, y, Color.WHITE.getRGB());
+                } else {
+                    imgOut.setRGB(x, y, Color.BLACK.getRGB());
                 }
             }
         }

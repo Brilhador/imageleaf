@@ -14,11 +14,20 @@ import java.util.Collections;
 public class Statistic {
 
     private double[] vector = null;
-    
+
     public Statistic(double[] vector) {
         this.vector = vector;
     }
-    
+
+    public Statistic(Double[] vector) {
+        double[] array = new double[vector.length];
+
+        for (int i = 0; i < vector.length; i++) {
+            array[i] = vector[i];
+        }
+        this.vector = array;
+    }
+
     public double average() {
         double soma = 0;
         for (int i = 0; i < vector.length; i++) {
@@ -35,7 +44,7 @@ public class Statistic {
         }
         return variance / (vector.length - 1);
     }
-    
+
     public double averageDeviation() {
         double median = average();
         double variance = 0;
@@ -44,23 +53,23 @@ public class Statistic {
         }
         return variance / (vector.length - 1);
     }
-    
-    public double standardDeviation(){
+
+    public double standardDeviation() {
         return Math.sqrt(variance());
     }
-    
-    public double coefficientVariation(){     
+
+    public double coefficientVariation() {
         return standardDeviation() / average();
     }
-    
-    public double median(){
+
+    public double median() {
         ArrayList<Double> dados = new ArrayList<>();
         for (int i = 0; i < vector.length; i++) {
             dados.add(vector[i]);
         }
-        
+
         Collections.sort(dados);
         return dados.get(dados.size() / 2);
     }
-    
+
 }
