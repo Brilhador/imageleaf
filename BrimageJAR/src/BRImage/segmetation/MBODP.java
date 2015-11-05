@@ -7,6 +7,7 @@ package BRImage.segmetation;
 
 import BRImage.useful.Coordinate;
 import BRImage.useful.Perimeter;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -35,7 +36,7 @@ public class MBODP {
         this.heigth = imageBorder[0].length;
 
         this.imageBorder = new boolean[width][heigth];
-        
+
         this.imageCopy = new boolean[width][heigth];
 
         for (int x = 0; x < this.width; x++) {
@@ -53,7 +54,7 @@ public class MBODP {
         this.heigth = imageBorder[0].length;
 
         this.imageBorder = new boolean[width][heigth];
-        
+
         this.imageCopy = new boolean[width][heigth];
 
         for (int x = 0; x < this.width; x++) {
@@ -63,7 +64,7 @@ public class MBODP {
             }
         }
     }
-    
+
     public ArrayList<Coordinate> getObjects() {
 
         ArrayList<Coordinate> objeto = new ArrayList<>();
@@ -105,7 +106,7 @@ public class MBODP {
                     //adiciona o perimetro na lista
                     perimetro.add(new Perimeter(contorno));
                 }
-                
+
                 //remove objeto da imagem
                 removeObject(contorno);
             } catch (Exception e) {
@@ -146,7 +147,7 @@ public class MBODP {
             }
         }
     }
-    
+
     private void removeObject(ArrayList<Coordinate> Contorno) {
         //Coordenadas Limite
         int minX = Integer.MAX_VALUE;
@@ -319,6 +320,72 @@ public class MBODP {
             y += dimension.getY();
         }
         return new Coordinate(x / lista.size(), y / lista.size());
+    }
+
+    public static BufferedImage getSubImage(ArrayList<Coordinate> lista, BufferedImage imageIn) {
+
+        // proporcoes
+        int largura = imageIn.getWidth();
+        int altura = imageIn.getHeight();
+
+        int xmin = largura;
+        int xmax = 0;
+        int ymin = altura;
+        int ymax = 0;
+
+        for (Coordinate c : lista) {
+            if (c.getX() < xmin) {
+                xmin = c.getX();
+            }
+            if (c.getX() > xmax) {
+                xmax = c.getX();
+            }
+            if (c.getY() < ymin) {
+                ymin = c.getY();
+            }
+            if (c.getY() > ymax) {
+                ymax = c.getY();
+            }
+        }
+
+        int subLargura = (xmax - xmin);
+        int subAltura = (ymax - ymin);
+        
+        return imageIn.getSubimage(xmin, ymin, subLargura, subAltura);
+    }
+    
+    public static int[] getMinumusList(ArrayList<Coordinate> lista, BufferedImage imageIn) {
+        
+        int[] aux = new int[2];
+
+        // proporcoes
+        int largura = imageIn.getWidth();
+        int altura = imageIn.getHeight();
+
+        int xmin = largura;
+        int xmax = 0;
+        int ymin = altura;
+        int ymax = 0;
+
+        for (Coordinate c : lista) {
+            if (c.getX() < xmin) {
+                xmin = c.getX();
+            }
+            if (c.getX() > xmax) {
+                xmax = c.getX();
+            }
+            if (c.getY() < ymin) {
+                ymin = c.getY();
+            }
+            if (c.getY() > ymax) {
+                ymax = c.getY();
+            }
+        }
+
+        aux[0] = xmin;
+        aux[1] = ymin;
+        
+        return aux;
     }
 
     public boolean[][] getImageBorder() {

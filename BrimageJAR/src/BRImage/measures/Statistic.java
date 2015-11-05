@@ -55,7 +55,13 @@ public class Statistic {
     }
 
     public double standardDeviation() {
-        return Math.sqrt(variance());
+        double retorno = Math.sqrt(variance());
+        
+        if (Double.NaN == retorno) {
+            return 0;
+        } else {
+            return retorno;
+        }
     }
 
     public double coefficientVariation() {
